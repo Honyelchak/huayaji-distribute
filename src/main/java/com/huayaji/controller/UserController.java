@@ -3,6 +3,7 @@ package com.huayaji.controller;
 import com.huayaji.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.persistence.Table;
@@ -15,8 +16,8 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping("/hello")
-    public String hello(String name){
+    public ModelAndView hello(String name){
         System.out.println(name);
-        return "success";
+        return new ModelAndView("success");
     }
 }

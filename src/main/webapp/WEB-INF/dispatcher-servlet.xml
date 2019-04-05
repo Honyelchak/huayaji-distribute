@@ -20,10 +20,10 @@
 
     </bean>
 
-    <mvc:resources mapping="/assets/img/**" location="/WEB-INF/assets/img/" />
-    <mvc:resources mapping="/assets/js/**" location="/WEB-INF/assets/js/" />
-    <mvc:resources mapping="/assets/font/**" location="/WEB-INF/assets/font/" />
-    <mvc:resources mapping="/assets/css/**" location="/WEB-INF/assets/css/" />
-
+    <mvc:resources mapping="/assets/img/**" location="/assets/img/" />
+    <mvc:resources mapping="/assets/js/**" location="/assets/js/" />
+    <mvc:resources mapping="/assets/font/**" location="/assets/font/" />
+    <mvc:resources mapping="/assets/css/**" location="/assets/css/" />
+    <mvc:resources mapping="/*.html" location="/" />
 
 </beans>
