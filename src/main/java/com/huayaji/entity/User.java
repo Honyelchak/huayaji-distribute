@@ -1,14 +1,17 @@
 package com.huayaji.entity;
 
-import org.springframework.stereotype.Component;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.UUID;
 
-@Component
+@Entity
+@Table(name="user_data")
 public class User implements Serializable {
 
-    private UUID id;
+    @Id
+    private Long id;
     private String name;
     private String real_name;
     private String phone;
@@ -18,11 +21,11 @@ public class User implements Serializable {
     private String note;
     private int distribute_balance;
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -90,7 +93,7 @@ public class User implements Serializable {
         this.distribute_balance = distribute_balance;
     }
 
-    public User(UUID id, String name, String real_name, String phone, int sex, int age, long service_no, String note, int distribute_balance) {
+    public User(Long id, String name, String real_name, String phone, int sex, int age, long service_no, String note, int distribute_balance) {
         this.id = id;
         this.name = name;
         this.real_name = real_name;
