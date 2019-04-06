@@ -15,14 +15,14 @@
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 
-        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="prefix" value="/WEB-INF/page/" />
         <property name="suffix" value=".jsp" />
 
     </bean>
 
     <mvc:resources mapping="/assets/img/**" location="/assets/img/" />
     <mvc:resources mapping="/assets/js/**" location="/assets/js/" />
-    <mvc:resources mapping="/assets/font/**" location="/assets/font/" />
+    <mvc:resources mapping="/assets/fonts/**" location="/assets/fonts/" />
     <mvc:resources mapping="/assets/css/**" location="/assets/css/" />
     <mvc:resources mapping="/*.html" location="/" />
 
