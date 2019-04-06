@@ -3,6 +3,7 @@ package com.huayaji.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -20,6 +21,8 @@ public class User implements Serializable {
     private long service_no;
     private String note;
     private int distribute_balance;
+    @OneToOne
+    private Address address;
 
     public Long getId() {
         return id;

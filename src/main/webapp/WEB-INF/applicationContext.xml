@@ -78,7 +78,6 @@
 
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="dataSource" ref="dataSource" />
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
