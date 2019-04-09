@@ -22,11 +22,13 @@ public class UserController {
 
     @RequestMapping("/hello")
     public ModelAndView hello(String name){
-        System.out.println(name);
-        List<User> userAll = userService.findAll();
-        for (User user : userAll) {
-            System.out.println(user.toString());
-        }
+
+//        List<User> userAll = userService.findAll();
+//        for (User user : userAll) {
+//            System.out.println(user.toString());
+//        }
+        User user= userService.findById(1L);
+        System.out.println(user.toString());
         return new ModelAndView("success");
     }
 }

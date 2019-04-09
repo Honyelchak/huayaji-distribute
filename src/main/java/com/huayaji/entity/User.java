@@ -1,10 +1,7 @@
 package com.huayaji.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -21,7 +18,8 @@ public class User implements Serializable {
     private long service_no;
     private String note;
     private int distribute_balance;
-    @OneToOne
+    @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
+    @JoinColumn(name="address_id",referencedColumnName="id",nullable=false)
     private Address address;
 
     public Long getId() {
@@ -117,13 +115,6 @@ public class User implements Serializable {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", real_name='" + real_name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", sex=" + sex +
-                ", age=" + age +
-                ", service_no=" + service_no +
-                ", note='" + note + '\'' +
-                ", distribute_balance=" + distribute_balance +
-                '}';
+                "," + address.toString();
     }
 }

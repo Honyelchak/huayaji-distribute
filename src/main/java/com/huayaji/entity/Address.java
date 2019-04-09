@@ -10,8 +10,8 @@ public class Address implements Serializable {
     @Id
     private Long id;
 
+
     @Column(name="user_id")
-    @JoinColumn
     private Long userId;
     private String province;
     private String city;

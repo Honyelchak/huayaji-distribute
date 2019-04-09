@@ -11,11 +11,9 @@ public class Order implements Serializable {
     @Id
     private Long id;
     private String user_id;
-    @OneToOne
-    @JoinColumn(name="address_id")
+
     private Address address;
-    @OneToOne
-    @JoinColumn(name="product_id")
+
     private Product product;
     @Column(name="total_money")
     private double totalMoney;
