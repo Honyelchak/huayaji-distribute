@@ -25,5 +25,6 @@
     <mvc:resources mapping="/assets/fonts/**" location="/assets/fonts/" />
     <mvc:resources mapping="/assets/css/**" location="/assets/css/" />
     <mvc:resources mapping="/*.html" location="/" />
+    <mvc:resources mapping="/favicon.ico" location="/" />
 
 </beans>

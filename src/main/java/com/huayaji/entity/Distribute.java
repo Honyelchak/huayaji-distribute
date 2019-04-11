@@ -1,29 +1,40 @@
 package com.huayaji.entity;
 
-import javax.persistence.*;
-import java.sql.Date;
-@Entity
-@Table(name = "user_distribute")
-public class Distribute {
+import jdk.Exported;
 
-    @Id
-    private int id;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.sql.Timestamp;
+
+@Entity
+@Table(name="user_distribute")
+public class Distribute implements Serializable {
+
+    private Long id;
+
     @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
     @JoinColumn(name="user_id",referencedColumnName="id",nullable=false)
     private User user;
+
     @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
     @JoinColumn(name="product_id",referencedColumnName="id",nullable=false)
     private Product product;
-    private Date distribute_time;
-    private int distribute_count_per;//每次配送数量
-    private int distribute_balance;
-    private String comment;//备注
 
-    public int getId() {
+    @Column(name="distribue_time")
+    private Timestamp distributeTime;
+    @Column(name="distribute_time_type")
+    private int distributeTimeType;
+    @Column(name="distribute_count_per")
+    private int distributeCountPer;
+    @Column(name="distribute_banlace")
+    private int distributeBalance;
+    private String comment;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -43,28 +54,36 @@ public class Distribute {
         this.product = product;
     }
 
-    public Date getDistribute_time() {
-        return distribute_time;
+    public Timestamp getDistributeTime() {
+        return distributeTime;
     }
 
-    public void setDistribute_time(Date distribute_time) {
-        this.distribute_time = distribute_time;
+    public void setDistributeTime(Timestamp distributeTime) {
+        this.distributeTime = distributeTime;
     }
 
-    public int getDistribute_count_per() {
-        return distribute_count_per;
+    public int getDistributeTimeType() {
+        return distributeTimeType;
     }
 
-    public void setDistribute_count_per(int distribute_count_per) {
-        this.distribute_count_per = distribute_count_per;
+    public void setDistributeTimeType(int distributeTimeType) {
+        this.distributeTimeType = distributeTimeType;
     }
 
-    public int getDistribute_balance() {
-        return distribute_balance;
+    public int getDistributeCountPer() {
+        return distributeCountPer;
     }
 
-    public void setDistribute_balance(int distribute_balance) {
-        this.distribute_balance = distribute_balance;
+    public void setDistributeCountPer(int distributeCountPer) {
+        this.distributeCountPer = distributeCountPer;
+    }
+
+    public int getDistributeBalance() {
+        return distributeBalance;
+    }
+
+    public void setDistributeBalance(int distributeBalance) {
+        this.distributeBalance = distributeBalance;
     }
 
     public String getComment() {

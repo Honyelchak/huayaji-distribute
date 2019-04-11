@@ -11,8 +11,6 @@ public class Address implements Serializable {
 
     @Id
     private Long id;
-
-
     @Column(name="user_id")
     private Long userId;
     private String province;
