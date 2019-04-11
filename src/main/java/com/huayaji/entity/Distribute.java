@@ -5,6 +5,8 @@ import java.sql.Date;
 @Entity
 @Table(name = "user_distribute")
 public class Distribute {
+
+    @Id
     private int id;
     @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
     @JoinColumn(name="user_id",referencedColumnName="id",nullable=false)
