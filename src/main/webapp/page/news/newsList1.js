@@ -77,8 +77,13 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
                     var body = layer.getChildFrame('body',index);
                     //console.log(body);
                     console.log(layero);
+                    console.log(index);
                     var iframeWin = window[layero.find('iframe')[0]['name']];
-                    iframeWin.input(that[data]);
+                    //iframeWin.input(that[data]);
+                    var iframe = window['layui-layer-iframe'+index];
+                    //调用子页面的全局函数
+                    console.log(iframe);
+                    iframe.child(that[data]);
                 }
             });
         }
