@@ -38,7 +38,7 @@
 		</div>
 	</blockquote>
 	<div class="layui-form news_list">
-	  	<table class="layui-table">
+	  	<table class="layui-table" id="lay_table_news" lay-filter="demo">
 		    <colgroup>
 				<col width="50">
 				<col>
@@ -49,23 +49,16 @@
 				<col width="9%">
 				<col width="15%">
 		    </colgroup>
-		    <thead>
-				<tr>
-					<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-					<th style="text-align:left;">文章标题</th>
-					<th>发布人</th>
-					<th>审核状态</th>
-					<th>浏览权限</th>
-					<th>是否展示</th>
-					<th>发布时间</th>
-					<th>操作</th>
-				</tr> 
-		    </thead>
-		    <tbody class="news_content"></tbody>
 		</table>
+		<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+			<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		</script>
 	</div>
 	<div id="page"></div>
+
 	<script type="text/javascript" src="../../layui/layui.js"></script>
-	<script type="text/javascript" src="newsList.js"></script>
+	<script type="text/javascript" src="newsList1.js"></script>
 </body>
 </html>

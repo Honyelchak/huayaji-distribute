@@ -1,9 +1,10 @@
 layui.config({
 	base : "js/"
-}).use(['form','layer','jquery','laypage'],function(){
-	var form = layui.form(),
+}).use(['form','layer','jquery','laypage','table'],function(){
+    var table = layui.table;
+	var form = layui.form,
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
-		laypage = layui.laypage,
+        laypage = layui.laypage,
 		$ = layui.jquery;
 
 	//加载页面数据
@@ -224,10 +225,70 @@ layui.config({
         },2000);
 	})
  
-	//操作
+	/*//操作
 	$("body").on("click",".news_edit",function(){  //编辑
 		layer.alert('您点击了文章编辑按钮，由于是纯静态页面，所以暂时不存在编辑内容，后期会添加，敬请谅解。。。',{icon:6, title:'文章编辑'});
-	})
+	})*/
+
+	table.on('tool(demo)', function(obj){
+        var data = obj.data;
+        if(obj.event === 'detail'){
+            layer.msg('ID：'+ data.id + ' 的查看操作');
+        } else if(obj.event === 'del'){
+            layer.confirm('真的删除行么', function(index){
+                console.log(data);
+                $.ajax({
+                    url: "UVServlet",
+                    type: "POST",
+                    data:{"uvid":data.id,"memthodname":"deleteuv","aid":data.aid},
+                    dataType: "json",
+                    success: function(data){
+                        if(data.state==1){
+                            //删除这一行
+                            obj.del();
+                            //关闭弹框
+                            layer.close(index);
+                            layer.msg("删除成功", {icon: 6});
+                        }else{
+                            layer.msg("删除失败", {icon: 5});
+                        }
+                    }
+                });
+            });
+        } else if(obj.event === 'edit'){
+            layer.prompt({
+                formType: 2
+                ,title: '修改 ID 为 ['+ data.id +'] 的访问量'
+                ,value: data.uv
+            }, function(value, index){
+                //这里一般是发送修改的Ajax请求
+                EidtUv(data,value,index,obj);
+            });
+        }
+	});
+    function  EidtUv(data,value,index,obj) {
+        $.ajax({
+            url: "UVServlet",
+            type: "POST",
+            data:{"uvid":data.id,"memthodname":"edituv","aid":data.aid,"uv":value},
+            dataType: "json",
+            success: function(data){
+
+                if(data.state==1){
+                    //关闭弹框
+                    layer.close(index);
+                    //同步更新表格和缓存对应的值
+                    obj.update({
+                        uv: value
+                    });
+                    layer.msg("修改成功", {icon: 6});
+                }else{
+                    layer.msg("修改失败", {icon: 5});
+                }
+            }
+
+        });
+    }
 
 	$("body").on("click",".news_collect",function(){  //收藏.
 		if($(this).text().indexOf("已收藏") > 0){
@@ -277,7 +338,7 @@ layui.config({
 			    	+'<td><input type="checkbox" name="show" lay-skin="switch" lay-text="是|否" lay-filter="isShow"'+currData[i].isShow+'></td>'
 			    	+'<td>'+currData[i].newsTime+'</td>'
 			    	+'<td>'
-					+  '<a class="layui-btn layui-btn-mini news_edit"><i class="iconfont icon-edit"></i> 编辑</a>'
+					+  '<a class="layui-btn layui-btn-mini news_edit " lay-event="edit"><i class="iconfont icon-edit"></i> 编辑</a>'
 					+  '<a class="layui-btn layui-btn-normal layui-btn-mini news_collect"><i class="layui-icon">&#xe600;</i> 收藏</a>'
 					+  '<a class="layui-btn layui-btn-danger layui-btn-mini news_del" data-id="'+data[i].newsId+'"><i class="layui-icon">&#xe640;</i> 删除</a>'
 			        +'</td>'
@@ -294,7 +355,7 @@ layui.config({
 		if(that){
 			newsData = that;
 		}
-		laypage({
+		laypage.render({
 			cont : "page",
 			pages : Math.ceil(newsData.length/nums),
 			jump : function(obj){
