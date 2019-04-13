@@ -20,10 +20,12 @@
 
     </bean>
 
-    <mvc:resources mapping="/assets/img/**" location="/assets/img/" />
-    <mvc:resources mapping="/assets/js/**" location="/assets/js/" />
-    <mvc:resources mapping="/assets/fonts/**" location="/assets/fonts/" />
-    <mvc:resources mapping="/assets/css/**" location="/assets/css/" />
+    <mvc:resources mapping="/images/**" location="/images/" />
+    <mvc:resources mapping="/layui/**" location="/layui/" />
+    <mvc:resources mapping="/js/**" location="/js/" />
+    <mvc:resources mapping="/page/**" location="/page/" />
+    <mvc:resources mapping="/json/**" location="/json/" />
+    <mvc:resources mapping="/css/**" location="/css/" />
     <mvc:resources mapping="/*.html" location="/" />
     <mvc:resources mapping="/favicon.ico" location="/" />
 

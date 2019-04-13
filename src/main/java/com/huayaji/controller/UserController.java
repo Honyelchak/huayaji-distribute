@@ -5,11 +5,15 @@ import com.huayaji.services.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.annotation.Resource;
 import javax.persistence.Table;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -20,15 +24,19 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @RequestMapping("/hello")
-    public ModelAndView hello(String name){
-
-//        List<User> userAll = userService.findAll();
-//        for (User user : userAll) {
-//            System.out.println(user.toString());
-//        }
-        User user= userService.findById(1L);
-        System.out.println(user.toString());
-        return new ModelAndView("success");
+    @RequestMapping("/getAll")
+    @ResponseBody
+    public ModelAndView hello(){
+        Map map = new HashMap();
+        List<User> userAll = userService.findAll();
+        System.out.println();
+        map.put("data",userAll);
+        map.put("code", 0);
+        map.put("count", userAll.size());
+        map.put("msg", null);
+        //User user= userService.findById(1L);
+        //System.out.println(user.toString());
+        return new ModelAndView(new MappingJackson2JsonView(), map);
     }
+
 }
