@@ -4,9 +4,9 @@
 	"href" : "page/main.html",
 	"spread" : false
 },{
-	"title" : "文章列表",
+	"title" : "用户列表",
 	"icon" : "icon-text",
-	"href" : "page/news/newsList.html",
+	"href" : "page/news/userList.html",
 	"spread" : false
 },{
 	"title" : "友情链接",

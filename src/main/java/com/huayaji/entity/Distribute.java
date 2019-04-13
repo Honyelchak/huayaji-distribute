@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 @Table(name="user_distribute")
 public class Distribute implements Serializable {
 
+    @Id
     private Long id;
 
     @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系

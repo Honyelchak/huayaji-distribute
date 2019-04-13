@@ -39,16 +39,16 @@
 	</blockquote>
 	<div class="layui-form news_list">
 	  	<table class="layui-table" id="lay_table_news" lay-filter="demo">
-		    <colgroup>
+		    <!--<colgroup>
 				<col width="50">
 				<col>
 				<col width="9%">
-				<col width="9%">
+				<col width="10%">
 				<col width="9%">
 				<col width="9%">
 				<col width="9%">
 				<col width="15%">
-		    </colgroup>
+		    </colgroup>-->
 		</table>
 		<script type="text/html" id="barDemo">
 			<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
@@ -56,9 +56,10 @@
 			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 		</script>
 	</div>
+	<input hidden="hidden" id="handle_status" type="text"/>
 	<div id="page"></div>
 
 	<script type="text/javascript" src="../../layui/layui.js"></script>
-	<script type="text/javascript" src="newsList1.js"></script>
+	<script type="text/javascript" src="userList.js"></script>
 </body>
 </html>

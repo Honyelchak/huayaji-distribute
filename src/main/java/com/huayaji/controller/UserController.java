@@ -39,4 +39,16 @@ public class UserController {
         return new ModelAndView(new MappingJackson2JsonView(), map);
     }
 
+    @RequestMapping(value = "/update", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public ModelAndView update(User user){
+        Map map = new HashMap();
+        userService.update(user);
+        System.out.println("修改成功！！！！--update");
+        map.put("res", "ok");
+        map.put("code", 0);
+        map.put("msg", null);
+        return new ModelAndView(new MappingJackson2JsonView(), map);
+    }
+
 }

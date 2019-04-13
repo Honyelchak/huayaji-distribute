@@ -5,7 +5,7 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         laypage = layui.laypage,
         $ = layui.jquery;
 
-    table.render({
+    var tableInstance = table.render({
         elem: '#lay_table_news'
         , url: '/user/getAll'
         , cols: [[
@@ -16,7 +16,10 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             , {field: 'phone', title: '电话', width: 180}
             , {field: 'sex', title: '性别', width: 100}
             , {field: 'age', title: '年龄', width: 100}
+            , {field: 'service_no', title: '客服微信号', width: 100}
             , {field: 'distribute_balance', title: '余额', width: 100}
+            , {field: 'address.id', title: '余额', width: 100}
+            , {field: 'address.province', title: '余额', width: 100}
             , {field: 'note', title: '备注', width: 100}
             , {field: 'right', title: '操作', width: 177, toolbar: "#barDemo"}
         ]]
@@ -32,16 +35,14 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
     table.on('tool(demo)', function (obj) {
         var data = obj.data;
         if (obj.event === 'detail') {
-            form.val("content1", data);
-            active.update(data);
-            layer.msg('ID：' + data.id + ' 的查看操作');
+            layer.alert('查看行：<br>' + JSON.stringify(data))
         } else if (obj.event === 'del') {
             layer.confirm('真的删除行么', function (index) {
                 obj.del();
                 layer.close(index);
             });
         } else if (obj.event === 'edit') {
-            layer.alert('编辑行：<br>' + JSON.stringify(data))
+            active.update(data);
         }
     });
 
@@ -61,6 +62,10 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             var checkStatus = table.checkStatus('idTest');
             layer.msg(checkStatus.isAll ? '全选': '未全选')
         }
+        ,reload: function () {
+            console.log("success reload");
+            table.reload('testReload');
+        }
         ,update: function(data){
             var that = this;
             that["data"] = data;
@@ -72,18 +77,33 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
                 ,shade: 0.5
                 ,maxmin: true
                 ,data1:data
-                ,content: "page/news/newsUpdate.html"
+                ,content: "page/news/userUpdate.html"
                 ,success: function(layero, index){
                     var body = layer.getChildFrame('body',index);
-                    //console.log(body);
-                    console.log(layero);
-                    console.log(index);
-                    var iframeWin = window[layero.find('iframe')[0]['name']];
-                    //iframeWin.input(that[data]);
-                    var iframe = window['layui-layer-iframe'+index];
-                    //调用子页面的全局函数
-                    console.log(iframe);
-                    iframe.child(that[data]);
+                    var p = that["data"];
+                    for(var key in p){
+                        body.contents().find("#" + key).val(p[key]);
+                    }
+                }
+                ,end: function () {
+                    var handle_status = $("#handle_status").val();
+                    console.log($("#handle_status").val());
+                    console.log("hello!");
+                    if ( handle_status == 'ok' ) {
+                        layer.msg('添加成功！',{
+                            icon: 1,
+                            time: 1000
+                        });
+                        $("#handle_status").val('');
+                    } else {
+                        if(handle_status.length > 0){　　//防止关闭窗口报错
+                            layer.msg(handle_status,{
+                                icon: 2,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            });
+                            $("#handle_status").val('');
+                        }
+                    }
                 }
             });
         }

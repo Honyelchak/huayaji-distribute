@@ -17,9 +17,11 @@ public class User implements Serializable {
     private int age;
     private long service_no;
     private String note;
+    @Column(name="distribute_balance")
     private int distribute_balance;
+
     @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
-    @JoinColumn(name="address_id",referencedColumnName="id",nullable=false)
+    @JoinColumn(name="address_id", referencedColumnName="id", nullable=true)
     private Address address;
 
     public Long getId() {
