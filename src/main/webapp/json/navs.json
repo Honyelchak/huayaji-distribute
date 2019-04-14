@@ -19,6 +19,11 @@
 	"href" : "page/systemParameter/systemParameter.html",
 	"spread" : false
 },{
+	"title" : "订单页面",
+	"icon" : "&#xe632;",
+	"href" : "page/order/orderList.html",
+	"spread" : false
+},{
 	"title" : "其他页面",
 	"icon" : "&#xe630;",
 	"href" : "",
