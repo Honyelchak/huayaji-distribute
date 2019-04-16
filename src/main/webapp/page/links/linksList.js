@@ -3,7 +3,7 @@ layui.config({
 }).use(['form','layer','jquery','laypage'],function(){
 	var form = layui.form,
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
-		laypage = layui.laypage,
+        laypage = layui.laypage,
 		$ = layui.jquery;
 
 	//加载页面数据
@@ -210,7 +210,7 @@ layui.config({
 		if(that){
 			linksData = that;
 		}
-		laypage({
+        /*laypage({
 			cont : "page",
 			pages : Math.ceil(linksData.length/nums),
 			jump : function(obj){
@@ -218,6 +218,6 @@ layui.config({
 				$('.links_list thead input[type="checkbox"]').prop("checked",false);
 		    	form.render();
 			}
-		})
+		})*/
 	}
 })

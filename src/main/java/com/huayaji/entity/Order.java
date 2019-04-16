@@ -1,22 +1,30 @@
 package com.huayaji.entity;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="order")
+@Table(name="order_data")
 public class Order implements Serializable {
 
     @Id
     private Long id;
 
-    @ManyToOne()
-    @JoinColumn(name="user_id")
+    @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
+    @JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
+//    @NotFound(action=NotFoundAction.IGNORE)
     private User user;
-
+    @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
+    @JoinColumn(name="address_id", referencedColumnName="id", nullable=true)
+    @NotFound(action=NotFoundAction.IGNORE)
     private Address address;
-
+    @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
+    @JoinColumn(name="product_id", referencedColumnName="id", nullable=true)
+//    @NotFound(action=NotFoundAction.IGNORE)
     private Product product;
     @Column(name="total_money")
     private double totalMoney;

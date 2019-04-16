@@ -37,9 +37,28 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         if (obj.event === 'detail') {
             layer.alert('查看行：<br>' + JSON.stringify(data))
         } else if (obj.event === 'del') {
-            layer.confirm('真的删除行么', function (index) {
+            layer.confirm('真的删除行么',  {btn: ['确定', '取消'], title: "提示"},function (index) {
+                active.delete(data["id"]);
                 obj.del();
                 layer.close(index);
+            });
+            layer.confirm('真的删除行么', {btn: ['确定', '取消'], title: "提示"}, function () {
+                var url = "/user/delete?id=" + data.id;
+                $.ajax({
+                    type: "get",
+                    url: url,
+                    data: null,
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        if (data.code == '0') {
+                            layer.msg('操作成功', {icon: 1});
+                            /*window.setTimeout("javascript:location.href='/new'", 2000);*/
+                        } else {
+                            layer.msg(data.msg, {icon: 2});
+                        }
+                    }
+                });
             });
         } else if (obj.event === 'edit') {
             active.update(data);
@@ -106,6 +125,9 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
                     }
                 }
             });
+        },
+        delete: function(id){
+
         }
     };
 
@@ -113,4 +135,26 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         var type = $(this).data('type');
         active[type] ? active[type].call(this) : '';
     });
+
+    //添加会员
+    $(".newsAdd_btn").click(function(){
+        var index = layui.layer.open({
+            title : "添加会员",
+            type : 2,
+            content : "userAdd.html",
+            success : function(layero, index){
+                setTimeout(function(){
+                    layui.layer.tips('点击此处返回会员列表', '.layui-layer-setwin .layui-layer-close', {
+                        tips: 3
+                    });
+                },500)
+            }
+        })
+        //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+        $(window).resize(function(){
+            layui.layer.full(index);
+        })
+        layui.layer.full(index);
+    })
+
 });

@@ -4,12 +4,22 @@
 	"href" : "page/main.html",
 	"spread" : false
 },{
-	"title" : "用户列表",
+	"title" : "订单管理",
+	"icon" : "&#xe632;",
+	"href" : "page/order/orderList.html",
+	"spread" : false
+},{
+	"title" : "配送管理",
+	"icon" : "&#xe632;",
+	"href" : "page/order/orderList.html",
+	"spread" : false
+},{
+	"title" : "用户管理",
 	"icon" : "icon-text",
 	"href" : "page/news/userList.html",
 	"spread" : false
 },{
-	"title" : "友情链接",
+	"title" : "数据管理",
 	"icon" : "&#xe64c;",
 	"href" : "page/links/linksList.html",
 	"spread" : false
@@ -17,11 +27,6 @@
 	"title" : "系统基本参数",
 	"icon" : "&#xe631;",
 	"href" : "page/systemParameter/systemParameter.html",
-	"spread" : false
-},{
-	"title" : "订单页面",
-	"icon" : "&#xe632;",
-	"href" : "page/order/orderList.html",
 	"spread" : false
 },{
 	"title" : "其他页面",
