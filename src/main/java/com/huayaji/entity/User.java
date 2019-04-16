@@ -1,6 +1,9 @@
 package com.huayaji.entity;
 
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -22,6 +25,7 @@ public class User implements Serializable {
 
     @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
     @JoinColumn(name="address_id", referencedColumnName="id", nullable=true)
+    @NotFound(action=NotFoundAction.IGNORE)
     private Address address;
 
     public Long getId() {

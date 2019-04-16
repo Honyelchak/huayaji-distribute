@@ -43,21 +43,17 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
                 layer.close(index);
             });
             layer.confirm('真的删除行么', {btn: ['确定', '取消'], title: "提示"}, function () {
-                var price = $("#price").val();
-                if (price == null || price == undefined) {
-                    layer.msg('请输入金额', {icon: 2});
-                }
-                var url = "${ctx }/manage/member/Back.do?museId=" + museId + "&price=" + price;
+                var url = "/user/delete?id=" + data.id;
                 $.ajax({
-                    type: "post",
+                    type: "get",
                     url: url,
                     data: null,
                     dataType: "json",
                     async: false,
                     success: function (data) {
-                        if (data.flag == 1) {
+                        if (data.code == '0') {
                             layer.msg('操作成功', {icon: 1});
-                            window.setTimeout("javascript:location.href='${ctx }/manage/member/toPage.do'", 2000);
+                            /*window.setTimeout("javascript:location.href='/new'", 2000);*/
                         } else {
                             layer.msg(data.msg, {icon: 2});
                         }
@@ -139,4 +135,26 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         var type = $(this).data('type');
         active[type] ? active[type].call(this) : '';
     });
+
+    //添加会员
+    $(".newsAdd_btn").click(function(){
+        var index = layui.layer.open({
+            title : "添加会员",
+            type : 2,
+            content : "userAdd.html",
+            success : function(layero, index){
+                setTimeout(function(){
+                    layui.layer.tips('点击此处返回会员列表', '.layui-layer-setwin .layui-layer-close', {
+                        tips: 3
+                    });
+                },500)
+            }
+        })
+        //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+        $(window).resize(function(){
+            layui.layer.full(index);
+        })
+        layui.layer.full(index);
+    })
+
 });

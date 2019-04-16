@@ -51,4 +51,15 @@ public class UserController {
         return new ModelAndView(new MappingJackson2JsonView(), map);
     }
 
+    @RequestMapping(value = "/delete", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public ModelAndView delete(User user){
+        Map map = new HashMap();
+        userService.delete(user.getId());
+        System.out.println("删除成功！！！！--delete");
+        map.put("res", "ok");
+        map.put("code", 0);
+        map.put("msg", null);
+        return new ModelAndView(new MappingJackson2JsonView(), map);
+    }
 }

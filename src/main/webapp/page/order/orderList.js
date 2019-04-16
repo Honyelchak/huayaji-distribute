@@ -4,6 +4,26 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         layer = parent.layer === undefined ? layui.layer : parent.layer,
         laypage = layui.laypage,
         $ = layui.jquery;
+//添加会员
+    $(".newsAdd_btn").click(function(){
+        var index = layui.layer.open({
+            title : "添加会员",
+            type : 2,
+            content : "orderAdd.html",
+            success : function(layero, index){
+                setTimeout(function(){
+                    layui.layer.tips('点击此处返回会员列表', '.layui-layer-setwin .layui-layer-close', {
+                        tips: 3
+                    });
+                },500)
+            }
+        })
+        //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+        $(window).resize(function(){
+            layui.layer.full(index);
+        })
+        layui.layer.full(index);
+    })
 
     var tableInstance = table.render({
         elem: '#lay_table_news'
@@ -11,13 +31,13 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         , cols: [[
             {checkbox: true, fixed: true}
             , {field: 'id', title: 'ID', width: 80, sort: true, fixed: true}
-            , {field: 'user.name', title: '昵称', width: 80, sort: true}
-            , {field: 'product.name', title: '产品', width: 80, sort: true, edit: true}
+            , {field: 'user.name', title: '昵称', width: 80, sort: true, templet: '<div>{{d.user.name}}</div>'}
+            , {field: 'product.name', title: '产品', width: 80, sort: true, edit: true, templet: '<div>{{d.product.name}}</div>'}
             , {field: 'address.province', title: '省', width: 180}
-            , {field: 'address.province', title: '市', width: 180}
-            , {field: 'address.province', title: '县（区）', width: 180}
+            , {field: 'address.city', title: '市', width: 180}
+            , {field: 'address.county', title: '县（区）', width: 180}
             , {field: 'totalMoney', title: '总金额', width: 100}
-            , {field: 'orderTime', title: '下单时间', width: 100}
+            , {field: 'orderTime', title: '下单时间', width: 100, templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
             , {field: 'distributeTime', title: '首次配送时间', width: 100}
             , {field: 'distributeType', title: '配送类型', width: 100}
             , {field: 'count', title: '数量', width: 100}
