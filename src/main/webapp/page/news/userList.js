@@ -37,9 +37,32 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         if (obj.event === 'detail') {
             layer.alert('查看行：<br>' + JSON.stringify(data))
         } else if (obj.event === 'del') {
-            layer.confirm('真的删除行么', function (index) {
+            layer.confirm('真的删除行么',  {btn: ['确定', '取消'], title: "提示"},function (index) {
+                active.delete(data["id"]);
                 obj.del();
                 layer.close(index);
+            });
+            layer.confirm('真的删除行么', {btn: ['确定', '取消'], title: "提示"}, function () {
+                var price = $("#price").val();
+                if (price == null || price == undefined) {
+                    layer.msg('请输入金额', {icon: 2});
+                }
+                var url = "${ctx }/manage/member/Back.do?museId=" + museId + "&price=" + price;
+                $.ajax({
+                    type: "post",
+                    url: url,
+                    data: null,
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        if (data.flag == 1) {
+                            layer.msg('操作成功', {icon: 1});
+                            window.setTimeout("javascript:location.href='${ctx }/manage/member/toPage.do'", 2000);
+                        } else {
+                            layer.msg(data.msg, {icon: 2});
+                        }
+                    }
+                });
             });
         } else if (obj.event === 'edit') {
             active.update(data);
@@ -106,6 +129,9 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
                     }
                 }
             });
+        },
+        delete: function(id){
+
         }
     };
 
