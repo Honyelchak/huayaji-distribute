@@ -33,14 +33,15 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             , {field: 'id', title: 'ID', width: 80, sort: true, fixed: true}
             , {field: 'user.name', title: '昵称', width: 80, sort: true, templet: '<div>{{d.user.name}}</div>'}
             , {field: 'product.name', title: '产品', width: 80, sort: true, edit: true, templet: '<div>{{d.product.name}}</div>'}
-            , {field: 'address.province', title: '省', width: 180}
-            , {field: 'address.city', title: '市', width: 180}
-            , {field: 'address.county', title: '县（区）', width: 180}
+            , {field: 'address.province', title: '省', width: 180, templet: '<div>{{d.address.province}}</div>'}
+            , {field: 'address.city', title: '市', width: 180, templet: '<div>{{d.address.city}}</div>'}
+            , {field: 'address.county', title: '县（区）', width: 180, templet: '<div>{{d.address.county}}</div>'}
             , {field: 'totalMoney', title: '总金额', width: 100}
             , {field: 'orderTime', title: '下单时间', width: 100, templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
             , {field: 'distributeTime', title: '首次配送时间', width: 100}
             , {field: 'distributeType', title: '配送类型', width: 100}
             , {field: 'count', title: '数量', width: 100}
+            , {field: 'right', title: '操作', width: 177, toolbar: "#barDemo"}
         ]]
         , id: 'testReload'
         , page: true
@@ -96,7 +97,7 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
                 ,shade: 0.5
                 ,maxmin: true
                 ,data1:data
-                ,content: "page/news/userUpdate.html"
+                ,content: "page/order/orderUpdate.html"
                 ,success: function(layero, index){
                     var body = layer.getChildFrame('body',index);
                     var p = that["data"];
