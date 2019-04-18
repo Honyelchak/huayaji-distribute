@@ -25,6 +25,8 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             , {field: 'phone', title: '电话', width: 120}
             , {field: 'service_no', title: '客服微信号', width: 100}
             , {field: 'distribute_balance', title: '余额', width: 100}
+            , {field: 'address.id', title: '余额', width: 100}
+            , {field: 'address.province', title: '余额', width: 100}
             , {field: 'note', title: '备注', width: 100}
             , {field: 'right', title: '操作', width: 177, toolbar: "#barDemo"}
         ]]

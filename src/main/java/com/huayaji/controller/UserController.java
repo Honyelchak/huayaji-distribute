@@ -62,4 +62,5 @@ public class UserController {
         map.put("msg", null);
         return new ModelAndView(new MappingJackson2JsonView(), map);
     }
+
 }
