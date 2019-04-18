@@ -23,10 +23,19 @@ public class User implements Serializable {
     @Column(name="distribute_balance")
     private int distribute_balance;
 
+
     @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
     @JoinColumn(name="address_id", referencedColumnName="id", nullable=true)
     @NotFound(action=NotFoundAction.IGNORE)
     private Address address;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public Long getId() {
         return id;

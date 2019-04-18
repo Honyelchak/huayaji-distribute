@@ -11,15 +11,20 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         , cols: [[
             {checkbox: true, fixed: true}
             , {field: 'id', title: 'ID', width: 80, sort: true, fixed: true}
-            , {field: 'name', title: '昵称', width: 80, sort: true}
-            , {field: 'real_name', title: '真实姓名', width: 80, sort: true, edit: true}
-            , {field: 'phone', title: '电话', width: 180}
-            , {field: 'sex', title: '性别', width: 100}
-            , {field: 'age', title: '年龄', width: 100}
+            , {field: 'name', title: '昵称', width: 100, sort: true}
+            , {field: 'real_name', title: '真实姓名', width: 100, sort: true, edit: true}
+            , {field: 'address.province', title: '省', width: 80, templet:'<div>{{d.address.province}}</div>'}
+            , {field: 'address.city', title: '市', width: 80, templet:'<div>{{d.address.city}}</div>'}
+            , {field: 'address.county', title: '县', width: 80, templet:'<div>{{d.address.county}}</div>'}
+            , {field: 'address.address', title: '详细地址', width: 100, templet:'<div>{{d.address.address}}</div>'}
+            , {field: 'address.apartment', title: '小区名', width: 100, templet:'<div>{{d.address.apartment}}</div>'}
+            , {field: 'address.building_no', title: '单元', width: 100, templet:'<div>{{d.address.building_no}}</div>'}
+            , {field: 'address.house_no', title: '房间号', width: 100, templet:'<div>{{d.address.house_no}}</div>'}
+            , {field: 'sex', title: '性别', width: 70}
+            , {field: 'age', title: '年龄', width: 80}
+            , {field: 'phone', title: '电话', width: 120}
             , {field: 'service_no', title: '客服微信号', width: 100}
             , {field: 'distribute_balance', title: '余额', width: 100}
-            , {field: 'address.id', title: '余额', width: 100}
-            , {field: 'address.province', title: '余额', width: 100}
             , {field: 'note', title: '备注', width: 100}
             , {field: 'right', title: '操作', width: 177, toolbar: "#barDemo"}
         ]]
