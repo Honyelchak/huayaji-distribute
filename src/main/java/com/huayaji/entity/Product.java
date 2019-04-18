@@ -49,6 +49,13 @@ public class Product implements Serializable {
         this.price = price;
     }
 
+    public String getDistributeType() {
+        return distributeType;
+    }
+
+    public void setDistributeType(String distributeType) {
+        this.distributeType = distributeType;
+    }
 
     public Product() {
     }

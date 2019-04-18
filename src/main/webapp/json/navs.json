@@ -14,6 +14,11 @@
 	"href" : "page/order/orderList.html",
 	"spread" : false
 },{
+  "title" : "产品管理",
+  "icon" : "&#xe632;",
+  "href" : "page/product/productList.html",
+  "spread" : false
+},{
 	"title" : "用户管理",
 	"icon" : "icon-text",
 	"href" : "page/user/userList.html",

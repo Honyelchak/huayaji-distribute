@@ -7,34 +7,19 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
 
     var tableInstance = table.render({
         elem: '#lay_table_news'
-        , url: '/user/getAll'
+        , url: '/product/getAll'
         , cols: [[
             {checkbox: true, fixed: true}
-            , {field: 'id', title: 'ID', width: 80, sort: true, fixed: true}
-            , {field: 'name', title: '昵称', width: 100, sort: true}
-            , {field: 'real_name', title: '真实姓名', width: 100, sort: true, edit: true}
-            , {field: 'address.id', title: '地址编号', style:"display:none;", width: 100, templet:'<div>{{d.address.id}}</div>'}
-            , {field: 'address.province', title: '省', width: 80, templet:'<div>{{d.address.province}}</div>'}
-            , {field: 'address.city', title: '市', width: 80, templet:'<div>{{d.address.city}}</div>'}
-            , {field: 'address.county', title: '县', width: 80, templet:'<div>{{d.address.county}}</div>'}
-            , {field: 'address.detailAddress', title: '详细地址', width: 100, templet:'<div>{{d.address.detailAddress}}</div>'}
-            , {field: 'address.apartment', title: '小区名', width: 100, templet:'<div>{{d.address.apartment}}</div>'}
-            , {field: 'address.buildingNo', title: '单元', width: 100, templet:'<div>{{d.address.buildingNo}}</div>'}
-            , {field: 'address.houseNo', title: '房间号', width: 100, templet:'<div>{{d.address.houseNo}}</div>'}
-            , {field: 'sex', title: '性别', width: 70}
-            , {field: 'age', title: '年龄', width: 80}
-            , {field: 'phone', title: '电话', width: 120}
-            , {field: 'service_no', title: '客服微信号', width: 100}
-            , {field: 'distribute_balance', title: '余额', width: 100}
-            , {field: 'note', title: '备注', width: 100}
+            , {field: 'id', title: '产品编号', width: 120, sort: true, fixed: true}
+            , {field: 'type', title: '产品类型', width: 120, sort: true, edit: true}
+            , {field: 'name', title: '产品名称', width: 120, sort: true}
+            , {field: 'price', title: '产品单价(元)', width: 160}
+            , {field: 'distributeType', title: '配送类型', width: 160}
             , {field: 'right', title: '操作', width: 177, toolbar: "#barDemo"}
         ]]
         , id: 'testReload'
         , page: true
         , height: 600
-        , done: function(){
-            $("[data-field='address.id']").hide();
-        }
     });
 
     table.on('checkbox(demo)', function (obj) {
@@ -52,7 +37,7 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
                 layer.close(index);
             });
             layer.confirm('真的删除行么', {btn: ['确定', '取消'], title: "提示"}, function () {
-                var url = "/user/delete?id=" + data.id;
+                var url = "/product/delete?id=" + data.id;
                 $.ajax({
                     type: "get",
                     url: url,
@@ -91,7 +76,7 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             var checkStatus = table.checkStatus('idTest');
             layer.msg(checkStatus.isAll ? '全选': '未全选')
         }
-        ,reload: function () {
+        ,reload: function(){
             console.log("success reload");
             table.reload('testReload');
         }
@@ -101,32 +86,24 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             //that.data = data;
             layer.open({
                 type: 2 //此处以iframe举例
-                ,title: '修改用户信息'
+                ,title: '修改产品信息'
                 ,area: ['600px', '500px']
                 ,shade: 0.5
                 ,maxmin: true
                 ,data1:data
-                ,content: "page/user/userUpdate.html"
+                ,content: "page/product/productUpdate.html"
                 ,success: function(layero, index){
                     var body = layer.getChildFrame('body',index);
                     var p = that["data"];
                     console.log(p);
                     for(var key in p){
-                        if (key == 'address') {
-                            var address = p[key];
-                            for(var key1 in address) {
-                                body.contents().find("#" + key + "-" + key1).val(address[key1]);
-                            }
-                        } else {
-                            body.contents().find("#" + key).val(p[key]);
-                        }
+                        body.contents().find("#" + key).val(p[key]);
                     }
                 }
                 ,end: function () {
                     var handle_status = $("#handle_status").val();
                     console.log($("#handle_status").val());
                     active.reload();
-                    console.log("hello!");
                     if ( handle_status == 'ok' ) {
                         layer.msg('添加成功！',{
                             icon: 1,
@@ -158,9 +135,9 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
     //添加会员
     $(".newsAdd_btn").click(function(){
         var index = layui.layer.open({
-            title : "添加会员",
+            title : "添加产品",
             type : 2,
-            content : "userAdd.html",
+            content : "productAdd.html",
             success : function(layero, index){
                 setTimeout(function(){
                     layui.layer.tips('点击此处返回会员列表', '.layui-layer-setwin .layui-layer-close', {
