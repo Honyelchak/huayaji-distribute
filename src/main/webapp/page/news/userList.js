@@ -13,9 +13,9 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             , {field: 'id', title: 'ID', width: 80, sort: true, fixed: true}
             , {field: 'name', title: '昵称', width: 80, sort: true}
             , {field: 'real_name', title: '真实姓名', width: 80, sort: true, edit: true}
-            , {field: 'phone', title: '电话', width: 180}
-            , {field: 'sex', title: '性别', width: 100}
-            , {field: 'age', title: '年龄', width: 100}
+            , {field: 'phone', title: '电话', width: 100}
+            , {field: 'sex', title: '性别', width: 70}
+            , {field: 'age', title: '年龄', width: 70}
             , {field: 'service_no', title: '客服微信号', width: 100}
             , {field: 'distribute_balance', title: '余额', width: 100}
             , {field: 'address.id', title: '余额', width: 100}
