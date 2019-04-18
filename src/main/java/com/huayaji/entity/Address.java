@@ -17,11 +17,13 @@ public class Address implements Serializable {
     private String city;
     private String county;
 
-    @Column(name="address")
+    @Column(name="detail_address")
     private String detailAddress;
     private String apartment;
-    private int building_no;
-    private int house_no;
+    @Column(name="building_no")
+    private int buildingNo;
+    @Column(name="house_no")
+    private int houseNo;
 
     public Long getId() {
         return id;
@@ -79,23 +81,23 @@ public class Address implements Serializable {
         this.apartment = apartment;
     }
 
-    public int getBuilding_no() {
-        return building_no;
+    public int getBuildingNo() {
+        return buildingNo;
     }
 
-    public void setBuilding_no(int building_no) {
-        this.building_no = building_no;
+    public void setBuildingNo(int buildingNo) {
+        this.buildingNo = buildingNo;
     }
 
-    public int getHouse_no() {
-        return house_no;
+    public int getHouseNo() {
+        return houseNo;
     }
 
-    public void setHouse_no(int house_no) {
-        this.house_no = house_no;
+    public void setHouseNo(int houseNo) {
+        this.houseNo = houseNo;
     }
 
-    public Address(Long id, Long userId, String province, String city, String county, String detailAddress, String apartment, int building_no, int house_no) {
+    public Address(Long id, Long userId, String province, String city, String county, String detailAddress, String apartment, int buildingNo, int houseNo) {
         this.id = id;
         this.userId = userId;
         this.province = province;
@@ -103,11 +105,8 @@ public class Address implements Serializable {
         this.county = county;
         this.detailAddress = detailAddress;
         this.apartment = apartment;
-        this.building_no = building_no;
-        this.house_no = house_no;
-    }
-
-    public Address() {
+        this.buildingNo = buildingNo;
+        this.houseNo = houseNo;
     }
 
     @Override
@@ -120,8 +119,13 @@ public class Address implements Serializable {
                 ", county='" + county + '\'' +
                 ", detailAddress='" + detailAddress + '\'' +
                 ", apartment='" + apartment + '\'' +
-                ", building_no=" + building_no +
-                ", house_no=" + house_no +
+                ", buildingNo=" + buildingNo +
+                ", houseNo=" + houseNo +
                 '}';
     }
+
+    public Address() {
+    }
+
+
 }

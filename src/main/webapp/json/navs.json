@@ -16,7 +16,7 @@
 },{
 	"title" : "用户管理",
 	"icon" : "icon-text",
-	"href" : "page/news/userList.html",
+	"href" : "page/user/userList.html",
 	"spread" : false
 },{
 	"title" : "数据管理",
