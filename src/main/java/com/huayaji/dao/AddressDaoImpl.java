@@ -1,11 +1,20 @@
 package com.huayaji.dao;
 
 import com.huayaji.entity.Address;
+import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resource;
 import java.util.List;
 
+@Repository
 public class AddressDaoImpl extends HibernateDaoSupport implements AddressDao{
+
+    @Resource
+    public void setMySessionFactory(SessionFactory sessionFactory){
+        super.setSessionFactory(sessionFactory);
+    }
 
     @Override
     public void save(Address address) {

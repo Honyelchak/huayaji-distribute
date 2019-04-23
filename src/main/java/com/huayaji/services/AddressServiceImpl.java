@@ -2,10 +2,14 @@ package com.huayaji.services;
 
 import com.huayaji.dao.AddressDao;
 import com.huayaji.entity.Address;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 import java.util.List;
 
+@Service
+@Transactional
 public class AddressServiceImpl implements AddressService{
     @Resource
     AddressDao addressDao;
