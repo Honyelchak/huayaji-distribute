@@ -38,16 +38,39 @@ public class OrderController {
 
         return new ModelAndView(new MappingJackson2JsonView(), map);
     }
-
     @RequestMapping(value = "/update", produces = "application/json;charset=utf-8")
     @ResponseBody
     public ModelAndView update(Order order){
         Map map = new HashMap();
         orderService.update(order);
-        System.out.println("修改成功！！！！--update");
+        logger.info("更新成功！");
         map.put("res", "ok");
         map.put("code", 0);
         map.put("msg", null);
+        return new ModelAndView(new MappingJackson2JsonView(), map);
+    }
+
+    @RequestMapping(value = "/delete", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public ModelAndView delete(Order order){
+        Map map = new HashMap();
+        orderService.delete(order.getId());
+        logger.info("删除成功！");
+        map.put("res", "ok");
+        map.put("code", 0);
+        map.put("msg", "删除成功！");
+        return new ModelAndView(new MappingJackson2JsonView(), map);
+    }
+
+    @RequestMapping(value = "/add", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public ModelAndView save(Order order){
+        Map map = new HashMap();
+        orderService.save(order);
+        logger.info("添加成功！");
+        map.put("res", "ok");
+        map.put("code", 0);
+        map.put("msg", "添加成功");
         return new ModelAndView(new MappingJackson2JsonView(), map);
     }
 

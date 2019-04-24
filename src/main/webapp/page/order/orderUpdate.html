@@ -13,7 +13,7 @@
 </head>
 <body>
 <form class="layui-form" id="update_form"   style="margin-top: 20px;">
-    <div class="layui-form-item">
+    <div class="layui-form-item" style="display:none;">
         <label class="layui-form-label">id</label>
         <div class="layui-input-inline">
             <input type="text" class="layui-input newsName" id="id" hidden="hidden" lay-verify="required" name="id">
@@ -22,34 +22,79 @@
     <div class="layui-form-item">
         <label class="layui-form-label">昵称</label>
         <div class="layui-input-inline">
-            <input type="text" id="name" class="layui-input"  name="name">
+            <input type="text" disabled="disabled" id="name" class="layui-input"  name="name">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">真实姓名</label>
+        <label class="layui-form-label">产品</label>
         <div class="layui-input-inline">
-            <input type="text"  id="real_name" name="real_name" lay-verify="title" autocomplete="off" class="layui-input">
+            <input type="text"  id="productName" name="product.name" lay-verify="title" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">电话</label>
+        <label class="layui-form-label">省</label>
         <div class="layui-input-inline">
-            <input type="tel"  id="phone" name="phone" lay-verify="title" autocomplete="off" class="layui-input">
+            <input type="text"  id="addressProvince" name="address.province" lay-verify="title" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">性别</label>
-        <div class="layui-input-block">
-            <input type="radio" name="sex" value="男" title="男" checked="">
-            <input type="radio" name="sex" value="女" title="女">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">年龄</label>
+        <label class="layui-form-label">市</label>
         <div class="layui-input-inline">
-            <input type="text" id="age" name="age" lay-verify="title" autocomplete="off" class="layui-input">
+            <input type="text"  id="addressCity" name="address.city" lay-verify="title" autocomplete="off" class="layui-input">
         </div>
     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">县（区）</label>
+        <div class="layui-input-inline">
+            <input type="text"  id="addressCounty" name="address.county" lay-verify="title" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">详细地址</label>
+        <div class="layui-input-inline">
+            <input type="text"  id="detailAddress" name="address.detailAddress" lay-verify="title" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">总金额</label>
+        <div class="layui-input-inline">
+            <input type="text"  id="totalMoney" name="totalMoney" lay-verify="title" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">下单时间</label>
+        <div class="layui-input-inline">
+            <input type="type="date"  id="orderTime" name="orderTime" lay-verify="title" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">首次配送时间</label>
+        <div class="layui-input-inline">
+            <input type="type="date"  id="distributeTime" name="distributeTime" lay-verify="title" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">配送类型</label>
+        <div class="layui-input-inline">
+            <input type="text"  id="distributeType" name="distributeType" lay-verify="title" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">数量</label>
+        <div class="layui-input-inline">
+            <input type="text"  id="count" name="count" lay-verify="title" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">性别</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input type="radio" name="sex" value="男" title="男" checked="">-->
+            <!--<input type="radio" name="sex" value="女" title="女">-->
+        <!--</div>-->
+    <!--</div>-->
+
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button type="button" class="layui-btn" id="submit-btn" >立即提交</button>

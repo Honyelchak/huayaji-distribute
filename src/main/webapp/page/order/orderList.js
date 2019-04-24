@@ -30,15 +30,16 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         , url: '/order/getAll'
         , cols: [[
             {checkbox: true, fixed: true}
-            , {field: 'id', title: 'ID', width: 80, sort: true, fixed: true}
+            , {field: 'id', title: 'ID', width: 80, sort: true, fixed: true ,edit: false,}
             , {field: 'user.name', title: '昵称', width: 80, sort: true, templet: '<div>{{d.user.name}}</div>'}
-            , {field: 'product.name', title: '产品', width: 80, sort: true, edit: true, templet: '<div>{{d.product.name}}</div>'}
-            , {field: 'address.province', title: '省', width: 180, templet: '<div>{{d.address.province}}</div>'}
-            , {field: 'address.city', title: '市', width: 180, templet: '<div>{{d.address.city}}</div>'}
+            , {field: 'product.name', title: '产品', width: 80, sort: true, edit: false, templet: '<div>{{d.product.name}}</div>'}
+            , {field: 'address.province', title: '省', width: 80, templet: '<div>{{d.address.province}}</div>'}
+            , {field: 'address.city', title: '市', width: 80, templet: '<div>{{d.address.city}}</div>'}
             , {field: 'address.county', title: '县（区）', width: 180, templet: '<div>{{d.address.county}}</div>'}
+            , {field: 'address.detailAddress', title: '详细地址', width: 180, templet: '<div>{{d.address.detailAddress}}</div>'}
             , {field: 'totalMoney', title: '总金额', width: 100}
-            , {field: 'orderTime', title: '下单时间', width: 100, templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
-            , {field: 'distributeTime', title: '首次配送时间', width: 100}
+            , {field: 'orderTime', title: '下单时间', width: 200, templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
+            , {field: 'distributeTime', title: '首次配送时间', width: 200,templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
             , {field: 'distributeType', title: '配送类型', width: 100}
             , {field: 'count', title: '数量', width: 100}
             , {field: 'right', title: '操作', width: 177, toolbar: "#barDemo"}
@@ -57,14 +58,35 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         if (obj.event === 'detail') {
             layer.alert('查看行：<br>' + JSON.stringify(data))
         } else if (obj.event === 'del') {
-            layer.confirm('真的删除行么', function (index) {
+            layer.confirm('真的删除行么',  {btn: ['确定', '取消'], title: "提示"},function (index) {
+                active.delete(data["id"]);
                 obj.del();
                 layer.close(index);
+            });
+            layer.confirm('真的删除行么', {btn: ['确定', '取消'], title: "提示"}, function () {
+                var url = "/order/delete?id=" + data.id;
+                $.ajax({
+                    type: "get",
+                    url: url,
+                    data: null,
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        if (data.code == '0') {
+                            layer.msg('操作成功', {icon: 1});
+                            active.reload();
+                            /*window.setTimeout("javascript:location.href='/new'", 2000);*/
+                        } else {
+                            layer.msg(data.msg, {icon: 2});
+                        }
+                    }
+                });
             });
         } else if (obj.event === 'edit') {
             active.update(data);
         }
     });
+
 
 
     var $ = layui.$, active = {
@@ -102,12 +124,33 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
                     var body = layer.getChildFrame('body',index);
                     var p = that["data"];
                     for(var key in p){
-                        body.contents().find("#" + key).val(p[key]);
+                        if(key=="user")
+                        {
+                            body.contents().find("#name").val(p[key].name);
+                        }
+                        if(key=="product")
+                        {
+                            body.contents().find("#productName").val(p[key].name);
+                        }
+                        if(key=="address")
+                        {
+                            console.log(p[key].province+p[key].city+p[key].county);
+                            body.contents().find("#addressProvince").val(p[key].province);
+                            body.contents().find("#addressCity").val(p[key].city);
+                            body.contents().find("#addressCounty").val(p[key].county);
+                            body.contents().find("#detailAddress").val(p[key].detailAddress);
+
+                        }
+                        else{
+                            body.contents().find("#"+key).val(p[key]);
+                        }
+
                     }
                 }
                 ,end: function () {
                     var handle_status = $("#handle_status").val();
                     console.log($("#handle_status").val());
+                    active.reload();
                     console.log("hello!");
                     if ( handle_status == 'ok' ) {
                         layer.msg('添加成功！',{
