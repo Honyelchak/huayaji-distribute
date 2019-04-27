@@ -11,9 +11,15 @@
 },{
 	"title" : "配送管理",
 	"icon" : "&#xe632;",
-	"href" : "page/order/orderList.html",
+	"href" : "page/distribute/distributeList.html",
 	"spread" : false
 },{
+	"title" : "配送单管理",
+	"icon" : "&#xe632;",
+	"href" : "page/single/singleList.html",
+	"spread" : false
+}
+,{
   "title" : "产品管理",
   "icon" : "&#xe632;",
   "href" : "page/product/productList.html",

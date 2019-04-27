@@ -1,9 +1,7 @@
 package com.huayaji.controller;
 
-import com.huayaji.entity.Distribute;
-import com.huayaji.entity.User;
-import com.huayaji.services.DistributeService;
-import com.huayaji.services.UserService;
+import com.huayaji.entity.Sing;
+import com.huayaji.services.SingService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,30 +15,30 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/Distribute")
-public class DistributeController {
-    private static final Logger logger = Logger.getLogger(DistributeController.class);
+@RequestMapping("/single")
+public class SingleController {
+    private static final Logger logger = Logger.getLogger(SingleController.class);
 
     @Resource
-    private DistributeService distributeService;
+    private SingService singService;
     @RequestMapping("/getAll")
     @ResponseBody
     public ModelAndView getall(){
         Map map = new HashMap();
-        List<Distribute> orderAll = distributeService.findAll();
+        List<Sing> singAll = singService.findAll();
         System.out.println();
-        map.put("data",orderAll);
+        map.put("data",singAll);
         map.put("code", 0);
-        map.put("count", orderAll.size());
+        map.put("count", singAll.size());
         map.put("msg", null);
 
         return new ModelAndView(new MappingJackson2JsonView(), map);
     }
     @RequestMapping(value = "/update", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ModelAndView update(Distribute order){
+    public ModelAndView update(Sing sing){
         Map map = new HashMap();
-        distributeService.update(order);
+        singService.update(sing);
         logger.info("更新成功！");
         map.put("res", "ok");
         map.put("code", 0);
@@ -50,9 +48,9 @@ public class DistributeController {
 
     @RequestMapping(value = "/delete", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ModelAndView delete(Distribute order){
+    public ModelAndView delete(Sing sing){
         Map map = new HashMap();
-        distributeService.delete(order.getId());
+        singService.delete((long) sing.getId());
         logger.info("删除成功！");
         map.put("res", "ok");
         map.put("code", 0);
@@ -62,9 +60,9 @@ public class DistributeController {
 
     @RequestMapping(value = "/add", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ModelAndView save(Distribute order){
+    public ModelAndView save(Sing sing){
         Map map = new HashMap();
-        distributeService.save(order);
+        singService.save(sing);
         logger.info("添加成功！");
         map.put("res", "ok");
         map.put("code", 0);
