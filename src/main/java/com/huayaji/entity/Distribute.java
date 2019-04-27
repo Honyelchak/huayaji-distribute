@@ -21,13 +21,13 @@ public class Distribute implements Serializable {
     @JoinColumn(name="product_id",referencedColumnName="id",nullable=false)
     private Product product;
 
-    @Column(name="distribue_time")
+    @Column(name="distribute_time")
     private Timestamp distributeTime;
     @Column(name="distribute_time_type")
     private int distributeTimeType;
     @Column(name="distribute_count_per")
     private int distributeCountPer;
-    @Column(name="distribute_banlace")
+    @Column(name="distribute_balance")
     private int distributeBalance;
     private String comment;
 
