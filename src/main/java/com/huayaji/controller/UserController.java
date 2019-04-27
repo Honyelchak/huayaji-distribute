@@ -75,5 +75,29 @@ public class UserController {
         map.put("msg", "添加成功");
         return new ModelAndView(new MappingJackson2JsonView(), map);
     }
+    @RequestMapping(value = "/getUserById", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public ModelAndView getUserById(Long phone) {
+
+        Map map = new HashMap();
+        User user = userService.findById(phone);
+        if (user != null) {
+            logger.info("查找成功！");
+            map.put("res", "ok");
+            map.put("code", 0);
+            map.put("data", user);
+            map.put("msg", "用户存在");
+        }
+        else{
+            logger.info("查找失败！");
+            map.put("res", "false");
+            map.put("code", 0);
+            map.put("data", null);
+            map.put("msg", "用户不存在");
+        }
+            return new ModelAndView(new MappingJackson2JsonView(), map);
+
+    }
+
 
 }

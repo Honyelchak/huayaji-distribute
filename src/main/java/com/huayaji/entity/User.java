@@ -15,7 +15,7 @@ public class User implements Serializable {
     private Long id;
     private String name;
     private String real_name;
-    private String phone;
+
     private String sex;
     private int age;
     private long service_no;
@@ -61,13 +61,7 @@ public class User implements Serializable {
         this.real_name = real_name;
     }
 
-    public String getPhone() {
-        return phone;
-    }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     public String getSex() {
         return sex;
@@ -109,11 +103,11 @@ public class User implements Serializable {
         this.distribute_balance = distribute_balance;
     }
 
-    public User(Long id, String name, String real_name, String phone, String sex, int age, long service_no, String note, int distribute_balance) {
+    public User(Long id, String name, String real_name,  String sex, int age, long service_no, String note, int distribute_balance) {
         this.id = id;
         this.name = name;
         this.real_name = real_name;
-        this.phone = phone;
+       ;
         this.sex = sex;
         this.age = age;
         this.service_no = service_no;

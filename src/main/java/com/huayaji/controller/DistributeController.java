@@ -62,9 +62,9 @@ public class DistributeController {
 
     @RequestMapping(value = "/add", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ModelAndView save(Distribute order){
+    public ModelAndView save(Distribute distribute){
         Map map = new HashMap();
-        distributeService.save(order);
+        distributeService.add(distribute);
         logger.info("添加成功！");
         map.put("res", "ok");
         map.put("code", 0);
