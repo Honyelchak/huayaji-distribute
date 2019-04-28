@@ -2,7 +2,10 @@ package com.huayaji.controller;
 
 import com.huayaji.entity.Order;
 
+import com.huayaji.entity.Product;
 import com.huayaji.services.OrderService;
+import com.huayaji.services.ProductService;
+import com.huayaji.services.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +27,10 @@ public class OrderController {
 
     @Resource
     private OrderService orderService;
-
+    @Resource
+    private UserService userService;
+    @Resource
+    private ProductService productService;
     @RequestMapping("/getAll")
     @ResponseBody
     public ModelAndView getall(){
@@ -65,6 +71,8 @@ public class OrderController {
     @RequestMapping(value = "/add", produces = "application/json;charset=utf-8")
     @ResponseBody
     public ModelAndView save(Order order){
+        order.setUser(userService.findById(order.getUser().getId()));
+        order.setProduct(productService.findById(order.getProduct().getId()));
         Map map = new HashMap();
         orderService.save(order);
         logger.info("添加成功！");

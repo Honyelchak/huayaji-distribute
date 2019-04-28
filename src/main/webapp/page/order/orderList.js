@@ -33,10 +33,10 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             , {field: 'id', title: 'ID', width: 80, sort: true, fixed: true ,edit: false,}
             , {field: 'user.name', title: '昵称', width: 80, sort: true, templet: '<div>{{d.user.name}}</div>'}
             , {field: 'product.name', title: '产品', width: 80, sort: true, edit: false, templet: '<div>{{d.product.name}}</div>'}
-            , {field: 'address.province', title: '省', width: 80, templet: '<div>{{d.address.province}}</div>'}
-            , {field: 'address.city', title: '市', width: 80, templet: '<div>{{d.address.city}}</div>'}
-            , {field: 'address.county', title: '县（区）', width: 180, templet: '<div>{{d.address.county}}</div>'}
-            , {field: 'address.detailAddress', title: '详细地址', width: 180, templet: '<div>{{d.address.detailAddress}}</div>'}
+            , {field: 'user.address.province', title: '省', width: 80, templet: '<div>{{d.user.address.province}}</div>'}
+            , {field: 'user.address.city', title: '市', width: 80, templet: '<div>{{d.user.address.city}}</div>'}
+            , {field: 'user.address.county', title: '县（区）', width: 180, templet: '<div>{{d.user.address.county}}</div>' }
+            , {field: 'user.address.detailAddress', title: '详细地址', width: 180, templet: '<div>{{d.user.address.detailAddress}}</div>' }
             , {field: 'totalMoney', title: '总金额', width: 100}
             , {field: 'orderTime', title: '下单时间', width: 200, templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
             , {field: 'distributeTime', title: '首次配送时间', width: 200,templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}

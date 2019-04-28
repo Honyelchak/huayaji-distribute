@@ -12,4 +12,5 @@ public interface DistributeService {
     public void update(Distribute distribute);
     public void delete(Long id);
 
+    void add(Distribute distribute);
 }
