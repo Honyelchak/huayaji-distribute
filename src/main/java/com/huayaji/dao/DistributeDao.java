@@ -16,4 +16,5 @@ public interface DistributeDao {
 
     public void delete(Long id);
 
+    void add(Distribute distribute);
 }

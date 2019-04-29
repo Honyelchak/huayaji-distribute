@@ -38,4 +38,9 @@ public class DistributeServiceImpl implements DistributeService{
     public void delete(Long id) {
     distributeDao.delete(id);
     }
+
+    @Override
+    public void add(Distribute distribute) {
+        distributeDao.add(distribute);
+    }
 }
