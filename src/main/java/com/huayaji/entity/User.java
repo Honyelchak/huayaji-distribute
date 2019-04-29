@@ -12,10 +12,10 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
     private String name;
     private String real_name;
-    private String phone;
     private String sex;
     private int age;
     private long service_no;
@@ -37,14 +37,6 @@ public class User implements Serializable {
         this.address = address;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -61,12 +53,12 @@ public class User implements Serializable {
         this.real_name = real_name;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getId() {
+        return id;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getSex() {
@@ -109,11 +101,10 @@ public class User implements Serializable {
         this.distribute_balance = distribute_balance;
     }
 
-    public User(Long id, String name, String real_name, String phone, String sex, int age, long service_no, String note, int distribute_balance) {
-        this.id = id;
+    public User(String id, String name, String real_name, String sex, int age, long service_no, String note, int distribute_balance) {
         this.name = name;
         this.real_name = real_name;
-        this.phone = phone;
+        this.id = id;
         this.sex = sex;
         this.age = age;
         this.service_no = service_no;

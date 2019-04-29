@@ -10,9 +10,10 @@ import java.util.Set;
 public class Address implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name="user_id")
-    private Long userId;
+    private String userId;
     private String province;
     private String city;
     private String county;
@@ -33,11 +34,11 @@ public class Address implements Serializable {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -97,7 +98,7 @@ public class Address implements Serializable {
         this.houseNo = houseNo;
     }
 
-    public Address(Long id, Long userId, String province, String city, String county, String detailAddress, String apartment, int buildingNo, int houseNo) {
+    public Address(Long id, String userId, String province, String city, String county, String detailAddress, String apartment, int buildingNo, int houseNo) {
         this.id = id;
         this.userId = userId;
         this.province = province;

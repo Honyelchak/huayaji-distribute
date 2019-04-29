@@ -10,7 +10,7 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         , url: '/user/getAll'
         , cols: [[
             {checkbox: true, fixed: true}
-            , {field: 'id', title: 'ID', width: 80, sort: true, fixed: true}
+            , {field: 'id', title: '电话', width: 120, sort: true, fixed: true}
             , {field: 'name', title: '昵称', width: 100, sort: true}
             , {field: 'real_name', title: '真实姓名', width: 100, sort: true, edit: true}
             , {field: 'address.id', title: '地址编号', style:"display:none;", width: 100, templet:'<div>{{d.address.id}}</div>'}
@@ -23,7 +23,6 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             , {field: 'address.houseNo', title: '房间号', width: 100, templet:'<div>{{d.address.houseNo}}</div>'}
             , {field: 'sex', title: '性别', width: 70}
             , {field: 'age', title: '年龄', width: 80}
-            , {field: 'phone', title: '电话', width: 120}
             , {field: 'service_no', title: '客服微信号', width: 100}
             , {field: 'distribute_balance', title: '余额', width: 100}
             , {field: 'note', title: '备注', width: 100}
