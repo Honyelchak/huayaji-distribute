@@ -13,14 +13,21 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             , {field: 'id', title: '电话', width: 120, sort: true, fixed: true}
             , {field: 'name', title: '昵称', width: 100, sort: true}
             , {field: 'real_name', title: '真实姓名', width: 100, sort: true, edit: true}
-            , {field: 'address.id', title: '地址编号', style:"display:none;", width: 100, templet:'<div>{{d.address.id}}</div>'}
-            , {field: 'address.province', title: '省', width: 80, templet:'<div>{{d.address.province}}</div>'}
+            /*, {field: 'address.id', title: '地址编号', style:"display:none;", width: 100, templet:'<div>{{d.address.id}}</div>'}*/
+            , {field: 'province', title: '省', width: 80}
+            , {field: 'city', title: '市', width: 80}
+            , {field: 'county', title: '县', width: 80}
+            , {field: 'detailAddress', title: '详细地址'}
+            , {field: 'apartment', title: '小区名', width: 100}
+            , {field: 'buildingNo', title: '单元', width: 100}
+            , {field: 'houseNo', title: '房间号', width: 100}
+            /*, {field: 'address.province', title: '省', width: 80, templet:'<div>{{d.address.province}}</div>'}
             , {field: 'address.city', title: '市', width: 80, templet:'<div>{{d.address.city}}</div>'}
             , {field: 'address.county', title: '县', width: 80, templet:'<div>{{d.address.county}}</div>'}
             , {field: 'address.detailAddress', title: '详细地址', width: 100, templet:'<div>{{d.address.detailAddress}}</div>'}
             , {field: 'address.apartment', title: '小区名', width: 100, templet:'<div>{{d.address.apartment}}</div>'}
             , {field: 'address.buildingNo', title: '单元', width: 100, templet:'<div>{{d.address.buildingNo}}</div>'}
-            , {field: 'address.houseNo', title: '房间号', width: 100, templet:'<div>{{d.address.houseNo}}</div>'}
+            , {field: 'address.houseNo', title: '房间号', width: 100, templet:'<div>{{d.address.houseNo}}</div>'}*/
             , {field: 'sex', title: '性别', width: 70}
             , {field: 'age', title: '年龄', width: 80}
             , {field: 'service_no', title: '客服微信号', width: 100}
@@ -31,9 +38,9 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         , id: 'testReload'
         , page: true
         , height: 600
-        , done: function(){
+        /*, done: function(){
             $("[data-field='address.id']").hide();
-        }
+        }*/
     });
 
     table.on('checkbox(demo)', function (obj) {
@@ -157,7 +164,7 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
     //添加会员
     $(".newsAdd_btn").click(function(){
         var index = layui.layer.open({
-            title : "添加会员",
+            title : "添加用户",
             type : 2,
             content : "userAdd.html",
             success : function(layero, index){
@@ -166,6 +173,10 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
                         tips: 3
                     });
                 },500)
+            },
+            end: function(){
+                console.log("用户添加完成，表格重新加载！");
+                active.reload();
             }
         })
         //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）

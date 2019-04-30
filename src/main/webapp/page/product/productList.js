@@ -132,7 +132,7 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         active[type] ? active[type].call(this) : '';
     });
 
-    //添加会员
+    //添加产品
     $(".newsAdd_btn").click(function(){
         var index = layui.layer.open({
             title : "添加产品",
@@ -144,6 +144,10 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
                         tips: 3
                     });
                 },500)
+            },
+            end: function(){
+                console.log("商品添加完成，表格重新加载！");
+                active.reload();
             }
         })
         //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）

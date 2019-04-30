@@ -26,7 +26,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao{
     }
 
     @Override
-    public User findById(String phone) {
+    public User findById(Long phone) {
         return this.getHibernateTemplate().get(User.class, phone);
     }
 
@@ -36,7 +36,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao{
     }
 
     @Override
-    public void delete(String phone) {
+    public void delete(Long phone) {
         this.getHibernateTemplate().delete(findById(phone));
     }
 

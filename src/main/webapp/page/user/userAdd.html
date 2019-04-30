@@ -29,7 +29,8 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">手机号码</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input newsName" name="id" lay-verify="required" placeholder="请输入手机号">
+				<input type="text" class="layui-input newsName" id="phone" name="id" lay-verify="required" placeholder="请输入手机号">
+				<!--<input type="hidden" class="layui-input" id="user_id" name="address.userId">-->
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -49,20 +50,20 @@
 			<div class="layui-inline">
 				<label class="layui-form-label">省份：</label>
 				<div class="layui-input-block">
-					<input type="text"  class="layui-input newsAuthor"  id="address-province" name="address.province" >
+					<input type="text"  class="layui-input newsAuthor"  id="province" name="province" >
 					<!--<input type="checkbox" name="show" class="isShow" title="展示">-->
 				</div>
 			</div>
 			<div class="layui-inline">
 				<label class="layui-form-label">市：</label>
 				<div class="layui-input-inline">
-					<input type="text" class="layui-input newsAuthor" name="address.city" id="address-city" lay-verify="required" placeholder="请输入市">
+					<input type="text" class="layui-input newsAuthor" name="city" id="city" lay-verify="required" placeholder="请输入市">
 				</div>
 			</div>
 			<div class="layui-inline">		
 				<label class="layui-form-label">区：</label>
 				<div class="layui-input-inline">
-					<input type="text" class="layui-input newsTime" name="address.county" id="address-county" lay-verify="required" >
+					<input type="text" class="layui-input newsTime" name="county" id="county" lay-verify="required" >
 				</div>
 			</div>
 			<!--onclick="layui.laydate({elem:this})"-->
@@ -70,25 +71,25 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">详细地址</label>
 			<div class="layui-input-block">
-				<input type="text" name="address.detailAddress" id="address-detailAddress" class="layui-input" placeholder="请输入详细地址">
+				<input type="text" name="detailAddress" id="detailAddress" class="layui-input" placeholder="请输入详细地址">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">小区名</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input" id="address-apartment" name="address.apartment" placeholder="请输入详细地址">
+				<input type="text" class="layui-input" id="apartment" name="apartment" placeholder="请输入详细地址">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">楼号</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input" id="address-buildingNo" name="address.buildingNo" placeholder="请输入详细地址">
+				<input type="text" class="layui-input" id="buildingNo" name="buildingNo" placeholder="请输入详细地址">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">房间号</label>
 			<div class="layui-input-block">
-				<input type="text" class="layui-input" id="address-houseNo" name="address.houseNo" placeholder="请输入详细地址">
+				<input type="text" class="layui-input" id="houseNo" name="houseNo" placeholder="请输入详细地址">
 			</div>
 		</div>
 		<div class="layui-form-item">

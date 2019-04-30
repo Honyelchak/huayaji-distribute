@@ -9,7 +9,7 @@ public interface UserDao {
 
     public void save(User user);
     public List<User> findAll();
-    public User findById(String phone);
+    public User findById(Long phone);
     public void update(User user);
-    public void delete(String phone);
+    public void delete(Long phone);
 }
