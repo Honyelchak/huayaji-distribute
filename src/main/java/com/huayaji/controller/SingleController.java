@@ -53,6 +53,7 @@ public class SingleController {
                 s.setDistribute_data(d.getDistributeCountPer());
                 s.setDistribute_operation("1");
                 s.setDistribute_status(0);
+                s.setDistribute_time((java.sql.Date) new Date(d.getDistributeTime().getTime()));
                 s.setReceive_operation("1");
                 singService.save(s);
             }

@@ -29,7 +29,7 @@ public class Distribute implements Serializable {
     private int distributeCountPer;
     @Column(name="distribute_balance")
     private int distributeBalance;
-    private String comment;
+    private String comment1;
 
     public Long getId() {
         return id;
@@ -88,10 +88,10 @@ public class Distribute implements Serializable {
     }
 
     public String getComment() {
-        return comment;
+        return comment1;
     }
 
     public void setComment(String comment) {
-        this.comment = comment;
+        this.comment1 = comment;
     }
 }
