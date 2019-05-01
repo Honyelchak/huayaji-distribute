@@ -12,7 +12,8 @@ layui.config({
     var editIndex = layedit.build('news_content');
     var addNewsArray = [],addNews;
     form.on("submit(addUser)",function(data){
-        console.log(data);
+        /*console.log($("#phone").val());
+        $("#user_id").val($("#phone").val());*/
         //var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
         $.ajax({
             url:'/user/add',
@@ -34,19 +35,14 @@ layui.config({
                 }
                 //top.layer.close(index);
                 layer.closeAll("iframe");
-                //刷新父页面
+
                 parent.location.reload();
             },
             error : function(e) {
                 console.log(e);
             }
         });
-        /*window.sessionStorage.setItem("addNews",JSON.stringify(addNewsArray));
-        //弹出loading
 
-       setTimeout(function(){
-
-       },2000);*/
         return false;
     })
 

@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Long id) {
-        return userDao.findById(id);
+    public User findById(Long phone) {
+        return userDao.findById(phone);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(Long id) {
-        userDao.delete(id);
+    public void delete(Long phone) {
+        userDao.delete(phone);
     }
 }

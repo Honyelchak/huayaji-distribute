@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
 </head>
 <body class="childrenBody">
-	<form class="layui-form">
+	<form class="layui-form" id="add_form">
 		<div class="layui-form-item">
 			<label class="layui-form-label">产品类型：</label>
 			<div class="layui-input-block">
@@ -22,25 +22,25 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">产品名称：</label>
 			<div class="layui-input-block">
-				<input type="text" id="name" name="name" class="layui-input" placeholder="请输入详细地址">
+				<input type="text" id="name" name="name" class="layui-input" placeholder="请输入产品名称">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">产品单价(元)：</label>
 			<div class="layui-input-block">
-				<input type="text" id="price" name="price" class="layui-input" placeholder="请输入详细地址">
+				<input type="text" id="price" name="price" class="layui-input" placeholder="请输入产品单价">
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">配送类型：</label>
 			<div class="layui-input-block">
-				<input type="text" id="distributeType" name="distributeType" class="layui-input" placeholder="请输入详细地址">
+				<input type="text" id="distributeType" name="distributeType" class="layui-input" placeholder="请输入配送类型">
 			</div>
 		</div>
 
 		<div class="layui-form-item">
 			<div class="layui-input-block">
-				<button class="layui-btn" lay-submit="" lay-filter="addNews">立即提交</button>
+				<button class="layui-btn" lay-submit="" lay-filter="addProduct">立即提交</button>
 				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 		    </div>
 		</div>
