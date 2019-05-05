@@ -1,6 +1,7 @@
 package com.huayaji.controller;
 
 import com.huayaji.entity.Product;
+import com.huayaji.entity.User;
 import com.huayaji.services.ProductService;
 
 import org.apache.log4j.Logger;
@@ -60,6 +61,19 @@ public class ProductController {
         map.put("res", "ok");
         map.put("code", 0);
         map.put("msg", null);
+        return new ModelAndView(new MappingJackson2JsonView(), map);
+    }
+
+
+    @RequestMapping(value = "/add", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public ModelAndView save(Product product){
+        Map map = new HashMap();
+        productService.save(product);
+        logger.info("添加成功！");
+        map.put("res", "ok");
+        map.put("code", 0);
+        map.put("msg", "添加成功");
         return new ModelAndView(new MappingJackson2JsonView(), map);
     }
 }

@@ -1,6 +1,5 @@
 package com.huayaji.controller;
 
-import com.huayaji.entity.Address;
 import com.huayaji.entity.User;
 import com.huayaji.services.UserService;
 import org.apache.log4j.Logger;
@@ -11,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.annotation.Resource;
-import javax.persistence.Table;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -1,9 +1,6 @@
 package com.huayaji.entity;
 
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -15,7 +12,6 @@ public class User implements Serializable {
     private Long id;
     private String name;
     private String real_name;
-
     private String sex;
     private int age;
     private long service_no;
@@ -23,27 +19,74 @@ public class User implements Serializable {
     @Column(name="distribute_balance")
     private int distribute_balance;
 
+    private String province;
+    private String city;
+    private String county;
 
-    @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
-    @JoinColumn(name="address_id", referencedColumnName="id", nullable=true)
-    @NotFound(action=NotFoundAction.IGNORE)
-    private Address address;
+    @Column(name="detail_address")
+    private String detailAddress;
+    private String apartment;
+    @Column(name="building_no")
+    private int buildingNo;
+    @Column(name="house_no")
+    private int houseNo;
 
-    public Address getAddress() {
-        return address;
+    public String getProvince() {
+        return province;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setProvince(String province) {
+        this.province = province;
     }
 
-    public Long getId() {
-        return id;
+    public String getCity() {
+        return city;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCity(String city) {
+        this.city = city;
     }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    public String getDetailAddress() {
+        return detailAddress;
+    }
+
+    public void setDetailAddress(String detailAddress) {
+        this.detailAddress = detailAddress;
+    }
+
+    public String getApartment() {
+        return apartment;
+    }
+
+    public void setApartment(String apartment) {
+        this.apartment = apartment;
+    }
+
+    public int getBuildingNo() {
+        return buildingNo;
+    }
+
+    public void setBuildingNo(int buildingNo) {
+        this.buildingNo = buildingNo;
+    }
+
+    public int getHouseNo() {
+        return houseNo;
+    }
+
+    public void setHouseNo(int houseNo) {
+        this.houseNo = houseNo;
+    }
+
 
     public String getName() {
         return name;
@@ -61,7 +104,13 @@ public class User implements Serializable {
         this.real_name = real_name;
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getSex() {
         return sex;
@@ -103,20 +152,25 @@ public class User implements Serializable {
         this.distribute_balance = distribute_balance;
     }
 
-    public User(Long id, String name, String real_name,  String sex, int age, long service_no, String note, int distribute_balance) {
+    public User(Long id, String name, String real_name, String sex, int age, long service_no, String note, int distribute_balance, String province, String city, String county, String detailAddress, String apartment, int buildingNo, int houseNo) {
         this.id = id;
         this.name = name;
         this.real_name = real_name;
-       ;
         this.sex = sex;
         this.age = age;
         this.service_no = service_no;
         this.note = note;
         this.distribute_balance = distribute_balance;
+        this.province = province;
+        this.city = city;
+        this.county = county;
+        this.detailAddress = detailAddress;
+        this.apartment = apartment;
+        this.buildingNo = buildingNo;
+        this.houseNo = houseNo;
     }
 
     public User() {
-
     }
 
     @Override
@@ -124,6 +178,19 @@ public class User implements Serializable {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                "," + address.toString();
+                ", real_name='" + real_name + '\'' +
+                ", sex='" + sex + '\'' +
+                ", age=" + age +
+                ", service_no=" + service_no +
+                ", note='" + note + '\'' +
+                ", distribute_balance=" + distribute_balance +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", county='" + county + '\'' +
+                ", detailAddress='" + detailAddress + '\'' +
+                ", apartment='" + apartment + '\'' +
+                ", buildingNo=" + buildingNo +
+                ", houseNo=" + houseNo +
+                '}';
     }
 }

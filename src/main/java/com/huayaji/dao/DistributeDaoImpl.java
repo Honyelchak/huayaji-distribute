@@ -56,7 +56,7 @@ public class DistributeDaoImpl extends HibernateDaoSupport implements Distribute
                 "distribute_time_type, " +
                 "distribute_count_per, " +
                 "distribute_balance," +
-                " comment) " +
+                " comment1) " +
                 "VALUES ("
                 + distribute.getUser().getId().toString() + ","
                 + distribute.getProduct().getId() + ","
