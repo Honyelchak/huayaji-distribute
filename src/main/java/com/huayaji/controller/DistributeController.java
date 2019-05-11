@@ -3,6 +3,7 @@ package com.huayaji.controller;
 import com.huayaji.entity.Distribute;
 import com.huayaji.entity.User;
 import com.huayaji.services.DistributeService;
+import com.huayaji.services.ProductService;
 import com.huayaji.services.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -12,17 +13,25 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/Distribute")
+@RequestMapping("/distribute")
 public class DistributeController {
     private static final Logger logger = Logger.getLogger(DistributeController.class);
 
     @Resource
     private DistributeService distributeService;
+    @Resource
+    private UserService userService;
+    @Resource
+    private ProductService productService;
     @RequestMapping("/getAll")
     @ResponseBody
     public ModelAndView getall(){
@@ -38,9 +47,9 @@ public class DistributeController {
     }
     @RequestMapping(value = "/update", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ModelAndView update(Distribute order){
+    public ModelAndView update(String id,String distributeTime,String distributeTimeType,String distributeCountPer,String distributeBalance,String comment){
         Map map = new HashMap();
-        distributeService.update(order);
+        distributeService.update(id,distributeBalance,distributeCountPer,distributeTimeType,distributeTime,comment);
         logger.info("更新成功！");
         map.put("res", "ok");
         map.put("code", 0);
@@ -62,9 +71,22 @@ public class DistributeController {
 
     @RequestMapping(value = "/add", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ModelAndView save(Distribute distribute){
+    public ModelAndView save(String distributeTime,String distributeTimeType,String distributeCountPer,String distributeBalance,String comment,String userId,String productId){
+        Distribute distribute=new Distribute();
+        distribute.setUser(userService.findById(Long.parseLong(userId)));
+        distribute.setProduct(productService.findById( Long.parseLong(productId)));
+        DateFormat format= new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            distribute.setDistributeTime(new Timestamp(format.parse(distributeTime).getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        distribute.setComment(comment);
+        distribute.setDistributeCountPer(Integer.parseInt(distributeCountPer));
+        distribute.setDistributeBalance(Double.parseDouble(distributeBalance));
+        distribute.setDistributeTimeType(distributeTimeType);
         Map map = new HashMap();
-        distributeService.add(distribute);
+        distributeService.save(distribute);
         logger.info("添加成功！");
         map.put("res", "ok");
         map.put("code", 0);

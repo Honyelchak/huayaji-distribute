@@ -11,6 +11,10 @@ import javax.annotation.Resource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Repository
@@ -46,25 +50,21 @@ public class DistributeDaoImpl extends HibernateDaoSupport implements Distribute
         this.getHibernateTemplate().delete(findById(id));
     }
 
+
+
     @Override
-    public void add(Distribute distribute) {
-        String sql = "INSERT INTO" +
-                " user_distribute " +
-                "( user_id, " +
-                "product_id, " +
-                "distribute_time, " +
-                "distribute_time_type, " +
-                "distribute_count_per, " +
-                "distribute_balance," +
-                " comment1) " +
-                "VALUES ("
-                + distribute.getUser().getId().toString() + ","
-                + distribute.getProduct().getId() + ","
-                + distribute.getDistributeTime() + ","
-                + distribute.getDistributeTimeType() + ","
-                + distribute.getDistributeCountPer() + ","
-                + distribute.getDistributeBalance() + ","
-                + distribute.getComment() + ")";
-        this.getHibernateTemplate().getSessionFactory().openSession().createQuery(sql).executeUpdate();
+    public void update(String id, String distributeBalance, String distributeCountPer, String distributeTimeType, String distributeTime, String comment) {
+        Distribute distribute=this.getHibernateTemplate().get(Distribute.class,Long.parseLong(id));
+        DateFormat format= new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            distribute.setDistributeTime(new Timestamp( format.parse(distributeTime).getTime()));
+            distribute.setDistributeBalance(Double.parseDouble(distributeBalance));
+            distribute.setDistributeCountPer(Integer.parseInt(distributeCountPer));
+            distribute.setDistributeTimeType(distributeTimeType);
+            distribute.setComment(comment);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.getHibernateTemplate().update(distribute);
     }
 }

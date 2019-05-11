@@ -16,6 +16,10 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.annotation.Resource;
 import javax.persistence.Table;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,9 +75,20 @@ public class OrderController {
 
     @RequestMapping(value = "/add", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ModelAndView save(Order order){
-        order.setUser(userService.findById(order.getUser().getId()));
-        order.setProduct(productService.findById(order.getProduct().getId()));
+    public ModelAndView save(String userId,String productId,String totalMoney,String count,String orderTime,String distributeTime,String distributeType){
+       Order order =new Order();
+        order.setUser(userService.findById(Long.parseLong(userId)));
+        order.setProduct(productService.findById(Long.parseLong(productId)));
+        DateFormat format= new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            order.setOrderTime(new Timestamp( format.parse(orderTime).getTime()));
+            order.setDistributeTime(new Timestamp( format.parse(distributeTime).getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        order.setCount(Integer.parseInt(count));
+        order.setTotalMoney(Double.parseDouble(totalMoney));
+        order.setDistributeType(Integer.parseInt(distributeType));
         Map map = new HashMap();
         orderService.save(order);
         logger.info("添加成功！");

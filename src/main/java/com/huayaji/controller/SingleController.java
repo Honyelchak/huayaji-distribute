@@ -45,7 +45,7 @@ public class SingleController {
             String now=d1.getYear()+"-"+d1.getMonth()+"-"+d1.getMonth();
             Date fDate=sdf.parse(begin);
             Date oDate=sdf.parse(now);
-            if(oDate.getTime()-fDate.getTime()%(double)(d.getDistributeTimeType()*24 * 60 * 60 * 1000)<=(24 * 60 * 60 * 1000))
+            if(oDate.getTime()-fDate.getTime()%(double)(7/*d.getDistributeTimeType()*/*24 * 60 * 60 * 1000)<=(24 * 60 * 60 * 1000))
             {
                 Sing s=new Sing();
                 s.setUser(d.getUser());

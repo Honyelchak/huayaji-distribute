@@ -113,7 +113,7 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             //that.data = data;
             layer.open({
                 type: 2 //此处以iframe举例
-                ,title: '修改用户信息'
+                ,title: '修改订单信息'
                 ,area: ['600px', '500px']
                 ,shade: 0.5
                 ,maxmin: true
@@ -187,7 +187,6 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         active[type] ? active[type].call(this) : '';
     });
 });
-
 function  isYes(yes) {
     if(yes == 1 || yes ==true){
         return "配送到家";
