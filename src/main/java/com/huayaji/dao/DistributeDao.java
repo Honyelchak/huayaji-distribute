@@ -16,5 +16,7 @@ public interface DistributeDao {
 
     public void delete(Long id);
 
-    void add(Distribute distribute);
+
+
+    void update(String id, String distributeBalance, String distributeCountPer, String distributeTimeType, String distributeTime, String comment);
 }

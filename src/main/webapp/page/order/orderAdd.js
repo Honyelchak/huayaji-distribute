@@ -34,7 +34,7 @@ layui.config({
         $.ajax({
             type: "get",
             url: "/order/add",
-            data:{"user.id":$("#phone").val(),"product.id":$('#productType option:selected') .val(),"totalMoney":$("#totalMoney").val(),"count":$("#count").val(),"orderTime":$("#orderTime").val(),"distributeTime":$("#distributeTime").val(),"distributeType":$('#distributeType option:selected') .val()},
+            data:{"userId":$("#phone").val(),"productId":$('#productType option:selected') .val(),"totalMoney":$("#totalMoney").val(),"count":$("#count").val(),"orderTime":$("#orderTime").val(),"distributeTime":$("#distributeTime").val(),"distributeType":$('#distributeType option:selected') .val()},
             dataType: "json",
             async: false,
             success: function (data) {

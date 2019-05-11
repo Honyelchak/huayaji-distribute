@@ -2,6 +2,7 @@ package com.huayaji.services;
 
 import com.huayaji.dao.SingDao;
 import com.huayaji.entity.Sing;
+import com.huayaji.entity.TemporarySing;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -38,5 +39,30 @@ public class SingServiceImpl implements SingService {
     @Override
     public void delete(Long id) {
         singDao.delete(id);
+    }
+
+    @Override
+    public void saveTemporary(TemporarySing sing) {
+        singDao.saveTemporary(sing);
+    }
+
+    @Override
+    public List<TemporarySing> findTemporaryAll() {
+        return singDao.findTemporaryAll();
+    }
+
+    @Override
+    public TemporarySing findTemporaryById(Long id) {
+        return singDao.findTemporaryById(id);
+    }
+
+    @Override
+    public void updateTemporary(TemporarySing sing) {
+    singDao.updateTemporary(sing);
+    }
+
+    @Override
+    public void deleteTemporary(Long id) {
+        singDao.deleteTemporary(id);
     }
 }

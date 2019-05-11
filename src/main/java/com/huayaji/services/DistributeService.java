@@ -11,6 +11,5 @@ public interface DistributeService {
     public Distribute findById(Long id);
     public void update(Distribute distribute);
     public void delete(Long id);
-
-    void add(Distribute distribute);
+    void update(String id, String distributeBalance, String distributeCountPer, String distributeTimeType, String distributeTime, String comment);
 }

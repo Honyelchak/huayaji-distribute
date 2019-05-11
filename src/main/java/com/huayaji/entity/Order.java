@@ -15,12 +15,12 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
+    @ManyToOne(fetch=FetchType.EAGER,cascade = CascadeType.REFRESH ) //JPA注释： 一对一 关系
     @JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
 //    @NotFound(action=NotFoundAction.IGNORE)
     private User user;
 
-    @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
+    @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.REFRESH) //JPA注释： 一对一 关系
     @JoinColumn(name="product_id", referencedColumnName="id", nullable=true)
 //    @NotFound(action=NotFoundAction.IGNORE)
     private Product product;

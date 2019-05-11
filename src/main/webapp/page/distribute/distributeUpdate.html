@@ -28,65 +28,46 @@
     <div class="layui-form-item">
         <label class="layui-form-label">产品</label>
         <div class="layui-input-inline">
-            <input type="text"  id="productName" name="product.name" lay-verify="title" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">省</label>
-        <div class="layui-input-inline">
-            <input type="text"  id="addressProvince" name="address.province" lay-verify="title" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">市</label>
-        <div class="layui-input-inline">
-            <input type="text"  id="addressCity" name="address.city" lay-verify="title" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">县（区）</label>
-        <div class="layui-input-inline">
-            <input type="text"  id="addressCounty" name="address.county" lay-verify="title" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">详细地址</label>
-        <div class="layui-input-inline">
-            <input type="text"  id="detailAddress" name="address.detailAddress" lay-verify="title" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">总金额</label>
-        <div class="layui-input-inline">
-            <input type="text"  id="totalMoney" name="totalMoney" lay-verify="title" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">下单时间</label>
-        <div class="layui-input-inline">
-            <input type="type="date"  id="orderTime" name="orderTime" lay-verify="title" autocomplete="off" class="layui-input">
+            <input type="text"  disabled="disabled" id="productName" name="product.name" lay-verify="title" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">首次配送时间</label>
         <div class="layui-input-inline">
-            <input type="type="date"  id="distributeTime" name="distributeTime" lay-verify="title" autocomplete="off" class="layui-input">
+            <input type="date"  id="distributeTime" name="distributeTime" lay-verify="title" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">配送类型</label>
+        <label class="layui-form-label">配送时间间隔</label>
         <div class="layui-input-inline">
-            <input type="text"  id="distributeType" name="distributeType" lay-verify="title" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">数量</label>
-        <div class="layui-input-inline">
-            <input type="text"  id="count" name="count" lay-verify="title" autocomplete="off" class="layui-input">
-        </div>
-    </div>
+            <select  name="distributeTimeType" id="distributeTimeType" class="newsLook" lay-filter="browseLook">
+                <option value="7">1周</option>
+                <option value="14">2周</option>
+                <option value="21">3周</option>
+                <option value="10">10天</option>
+                <option value="15">15天</option>
 
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">每次配送数量</label>
+        <div class="layui-input-inline">
+            <input type="text"  id="distributeCountPer" name="distributeCountPer" lay-verify="title" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">配送余额</label>
+        <div class="layui-input-inline">
+            <input type="text"  id="distributeBalance" name="distributeBalance" lay-verify="title" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-inline">
+            <input type="text"  id="comment" name="comment" lay-verify="title" autocomplete="off" class="layui-input">
+        </div>
+    </div>
     <!--<div class="layui-form-item">-->
         <!--<label class="layui-form-label">性别</label>-->
         <!--<div class="layui-input-block">-->
@@ -116,7 +97,7 @@
                 url:'/distribute/update',
                 type: "post",
                 dataType: "json",//预期服务器返回的数据类型
-                data: $('#update_form').serialize(),
+                data: {"id":$("#id").val(),"comment":$("#comment").val(),"distributeBalance":$("#distributeBalance").val(),"distributeCountPer":$("#distributeCountPer").val(),"distributeTimeType":$("#distributeTimeType").val(),"distributeTime":$("#distributeTime").val(),},
                 success: function(res) {
                     console.log(res);
                     if(res["res"]=='ok'){

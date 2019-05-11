@@ -11,25 +11,26 @@ import java.sql.Timestamp;
 public class Distribute implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
+    @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.REFRESH) //JPA注释： 一对一 关系
     @JoinColumn(name="user_id",referencedColumnName="id",nullable=false)
     private User user;
 
-    @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
+    @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.REFRESH) //JPA注释： 一对一 关系
     @JoinColumn(name="product_id",referencedColumnName="id",nullable=false)
     private Product product;
 
     @Column(name="distribute_time")
     private Timestamp distributeTime;
     @Column(name="distribute_time_type")
-    private int distributeTimeType;
+    private String  distributeTimeType;
     @Column(name="distribute_count_per")
     private int distributeCountPer;
     @Column(name="distribute_balance")
-    private int distributeBalance;
-    private String comment;
+    private double distributeBalance;
+    private String comment1;
 
     public Long getId() {
         return id;
@@ -63,11 +64,11 @@ public class Distribute implements Serializable {
         this.distributeTime = distributeTime;
     }
 
-    public int getDistributeTimeType() {
+    public String  getDistributeTimeType() {
         return distributeTimeType;
     }
 
-    public void setDistributeTimeType(int distributeTimeType) {
+    public void setDistributeTimeType(String distributeTimeType) {
         this.distributeTimeType = distributeTimeType;
     }
 
@@ -79,19 +80,19 @@ public class Distribute implements Serializable {
         this.distributeCountPer = distributeCountPer;
     }
 
-    public int getDistributeBalance() {
+    public double getDistributeBalance() {
         return distributeBalance;
     }
 
-    public void setDistributeBalance(int distributeBalance) {
+    public void setDistributeBalance(double distributeBalance) {
         this.distributeBalance = distributeBalance;
     }
 
     public String getComment() {
-        return comment;
+        return comment1;
     }
 
     public void setComment(String comment) {
-        this.comment = comment;
+        this.comment1 = comment;
     }
 }

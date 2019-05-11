@@ -1,7 +1,9 @@
 package com.huayaji.controller;
 
 import com.huayaji.entity.Distribute;
+import com.huayaji.entity.Order;
 import com.huayaji.entity.Sing;
+import com.huayaji.entity.TemporarySing;
 import com.huayaji.services.DistributeService;
 import com.huayaji.services.OrderService;
 import com.huayaji.services.SingService;
@@ -16,10 +18,7 @@ import javax.annotation.Resource;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/single")
@@ -40,24 +39,32 @@ public class SingleController {
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         for(Distribute d:distributes)
         {
-            String begin=d.getDistributeTime().getYear()+"-"+d.getDistributeTime().getMonth()+"-"+d.getDistributeTime().getDay();
-            Date d1=new Date();
-            String now=d1.getYear()+"-"+d1.getMonth()+"-"+d1.getMonth();
-            Date fDate=sdf.parse(begin);
-            Date oDate=sdf.parse(now);
-            if(oDate.getTime()-fDate.getTime()%(double)(d.getDistributeTimeType()*24 * 60 * 60 * 1000)<=(24 * 60 * 60 * 1000))
+            if(d.getDistributeBalance()>0)
             {
-                Sing s=new Sing();
-                s.setUser(d.getUser());
-                s.setProduct(d.getProduct());
-                s.setDistribute_data(d.getDistributeCountPer());
-                s.setDistribute_operation("1");
-                s.setDistribute_status(0);
-                s.setReceive_operation("1");
-                singService.save(s);
+                Date d1=new Date();
+                Date d2=d.getDistributeTime();
+                long days= 0;
+                try {
+                     days=getDaysBetweenTwoDates(d1,d2);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if(days%Double.parseDouble(d.getDistributeTimeType())==0)
+                {
+                    Order o=orderService.findByUseridAndProductid(d.getUser().getId().toString(),d.getProduct().getId().toString());
+                    TemporarySing t=new TemporarySing();
+                    t.setDistribute_data(d.getDistributeCountPer());
+                    t.setDistribute_operation(o.getDistributeType()==1?"提货点自提":"送货上门");
+                    t.setDistribute_time(new java.sql.Date(d.getDistributeTime().getTime()));
+                    t.setUser(d.getUser());
+                    t.setProduct(d.getProduct());
+                    t.setReceive_operation(o.getDistributeType()==1?"提货点自提":"送货上门");
+                    singService.saveTemporary(t);
+                }
             }
+
         }
-        List<Sing> sings=singService.findAll();
+        List<TemporarySing> sings=singService.findTemporaryAll();
 
         map.put("data",sings);
         map.put("code", 0);
@@ -65,6 +72,24 @@ public class SingleController {
         map.put("msg", null);
 
         return new ModelAndView(new MappingJackson2JsonView(), map);
+    }
+    public static long getDaysBetweenTwoDates(Date a, Date b) throws Exception {
+        //判断这两个时间的大小
+        if(a.equals(b)) return 0;
+        if(!a.before(b)){//保证返回的值为正数
+            Date temp;
+            temp=a;
+            a=b;
+            b=temp;
+        }
+        Calendar c = Calendar.getInstance();//获取calendar对像
+        c.setTime(a);//设置时间 date  转 calendar 类型
+        long t1 = c.getTimeInMillis();//获取时间戳
+        c.setTime(b);
+        long t2 = c.getTimeInMillis();
+        //计算天数
+        long days = (t2 - t1) / (24 * 60 * 60 * 1000);
+        return days;
     }
     @RequestMapping(value = "/update", produces = "application/json;charset=utf-8")
     @ResponseBody

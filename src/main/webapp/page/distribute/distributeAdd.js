@@ -33,10 +33,10 @@ layui.config({
         var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
         $.ajax({
             type: "get",
-            url: "/Distribute/add",
+            url: "/distribute/add",
             data: {
-                "user.id": $("#phone").val(),
-                "product.id": $('#productType option:selected').val(),
+                "userId": $("#phone").val(),
+                "productId": $('#productType option:selected').val(),
                 "distributeBalance": $("#distributeBalance").val(),
                 "distributeCountPer": $("#distributeCountPer").val(),
                 "distributeTime": $("#distributeTime").val(),
@@ -67,7 +67,7 @@ layui.config({
                 }
             }
         });
-
+        return false;
     })
 })
 function change() {

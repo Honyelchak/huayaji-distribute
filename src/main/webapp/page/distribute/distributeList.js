@@ -27,15 +27,15 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
 
     var tableInstance = table.render({
         elem: '#lay_table_news'
-        , url: '/Distribute/getAll'
+        , url: '/distribute/getAll'
         , cols: [[
             {checkbox: true, fixed: true}
             , {field: 'id', title: 'ID', width: 80, sort: true, fixed: true ,edit: false,}
             , {field: 'user.name', title: '昵称', width: 80, sort: true, templet: '<div>{{d.user.name}}</div>'}
             , {field: 'product.name', title: '产品', width: 80, sort: true, edit: false, templet: '<div>{{d.product.name}}</div>'}
             , {field: 'distributeTime', title: '首次配送时间', width: 200,  templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
-            , {field: 'distributeTimeType', title: '配送时间间隔', width: 150, }
-            , {field: 'distributeCountPer', title: '每次配送数量', width: 100}
+            , {field: 'distributeTimeType', title: '配送时间间隔(天)', width: 150}
+            , {field: 'distributeCountPer', title: '每次配送数量(个)', width: 100}
             , {field: 'distributeBalance', title: '配送余额', width: 100}
             , {field: 'comment', title: '备注', width: 150}
             , {field: 'right', title: '操作', width: 177, toolbar: "#barDemo"}
@@ -60,7 +60,7 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
                 layer.close(index);
             });
             layer.confirm('真的删除行么', {btn: ['确定', '取消'], title: "提示"}, function () {
-                var url = "/Distribute/delete?id=" + data.id;
+                var url = "/distribute/delete?id=" + data.id;
                 $.ajax({
                     type: "get",
                     url: url,
@@ -110,7 +110,7 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             //that.data = data;
             layer.open({
                 type: 2 //此处以iframe举例
-                ,title: '修改用户信息'
+                ,title: '修改配送信息'
                 ,area: ['600px', '500px']
                 ,shade: 0.5
                 ,maxmin: true
@@ -124,18 +124,13 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
                         {
                             body.contents().find("#name").val(p[key].name);
                         }
-                        if(key=="product")
+                        else if(key=="product")
                         {
                             body.contents().find("#productName").val(p[key].name);
                         }
-                        if(key=="address")
+                       else if(key=="distributeTime")
                         {
-                            console.log(p[key].province+p[key].city+p[key].county);
-                            body.contents().find("#addressProvince").val(p[key].province);
-                            body.contents().find("#addressCity").val(p[key].city);
-                            body.contents().find("#addressCounty").val(p[key].county);
-                            body.contents().find("#detailAddress").val(p[key].detailAddress);
-
+                            body.contents().find("#distributeTime").val(layui.util.toDateString(p[key], 'yyyy-MM-dd'));
                         }
                         else{
                             body.contents().find("#"+key).val(p[key]);

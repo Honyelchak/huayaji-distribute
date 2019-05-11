@@ -39,8 +39,9 @@ public class DistributeServiceImpl implements DistributeService{
     distributeDao.delete(id);
     }
 
+
     @Override
-    public void add(Distribute distribute) {
-        distributeDao.add(distribute);
+    public void update(String id, String distributeBalance, String distributeCountPer, String distributeTimeType, String distributeTime, String comment) {
+        distributeDao.update(id,distributeBalance,distributeCountPer,distributeTimeType,distributeTime,comment);
     }
 }
