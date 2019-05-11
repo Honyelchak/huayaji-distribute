@@ -3,6 +3,8 @@ package com.huayaji.dao;
 
 import com.huayaji.entity.Order;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -50,7 +52,16 @@ public class OrderDaoImpl extends HibernateDaoSupport implements OrderDao{
     public Order findById(Long id) {
         return this.getHibernateTemplate().get(Order.class, id);
     }
-
+    @Override
+   public Order findByUseridAndProductid(String  userid,String productid) {
+       DetachedCriteria criteria = DetachedCriteria.forClass(Order.class);
+       criteria.add(Restrictions.eq("userid", userid));
+       criteria.add(Restrictions.eq("product", productid));
+       List<Order> list = (List<Order>) getHibernateTemplate().findByCriteria(criteria);
+       if(list!=null&&list.size()>0)
+       return list.get(0);
+       return null;
+   }
     @Override
     public void update(Order user) {
         this.getHibernateTemplate().update(user);

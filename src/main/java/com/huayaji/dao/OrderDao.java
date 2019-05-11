@@ -15,4 +15,5 @@ public interface OrderDao {
     public Order findById(Long id);
     public void update(Order user);
     public void delete(Long id);
+    public Order findByUseridAndProductid(String userid,String productid);
 }
