@@ -28,31 +28,31 @@
     <div class="layui-form-item">
         <label class="layui-form-label">产品</label>
         <div class="layui-input-inline">
-            <input type="text"  id="productName" name="product.name" lay-verify="title" autocomplete="off" class="layui-input">
+            <input type="text"  id="productName" disabled="disabled" name="product.name" lay-verify="title" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">省</label>
         <div class="layui-input-inline">
-            <input type="text"  id="addressProvince" name="address.province" lay-verify="title" autocomplete="off" class="layui-input">
+            <input type="text"  id="province" disabled="disabled" name="user.province" lay-verify="title" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">市</label>
         <div class="layui-input-inline">
-            <input type="text"  id="addressCity" name="address.city" lay-verify="title" autocomplete="off" class="layui-input">
+            <input type="text"  id="city" disabled="disabled" name="user.city" lay-verify="title" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">县（区）</label>
         <div class="layui-input-inline">
-            <input type="text"  id="addressCounty" name="address.county" lay-verify="title" autocomplete="off" class="layui-input">
+            <input type="text"  id="county" disabled="disabled" name="user.county" lay-verify="title" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">详细地址</label>
         <div class="layui-input-inline">
-            <input type="text"  id="detailAddress" name="address.detailAddress" lay-verify="title" autocomplete="off" class="layui-input">
+            <input type="text"  id="detailAddress" disabled="disabled" name="user.detailAddress" lay-verify="title" autocomplete="off" class="layui-input">
         </div>
     </div>
 
@@ -65,19 +65,23 @@
     <div class="layui-form-item">
         <label class="layui-form-label">下单时间</label>
         <div class="layui-input-inline">
-            <input type="type="date"  id="orderTime" name="orderTime" lay-verify="title" autocomplete="off" class="layui-input">
+            <input type="date"  id="orderTime" name="orderTime" lay-verify="title" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">首次配送时间</label>
         <div class="layui-input-inline">
-            <input type="type="date"  id="distributeTime" name="distributeTime" lay-verify="title" autocomplete="off" class="layui-input">
+            <input type="date"  id="distributeTime" name="distributeTime" lay-verify="title" autocomplete="off" class="layui-input">
         </div>
     </div>
+
     <div class="layui-form-item">
         <label class="layui-form-label">配送类型</label>
         <div class="layui-input-inline">
-            <input type="text"  id="distributeType" name="distributeType" lay-verify="title" autocomplete="off" class="layui-input">
+            <select  name="distributeType" id="distributeType" class="newsLook" lay-filter="browseLook">
+                <option value="1">配送到家</option>
+                <option value="2">提货点自提</option>
+            </select>
         </div>
     </div>
     <div class="layui-form-item">
@@ -106,19 +110,17 @@
 <script type="text/javascript" src="../../layui/layui.js"></script>
 
 <script>
-
     layui.config({
         base : "js/"
     }).use(['form','layer','jquery','laydate'],function(){
         var $ = layui.jquery,layer = parent.layer === undefined ? layui.layer : parent.layer;
         $("body").on('click','#submit-btn',function(){
             $.ajax({
-                url:'/order/update',
-                type: "post",
+                url:"/order/update",
+                type: "POST",
                 dataType: "json",//预期服务器返回的数据类型
-                data: $('#update_form').serialize(),
+                data: {"id":$("#id").val(),"count":$("#count").val(),"distributeType":$("#distributeType").val(),"distributeTime":$("#distributeTime").val(),"totalMoney":$("#totalMoney").val(),},
                 success: function(res) {
-                    console.log(res);
                     if(res["res"]=='ok'){
                         layer.msg("修改成功！",{time:3000});
                         parent.$("#handle_status").val("ok");　　//给A页的 id=handle_status 的元素赋值
@@ -135,6 +137,25 @@
             return false;
         });
     });
+    // function change(){
+    //     var $ = layui.jquery,layer = parent.layer === undefined ? layui.layer : parent.layer;
+    //     var type =$("#distributeType").val();
+    //     console.log(type);
+    //     $(" #distributeType option[lay-value='"+type+"']").css('select','true');
+    //     // if(type==1){
+    //     //     $("#distributeType  option[lay-value='1'] ").attr("selected","true");
+    //     // }else{
+    //     //     $("#distributeType  option[lay-value='2'] ").attr("selected","true");
+    //     // }
+    // };
+
+    // function  isYes(yes) {
+    //     if(yes == 1 || yes ==true){
+    //         return "配送到家";
+    //     }else{
+    //         return "提货点自提";
+    //     }
+    // }
 
 </script>
 </body>

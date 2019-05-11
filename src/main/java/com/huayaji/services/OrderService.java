@@ -12,4 +12,6 @@ public interface OrderService {
     public Order findById(Long id);
     public void update(Order user);
     public void delete(Long id);
+
+    void update(String id, String totalMoney, String distributeTime, String distributeType, String count);
 }

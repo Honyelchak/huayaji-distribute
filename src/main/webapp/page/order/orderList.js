@@ -7,12 +7,12 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
 //添加会员
     $(".newsAdd_btn").click(function(){
         var index = layui.layer.open({
-            title : "添加会员",
+            title : "添加订单",
             type : 2,
             content : "orderAdd.html",
             success : function(layero, index){
                 setTimeout(function(){
-                    layui.layer.tips('点击此处返回会员列表', '.layui-layer-setwin .layui-layer-close', {
+                    layui.layer.tips('点击此处返回订单列表', '.layui-layer-setwin .layui-layer-close', {
                         tips: 3
                     });
                 },500)
@@ -33,14 +33,14 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             , {field: 'id', title: 'ID', width: 80, sort: true, fixed: true ,edit: false,}
             , {field: 'user.name', title: '昵称', width: 80, sort: true, templet: '<div>{{d.user.name}}</div>'}
             , {field: 'product.name', title: '产品', width: 80, sort: true, edit: false, templet: '<div>{{d.product.name}}</div>'}
-            , {field: 'user.address.province', title: '省', width: 80, templet: '<div>{{d.user.address.province}}</div>'}
-            , {field: 'user.address.city', title: '市', width: 80, templet: '<div>{{d.user.address.city}}</div>'}
-            , {field: 'user.address.county', title: '县（区）', width: 180, templet: '<div>{{d.user.address.county}}</div>' }
-            , {field: 'user.address.detailAddress', title: '详细地址', width: 180, templet: '<div>{{d.user.address.detailAddress}}</div>' }
+            , {field: 'user.province', title: '省', width: 80, templet: '<div>{{d.user.province}}</div>'}
+            , {field: 'user.city', title: '市', width: 80, templet: '<div>{{d.user.city}}</div>'}
+            , {field: 'user.county', title: '县（区）', width: 180, templet: '<div>{{d.user.county}}</div>' }
+            , {field: 'user.detailAddress', title: '详细地址', width: 180, templet: '<div>{{d.user.detailAddress}}</div>' }
             , {field: 'totalMoney', title: '总金额', width: 100}
             , {field: 'orderTime', title: '下单时间', width: 200, templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
-            , {field: 'distributeTime', title: '首次配送时间', width: 200,templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
-            , {field: 'distributeType', title: '配送类型', width: 100}
+            , {field: 'distributeTime', title: '首次配送时间', width: 200,templet: "<div>{{layui.util.toDateString(d.distributeTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
+            , {field: 'distributeType', title: '配送类型', width: 100,templet:'<div>{{   isYes(d.distributeType) }}</div>'}
             , {field: 'count', title: '数量', width: 100}
             , {field: 'right', title: '操作', width: 177, toolbar: "#barDemo"}
         ]]
@@ -88,7 +88,6 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
     });
 
 
-
     var $ = layui.$, active = {
         getCheckData: function(){ //获取选中数据
             var checkStatus = table.checkStatus('idTest')
@@ -127,18 +126,29 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
                         if(key=="user")
                         {
                             body.contents().find("#name").val(p[key].name);
-                        }
+                            body.contents().find("#province").val(p[key].province);
+                            body.contents().find("#city").val(p[key].city);
+                            body.contents().find("#county").val(p[key].county);
+                            body.contents().find("#detailAddress").val(p[key].detailAddress);
+
+                        } else
                         if(key=="product")
                         {
                             body.contents().find("#productName").val(p[key].name);
+
                         }
-                        if(key=="address")
+                        else if(key=="orderTime")
                         {
-                            console.log(p[key].province+p[key].city+p[key].county);
-                            body.contents().find("#addressProvince").val(p[key].province);
-                            body.contents().find("#addressCity").val(p[key].city);
-                            body.contents().find("#addressCounty").val(p[key].county);
-                            body.contents().find("#detailAddress").val(p[key].detailAddress);
+                            body.contents().find("#orderTime").val(layui.util.toDateString(p[key], 'yyyy-MM-dd'));
+                        }
+                        else if(key=="distributeTime")
+                        {
+                            body.contents().find("#distributeTime").val(layui.util.toDateString(p[key], 'yyyy-MM-dd'));
+                        }
+                        else if(key=="distributeType")
+                        {
+                            console.log(p[key]);
+                            body.contents().find("#distributeType").val(p[key]);
 
                         }
                         else{
@@ -177,3 +187,11 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         active[type] ? active[type].call(this) : '';
     });
 });
+
+function  isYes(yes) {
+    if(yes == 1 || yes ==true){
+        return "配送到家";
+    }else{
+        return "提货点自提";
+    }
+}

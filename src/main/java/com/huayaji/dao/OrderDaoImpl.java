@@ -7,6 +7,10 @@ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Repository
@@ -16,6 +20,22 @@ public class OrderDaoImpl extends HibernateDaoSupport implements OrderDao{
     public void setMySessionFactory(SessionFactory sessionFactory){
         super.setSessionFactory(sessionFactory);
     }
+
+    @Override
+    public void update(String id, String totalMoney, String distributeTime, String distributeType, String count) {
+        Order order = this.getHibernateTemplate().get(Order.class, Long.parseLong(id));//根据id查询信息
+        DateFormat format= new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            order.setDistributeTime(new Timestamp( format.parse(distributeTime).getTime()));
+            order.setCount(Integer.parseInt(count));
+            order.setTotalMoney(Double.parseDouble(totalMoney));
+            order.setDistributeType(Integer.parseInt(distributeType));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.getHibernateTemplate().update(order);
+    }
+
     @Override
     public void save(Order user) {
         this.getHibernateTemplate().save(user);

@@ -40,4 +40,9 @@ public class OrderServiceImpl implements OrderService {
     public void delete(Long id) {
         orderDao.delete(id);
     }
+
+    @Override
+    public void update(String id, String totalMoney, String distributeTime, String distributeType, String count) {
+        orderDao.update(id,totalMoney,distributeTime,distributeType,count);
+    }
 }

@@ -9,6 +9,7 @@ import com.huayaji.services.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
@@ -44,11 +45,11 @@ public class OrderController {
 
         return new ModelAndView(new MappingJackson2JsonView(), map);
     }
-    @RequestMapping(value = "/update", produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/update", produces = "application/json;charset=utf-8",method = RequestMethod.POST)
     @ResponseBody
-    public ModelAndView update(Order order){
+    public ModelAndView update(String id ,String totalMoney,String distributeTime,String distributeType,String count){
         Map map = new HashMap();
-        orderService.update(order);
+       orderService.update(id,totalMoney,distributeTime,distributeType,count);
         logger.info("更新成功！");
         map.put("res", "ok");
         map.put("code", 0);
