@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     @Id
+    @Column()
     private Long id;
     private String name;
     private String real_name;
