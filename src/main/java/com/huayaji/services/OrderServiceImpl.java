@@ -43,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order findByUseridAndProductid(String userid,String productid) {
-        return orderDao.findByUseridAndProductid();
+        return orderDao.findByUseridAndProductid(userid,productid);
     }
 
     @Override
