@@ -29,7 +29,7 @@ public class UserController {
         Map map = new HashMap();
         List<User> userAll = userService.findAll();
         System.out.println();
-        map.put("userAll",userAll);
+        map.put("data",userAll);
         map.put("code", 0);
         map.put("count", userAll.size());
         map.put("msg", null);
