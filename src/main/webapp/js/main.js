@@ -86,13 +86,14 @@ layui.config({
  				return data;
  			}
  		}
- 		$(".version").text(nullData(data.version));      //当前版本
+ 		$(".cmsName").text(nullData(data.cmsName));      //当前版本
 		$(".author").text(nullData(data.author));        //开发作者
 		$(".homePage").text(nullData(data.homePage));    //网站首页
 		$(".server").text(nullData(data.server));        //服务器环境
 		$(".dataBase").text(nullData(data.dataBase));    //数据库版本
 		$(".maxUpload").text(nullData(data.maxUpload));    //最大上传限制
 		$(".userRights").text(nullData(data.userRights));//当前用户权限
+        $(".record").text(nullData(data.record));//当前用户权限
  	}
 
 })
