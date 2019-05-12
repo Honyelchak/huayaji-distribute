@@ -109,9 +109,6 @@ public class OrderDaoImpl extends HibernateDaoSupport implements OrderDao{
         if(search!=null&&search!=""&&!search.equals("")&&!search.equals(null))
             cri.add(Restrictions.like("user.id",Long.parseLong(search)));
          long count =(long)cri.setProjection(Projections.rowCount()).uniqueResult();
-
-
             return count;
-
     }
 }

@@ -11,5 +11,6 @@ public interface ProductService {
     public Product findById(Long id);
     public void update(Product product);
     public void delete(Long id);
-
+    public List<Product> findByPage(Integer page, Integer limit, String search);
+    public long getCount(String search);
 }

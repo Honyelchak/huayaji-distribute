@@ -49,7 +49,6 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             $("[data-field='id']").css('display','none');
             laypage.render({
                 elem:'page'
-
                 ,layout: ['prev', 'page', 'next', 'skip','count','limit']
                 ,jump:function (obj,first) {
                     if(!first){
