@@ -2,10 +2,14 @@ package com.huayaji.dao;
 
 
 import com.huayaji.entity.Order;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
+import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -53,14 +57,21 @@ public class OrderDaoImpl extends HibernateDaoSupport implements OrderDao{
         return this.getHibernateTemplate().get(Order.class, id);
     }
     @Override
-   public Order findByUseridAndProductid(String  userid,String productid) {
-       DetachedCriteria criteria = DetachedCriteria.forClass(Order.class);
-       criteria.add(Restrictions.eq("userid", userid));
-       criteria.add(Restrictions.eq("product", productid));
-       List<Order> list = (List<Order>) getHibernateTemplate().findByCriteria(criteria);
-       if(list!=null&&list.size()>0)
-       return list.get(0);
-       return null;
+   public Order findByUseridAndProductid(long  userid,long productid) {
+//       DetachedCriteria criteria = DetachedCriteria.forClass(Order.class);
+//       criteria.add(Restrictions.eq("user_id", userid));
+//       criteria.add(Restrictions.eq("product_id", productid));
+//       List<Order> list = (List<Order>) getHibernateTemplate().findByCriteria(criteria);
+//       if(list!=null&&list.size()>0)
+//       return list.get(0);
+//       return null;
+        Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria cri = session.createCriteria(Order.class);
+        cri.add(Restrictions.eq("user.id", userid));
+        cri.add(Restrictions.eq("product.id",productid));
+        List<Order> list = cri.list();
+        session.close();
+        return list.get(0);
    }
     @Override
     public void update(Order user) {

@@ -65,4 +65,9 @@ public class SingServiceImpl implements SingService {
     public void deleteTemporary(Long id) {
         singDao.deleteTemporary(id);
     }
+
+    @Override
+    public void deleteAllTem() {
+        singDao.deleteAllTem();
+    }
 }

@@ -37,7 +37,7 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             , {field: 'distribute_data', title: '待配送数量', width: 150, }
             , {field: 'distribute_operation', title: '配送员配送操作', width: 100}
             , {field: 'receive_operation', title: '客户收货操作', width: 100}
-            , {field: 'distribute_status', title: '配送状态', width: 150}
+            , {field: 'distribute_status', title: '配送状态', width: 150,templet:'<div>{{   isYes(d.distributeType) }}</div>'}
             , {field: 'right', title: '操作', width: 177, toolbar: "#barDemo"}
         ]]
         , id: 'testReload'
@@ -173,3 +173,14 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         active[type] ? active[type].call(this) : '';
     });
 });
+function  isYes(yes) {
+    if(yes == 1 ){
+        return "正在配送配送";
+    }else
+        if(yes==2) {
+            return "已配送";
+        }
+        else{
+        return "代配送";
+    }
+}

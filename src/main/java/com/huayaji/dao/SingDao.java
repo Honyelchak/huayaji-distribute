@@ -17,5 +17,5 @@ public interface SingDao {
     public TemporarySing findTemporaryById(Long id) ;
     public void updateTemporary(TemporarySing sing);
     public void deleteTemporary(Long id);
-
+    public void deleteAllTem();
 }

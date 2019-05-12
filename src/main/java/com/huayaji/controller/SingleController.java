@@ -37,6 +37,7 @@ public class SingleController {
         Map map = new HashMap();
         List<Distribute> distributes = distributeService.findAll();
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        singService.deleteAllTem();
         for(Distribute d:distributes)
         {
             if(d.getDistributeBalance()>0)
@@ -51,7 +52,7 @@ public class SingleController {
                 }
                 if(days%Double.parseDouble(d.getDistributeTimeType())==0)
                 {
-                    Order o=orderService.findByUseridAndProductid(d.getUser().getId().toString(),d.getProduct().getId().toString());
+                    Order o=orderService.findByUseridAndProductid(d.getUser().getId(),d.getProduct().getId());
                     TemporarySing t=new TemporarySing();
                     t.setDistribute_data(d.getDistributeCountPer());
                     t.setDistribute_operation(o.getDistributeType()==1?"提货点自提":"送货上门");
