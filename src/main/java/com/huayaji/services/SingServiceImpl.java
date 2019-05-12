@@ -72,6 +72,11 @@ public class SingServiceImpl implements SingService {
     }
 
     @Override
+    public Sing findByUseridAndProductidAnddate(TemporarySing t) {
+        return singDao.findByUseridAndProductidAnddate(t);
+    }
+
+    @Override
     public List<TemporarySing> findDilivering() {return singDao.findDilivering();}
 
 }

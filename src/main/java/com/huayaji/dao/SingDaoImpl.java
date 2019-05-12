@@ -2,9 +2,11 @@ package com.huayaji.dao;
 
 import com.huayaji.entity.Sing;
 import com.huayaji.entity.TemporarySing;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -43,7 +45,7 @@ public class SingDaoImpl extends HibernateDaoSupport implements SingDao{
     }
     @Override
     public TemporarySing findTemporaryById(Long id) {
-        return this.getHibernateTemplate().get(TemporarySing.class, id);
+        return this.getHibernateTemplate().get(TemporarySing.class, Integer.parseInt(id.toString()));
     }
 
     @Override
@@ -78,6 +80,21 @@ public class SingDaoImpl extends HibernateDaoSupport implements SingDao{
         session.close();
     }
 
+
+    @Override
+    public Sing findByUseridAndProductidAnddate(TemporarySing t) {
+
+        Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria cri = session.createCriteria(Sing.class);
+        cri.add(Restrictions.eq("user.id", t.getUser().getId()));
+        cri.add(Restrictions.eq("product.id",t.getProduct().getId()));
+        cri.add(Restrictions.like("distribute_time",t.getDistribute_time()));
+        List<Sing> list = cri.list();
+        session.close();
+        if(list!=null&&list.size()>0)
+        return list.get(0);
+        return null;
+    }
 
     @Override
     public void delete(Long id) {

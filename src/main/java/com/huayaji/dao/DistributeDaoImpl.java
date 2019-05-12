@@ -2,15 +2,16 @@ package com.huayaji.dao;
 
 import com.huayaji.entity.Distribute;
 
+import com.huayaji.entity.Order;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 
 import javax.annotation.Resource;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -37,7 +38,7 @@ public class DistributeDaoImpl extends HibernateDaoSupport implements Distribute
 
     @Override
     public Distribute findById(Long id) {
-        return this.getHibernateTemplate().get(Distribute.class, id);
+        return this.getHibernateTemplate().get(Distribute.class, Integer.parseInt(id.toString()));
     }
 
     @Override
@@ -66,5 +67,16 @@ public class DistributeDaoImpl extends HibernateDaoSupport implements Distribute
             e.printStackTrace();
         }
         this.getHibernateTemplate().update(distribute);
+    }
+
+    @Override
+    public List<Distribute> findByUserid(String id) {
+        Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria cri = session.createCriteria(Distribute.class);
+        cri.add(Restrictions.eq("user.id", id));
+
+        List<Distribute> list = cri.list();
+        session.close();
+        return list;
     }
 }

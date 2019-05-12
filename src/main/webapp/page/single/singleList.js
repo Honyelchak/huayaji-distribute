@@ -37,7 +37,7 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             , {field: 'distribute_data', title: '待配送数量', width: 150, }
             , {field: 'distribute_operation', title: '配送员配送操作', width: 100}
             , {field: 'receive_operation', title: '客户收货操作', width: 100}
-            , {field: 'distribute_status', title: '配送状态', width: 150,templet:'<div>{{   isYes(d.distributeType) }}</div>'}
+            , {field: 'distribute_status', title: '配送状态', width: 150,templet:'<div>{{   isYes(d.distribute_status) }}</div>'}
             , {field: 'right', title: '操作', width: 177, toolbar: "#barDemo"}
         ]]
         , id: 'testReload'
@@ -105,66 +105,84 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             table.reload('testReload');
         }
         ,update: function(data){
+
             var that = this;
             that["data"] = data;
-            //that.data = data;
-            layer.open({
-                type: 2 //此处以iframe举例
-                ,title: '修改用户信息'
-                ,area: ['600px', '500px']
-                ,shade: 0.5
-                ,maxmin: true
-                ,data1:data
-                ,content: "page/single/singleUpdate.html"
-                ,success: function(layero, index){
-                    var body = layer.getChildFrame('body',index);
-                    var p = that["data"];
-                    for(var key in p){
-                        if(key=="user")
-                        {
-                            body.contents().find("#name").val(p[key].name);
-                        }
-                        if(key=="product")
-                        {
-                            body.contents().find("#productName").val(p[key].name);
-                        }
-                        if(key=="address")
-                        {
-                            console.log(p[key].province+p[key].city+p[key].county);
-                            body.contents().find("#addressProvince").val(p[key].province);
-                            body.contents().find("#addressCity").val(p[key].city);
-                            body.contents().find("#addressCounty").val(p[key].county);
-                            body.contents().find("#detailAddress").val(p[key].detailAddress);
 
-                        }
-                        else{
-                            body.contents().find("#"+key).val(p[key]);
-                        }
-
-                    }
-                }
-                ,end: function () {
-                    var handle_status = $("#handle_status").val();
-                    console.log($("#handle_status").val());
-                    active.reload();
-                    console.log("hello!");
-                    if ( handle_status == 'ok' ) {
-                        layer.msg('添加成功！',{
-                            icon: 1,
-                            time: 1000
-                        });
-                        $("#handle_status").val('');
+            $.ajax({
+                type: "get",
+                url: "/single/add",
+                data: {"id":data.id},
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    if (data.code == '0') {
+                        layer.msg('配送成功', {icon: 1});
+                        active.reload();
+                        /*window.setTimeout("javascript:location.href='/new'", 2000);*/
                     } else {
-                        if(handle_status.length > 0){　　//防止关闭窗口报错
-                            layer.msg(handle_status,{
-                                icon: 2,
-                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                            });
-                            $("#handle_status").val('');
-                        }
+                        layer.msg(data.msg, {icon: 2});
                     }
                 }
             });
+            // //that.data = data;
+            // layer.open({
+            //     type: 2 //此处以iframe举例
+            //     ,title: '修改用户信息'
+            //     ,area: ['600px', '500px']
+            //     ,shade: 0.5
+            //     ,maxmin: true
+            //     ,data1:data
+            //     ,content: "page/single/singleUpdate.html"
+            //     ,success: function(layero, index){
+            //         var body = layer.getChildFrame('body',index);
+            //         var p = that["data"];
+            //         for(var key in p){
+            //             if(key=="user")
+            //             {
+            //                 body.contents().find("#name").val(p[key].name);
+            //             }
+            //             if(key=="product")
+            //             {
+            //                 body.contents().find("#productName").val(p[key].name);
+            //             }
+            //             if(key=="address")
+            //             {
+            //                 console.log(p[key].province+p[key].city+p[key].county);
+            //                 body.contents().find("#addressProvince").val(p[key].province);
+            //                 body.contents().find("#addressCity").val(p[key].city);
+            //                 body.contents().find("#addressCounty").val(p[key].county);
+            //                 body.contents().find("#detailAddress").val(p[key].detailAddress);
+            //
+            //             }
+            //             else{
+            //                 body.contents().find("#"+key).val(p[key]);
+            //             }
+            //
+            //         }
+            //     }
+            //     ,end: function () {
+            //         var handle_status = $("#handle_status").val();
+            //         console.log($("#handle_status").val());
+            //         active.reload();
+            //         console.log("hello!");
+            //         if ( handle_status == 'ok' ) {
+            //             layer.msg('添加成功！',{
+            //                 icon: 1,
+            //                 time: 1000
+            //             });
+            //             $("#handle_status").val('');
+            //         } else {
+            //             if(handle_status.length > 0){　　//防止关闭窗口报错
+            //                 layer.msg(handle_status,{
+            //                     icon: 2,
+            //                     time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            //                 });
+            //                 $("#handle_status").val('');
+            //             }
+            //         }
+            //     }
+            // });
         }
     };
 
@@ -175,12 +193,10 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
 });
 function  isYes(yes) {
     if(yes == 1 ){
-        return "正在配送配送";
-    }else
-        if(yes==2) {
+        return "正在配送";
+    }else if(yes==2) {
             return "已配送";
-        }
-        else{
-        return "代配送";
+    } else{
+        return "待配送";
     }
 }
