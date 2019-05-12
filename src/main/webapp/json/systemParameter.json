@@ -1,14 +1,14 @@
 {
-    "cmsName": "花崖后台管理系统",
+    "cmsName": "花崖配送管理平台",
     "version": "v1.0.1",
     "author": "YJZ、ZJP",
     "homePage": "page/index.html",
     "server": "windows",
-    "dataBase": "8.00.2039",
-    "maxUpload": "2M",
+    "dataBase": "Mysql5.6",
+    "maxUpload": "JDK1.8",
     "userRights": "总管理员",
     "description": "花崖后台管理系统",
     "powerby": "copyright @2019 花崖后台管理系统",
-    "record": "",
+    "record": "hy",
     "keywords": "花崖鸡、配送管理平台"
 }

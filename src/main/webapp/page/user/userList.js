@@ -37,7 +37,7 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         ]]
         , id: 'testReload'
         , page: true
-        , height: 600
+        , height: 500
         /*, done: function(){
             $("[data-field='address.id']").hide();
         }*/
