@@ -18,4 +18,6 @@ public interface SingDao {
     public void updateTemporary(TemporarySing sing);
     public void deleteTemporary(Long id);
     public void deleteAllTem();
+
+    Sing findByUseridAndProductidAnddate(TemporarySing t);
 }

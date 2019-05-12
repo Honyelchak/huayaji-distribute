@@ -83,4 +83,18 @@ public class Sing {
     public void setDistribute_status(int distribute_status) {
         this.distribute_status = distribute_status;
     }
+
+    public Sing(TemporarySing t) {
+
+        this.user = t.getUser();
+        this.product = t.getProduct();
+        this.distribute_time = t.getDistribute_time();
+        this.distribute_data = t.getDistribute_data();
+        this.distribute_operation = t.getDistribute_operation();
+        this.receive_operation = t.getReceive_operation();
+        this.distribute_status = t.getDistribute_status();
+    }
+
+    public Sing() {
+    }
 }

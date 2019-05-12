@@ -43,6 +43,7 @@ public class SingleController {
             if(d.getDistributeBalance()>0)
             {
                 Date d1=new Date();
+                d1=sdf.parse(sdf.format(d1));
                 Date d2=d.getDistributeTime();
                 long days= 0;
                 try {
@@ -60,13 +61,22 @@ public class SingleController {
                     t.setUser(d.getUser());
                     t.setProduct(d.getProduct());
                     t.setReceive_operation(o.getDistributeType()==1?"提货点自提":"送货上门");
-                    singService.saveTemporary(t);
+                    if(singService.findByUseridAndProductidAnddate(t)==null)
+                    {
+                        singService.saveTemporary(t);
+                    }
+
                 }
             }
 
         }
-        List<TemporarySing> sings=singService.findTemporaryAll();
-
+        List<Sing> sings=new ArrayList<Sing>();
+        List<TemporarySing> temsings=singService.findTemporaryAll();
+        for (TemporarySing t: temsings
+             ) {
+            sings.add(new Sing(t));
+        }
+        sings.addAll(singService.findAll());
         map.put("data",sings);
         map.put("code", 0);
         map.put("count", sings.size());
@@ -118,9 +128,11 @@ public class SingleController {
 
     @RequestMapping(value = "/add", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ModelAndView save(Sing sing){
+    public ModelAndView save(String  id){
         Map map = new HashMap();
-        singService.save(sing);
+        Sing sing =new Sing(singService.findTemporaryById(Long.parseLong(id)));
+        sing.setDistribute_status(1);
+       singService.save(sing);
         logger.info("添加成功！");
         map.put("res", "ok");
         map.put("code", 0);

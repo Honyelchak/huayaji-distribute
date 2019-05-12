@@ -70,4 +70,9 @@ public class SingServiceImpl implements SingService {
     public void deleteAllTem() {
         singDao.deleteAllTem();
     }
+
+    @Override
+    public Sing findByUseridAndProductidAnddate(TemporarySing t) {
+        return singDao.findByUseridAndProductidAnddate(t);
+    }
 }

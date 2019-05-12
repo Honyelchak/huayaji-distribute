@@ -37,7 +37,7 @@ public class DistributeDaoImpl extends HibernateDaoSupport implements Distribute
 
     @Override
     public Distribute findById(Long id) {
-        return this.getHibernateTemplate().get(Distribute.class, id);
+        return this.getHibernateTemplate().get(Distribute.class, Integer.parseInt(id.toString()));
     }
 
     @Override
