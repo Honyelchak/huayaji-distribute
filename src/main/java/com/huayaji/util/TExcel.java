@@ -1,11 +1,15 @@
 package com.huayaji.util;
 
+import com.huayaji.entity.Product;
+import com.huayaji.entity.TemporarySing;
+import com.huayaji.entity.User;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -282,24 +286,76 @@ public class TExcel {
 			// 遍历整个filed
 			for (int i = 0; i < fileds.length; i++) {
 				Field field = fileds[i];
+
 				BeanNote excel = field.getAnnotation(BeanNote.class);
 				// 如果设置了annottion
 				if (excel != null) {
-					// 添加到标题
-					exportFieldTitle.add(excel.name());
-					// 添加到需要导出的字段的方法
-					String fieldname = field.getName();
-					// System.out.println(i+"列宽"+excel.exportName()+" "+excel.exportFieldWidth());
-					StringBuffer getMethodName = new StringBuffer("get");
-					getMethodName.append(fieldname.substring(0, 1)
-							.toUpperCase());
-					getMethodName.append(fieldname.substring(1));
+					if("user".equals(field.getName())){
+						Field[] fields_user = User.class.getDeclaredFields();
+						for(int j = 0; j < fields_user.length; j++) {
+							Field field_user = fields_user[j];
+							BeanNote excel1 = field_user.getAnnotation(BeanNote.class);
+							if (excel1 != null) {
+								// 添加到标题
+								exportFieldTitle.add(excel1.name());
+								// 添加到需要导出的字段的方法
+								String fieldname = field_user.getName();
+								exportFieldWidth.add(excel1.width());
+								// System.out.println(i+"列宽"+excel.exportName()+" "+excel.exportFieldWidth());
+								StringBuffer getMethodName = new StringBuffer("get");
+								getMethodName.append(fieldname.substring(0, 1)
+										.toUpperCase());
+								getMethodName.append(fieldname.substring(1));
 
-					Method getMethod = pojoClass.getMethod(
-							getMethodName.toString(), new Class[] {});
+								Method getMethod = User.class.getMethod(
+										getMethodName.toString(), new Class[] {});
 
-					methodObj.add(getMethod);
-					System.out.println(getMethodName);
+								methodObj.add(getMethod);
+								//System.out.println(getMethodName);
+							}
+						}
+					} else if("product".equals(field.getName())){
+						Field[] fields_user = Product.class.getDeclaredFields();
+						for(int j = 0; j < fields_user.length; j++) {
+							Field field_user = fields_user[j];
+							BeanNote excel1 = field_user.getAnnotation(BeanNote.class);
+							if (excel1 != null) {
+								// 添加到标题
+								exportFieldTitle.add(excel1.name());
+								// 添加到需要导出的字段的方法
+								String fieldname = field_user.getName();
+								exportFieldWidth.add(excel1.width());
+								// System.out.println(i+"列宽"+excel.exportName()+" "+excel.exportFieldWidth());
+								StringBuffer getMethodName = new StringBuffer("get");
+								getMethodName.append(fieldname.substring(0, 1)
+										.toUpperCase());
+								getMethodName.append(fieldname.substring(1));
+
+								Method getMethod = Product.class.getMethod(
+										getMethodName.toString(), new Class[] {});
+
+								methodObj.add(getMethod);
+								//System.out.println(getMethodName);
+							}
+						}
+					} else {
+						// 添加到标题
+						exportFieldTitle.add(excel.name());
+						// 添加到需要导出的字段的方法
+						String fieldname = field.getName();
+						exportFieldWidth.add(excel.width());
+						// System.out.println(i+"列宽"+excel.exportName()+" "+excel.exportFieldWidth());
+						StringBuffer getMethodName = new StringBuffer("get");
+						getMethodName.append(fieldname.substring(0, 1)
+								.toUpperCase());
+						getMethodName.append(fieldname.substring(1));
+
+						Method getMethod = pojoClass.getMethod(
+								getMethodName.toString(), new Class[] {});
+
+						methodObj.add(getMethod);
+						//System.out.println(getMethodName);
+					}
 				}
 			}
 			int index = 0;
@@ -308,6 +364,12 @@ public class TExcel {
 			// 遍历设置工作表中的标题
 			for (int i = 0, exportFieldTitleSize = exportFieldTitle.size(); i < exportFieldTitleSize; i++) {
 				Cell cell = row.createCell(i);
+				CellStyle style = workbook.createCellStyle();
+				Font ztFont = workbook.createFont();
+				ztFont.setBold(true);
+				style.setAlignment(HorizontalAlignment.CENTER);
+				style.setFont(ztFont);
+				cell.setCellStyle(style);
 				// cell.setCellStyle(style);
 				RichTextString text = new XSSFRichTextString(
 						exportFieldTitle.get(i));
@@ -318,7 +380,7 @@ public class TExcel {
 			// 设置每行的列宽
 			for (int i = 0; i < exportFieldWidth.size(); i++) {
 				// 256=65280/255
-				sheet.setColumnWidth(i, 256 * exportFieldWidth.get(i));
+				sheet.setColumnWidth(i, 200*exportFieldWidth.get(i));
 			}
 			Iterator<E> its = dataset.iterator();
 			// 循环插入剩下的集合
@@ -331,11 +393,20 @@ public class TExcel {
 					Cell cell = row.createCell(k);
 					Method getMethod = methodObj.get(k);
 					Object value = null;
-					if (convertMethod.containsKey(getMethod.getName())) {
-						Method cm = convertMethod.get(getMethod.getName());
-						value = cm.invoke(t, new Object[] {});
+					//System.out.println(getMethod.getDeclaringClass().getName());
+					if("com.huayaji.entity.User".equals(getMethod.getDeclaringClass().getName())){
+						User t1 = ((TemporarySing)t).getUser();
+						value = getMethod.invoke(t1);
+					} else if("com.huayaji.entity.Product".equals(getMethod.getDeclaringClass().getName())){
+						Product t1 = ((TemporarySing)t).getProduct();
+						value = getMethod.invoke(t1);
 					} else {
-						value = getMethod.invoke(t, new Object[] {});
+						if (convertMethod.containsKey(getMethod.getName())) {
+							Method cm = convertMethod.get(getMethod.getName());
+							value = cm.invoke(t, new Object[] {});
+						} else {
+							value = getMethod.invoke(t, new Object[] {});
+						}
 					}
 					if(value instanceof Long)
 					{
@@ -351,8 +422,11 @@ public class TExcel {
 								value=TDate.getTimeStr(longvalue);
 						}
 					}
-					setCellValue(cell, value);
-
+					if("getId".equals(getMethod.getName())) {
+						setCellValue(cell, "'"+value);
+					} else {
+						setCellValue(cell, value);
+					}
 				}
 			}
 			workbook.write(out);

@@ -45,6 +45,14 @@ public class SingDaoImpl extends HibernateDaoSupport implements SingDao{
     public TemporarySing findTemporaryById(Long id) {
         return this.getHibernateTemplate().get(TemporarySing.class, id);
     }
+
+    @Override
+    public List<TemporarySing> findDilivering() {
+        TemporarySing valueBean = new TemporarySing();
+        valueBean.setDistribute_status(1);
+        return (List<TemporarySing>) this.getHibernateTemplate().findByValueBean("from TemporarySing as b where b.distribute_status =:distribute_status", valueBean);
+    }
+
     @Override
     public void updateTemporary(TemporarySing sing) {
         this.getHibernateTemplate().update(sing);
@@ -60,7 +68,6 @@ public class SingDaoImpl extends HibernateDaoSupport implements SingDao{
     }
 
     @Override
-
     public void deleteAllTem() {
         Session session=getHibernateTemplate().getSessionFactory().openSession();
         String sql="truncate table distribute_temporary "; //sql删除语句
@@ -70,6 +77,7 @@ public class SingDaoImpl extends HibernateDaoSupport implements SingDao{
         ts.commit();
         session.close();
     }
+
 
     @Override
     public void delete(Long id) {

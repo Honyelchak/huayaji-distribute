@@ -1,5 +1,7 @@
 package com.huayaji.entity;
 
+import com.huayaji.util.BeanNote;
+
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -10,15 +12,21 @@ public class TemporarySing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @BeanNote
     @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
     @JoinColumn(name="user_id",referencedColumnName="id",nullable=false)
     private User user;
     @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
     @JoinColumn(name="product_id",referencedColumnName="id",nullable=false)
+    @BeanNote(name = "产品")
     private Product product;
+    @BeanNote(name = "配送日期")
     private Date distribute_time;//客户待配送日期
+    @BeanNote(name = "配送数量")
     private int distribute_data;//待配送数量
+    @BeanNote(name = "配送操作")
     private String distribute_operation;//配送员配送操作
+    @BeanNote(name = "收货操作")
     private String receive_operation;//客户收货操作
     private  int distribute_status;//某个配送日期（已配送，正在配送, 待配送(三个状态)可用123表示
 

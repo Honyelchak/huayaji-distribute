@@ -1,6 +1,9 @@
 package com.huayaji.entity;
 
 
+import com.huayaji.util.BeanNote;
+import org.springframework.context.annotation.Bean;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -9,27 +12,40 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     @Id
-    @Column()
+    @BeanNote(name="手机号",width = 30)
     private Long id;
+    @BeanNote(name="微信号")
     private String name;
+    @BeanNote(name="真实姓名")
     private String real_name;
+    @BeanNote(name="性别")
     private String sex;
+    @BeanNote(name="年龄")
     private int age;
+    @BeanNote(name="客服微信号")
     private long service_no;
+    @BeanNote(name="备注")
     private String note;
     @Column(name="distribute_balance")
+    @BeanNote(name="真实姓名")
     private int distribute_balance;
-
+    @BeanNote(name="省")
     private String province;
+    @BeanNote(name="市")
     private String city;
+    @BeanNote(name="县")
     private String county;
 
     @Column(name="detail_address")
+    @BeanNote(name="详细地址")
     private String detailAddress;
+    @BeanNote(name="小区名称")
     private String apartment;
     @Column(name="building_no")
+    @BeanNote(name="楼号")
     private int buildingNo;
     @Column(name="house_no")
+    @BeanNote(name="房间号")
     private int houseNo;
 
     public String getProvince() {

@@ -9,5 +9,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD,ElementType.METHOD})
 public @interface BeanNote {
 		public String name() default "";
+		public int width() default 20;
 		public String format() default "";
 }

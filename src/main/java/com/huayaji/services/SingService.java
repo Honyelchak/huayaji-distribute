@@ -19,4 +19,5 @@ public interface SingService {
     public void updateTemporary(TemporarySing sing);
     public void deleteTemporary(Long id);
     public void deleteAllTem();
+    public List<TemporarySing> findDilivering();
 }

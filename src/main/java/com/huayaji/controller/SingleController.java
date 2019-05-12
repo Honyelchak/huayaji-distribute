@@ -1,20 +1,23 @@
 package com.huayaji.controller;
 
-import com.huayaji.entity.Distribute;
-import com.huayaji.entity.Order;
-import com.huayaji.entity.Sing;
-import com.huayaji.entity.TemporarySing;
+import com.huayaji.dao.UserDaoImpl;
+import com.huayaji.entity.*;
 import com.huayaji.services.DistributeService;
 import com.huayaji.services.OrderService;
 import com.huayaji.services.SingService;
+import com.huayaji.util.TExcel;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -126,6 +129,37 @@ public class SingleController {
         map.put("code", 0);
         map.put("msg", "添加成功");
         return new ModelAndView(new MappingJackson2JsonView(), map);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/export",consumes = "application/json;charset=utf-8")
+    public void export (HttpServletResponse response){
+        OutputStream out = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String name = "产品待配送表" + sdf.format(new Date());
+        Map map = new HashMap();
+        List<TemporarySing> list = singService.findDilivering();
+        logger.info(list);
+        logger.info("添加成功！");
+        map.put("res", "ok");
+        map.put("code", 0);
+        map.put("data", list);
+        map.put("msg", "添加成功");
+        try {
+            response.setHeader("content-type", "application/octet-stream");
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition", "attachment;filename=" +URLEncoder.encode(name, "UTF-8")+".xlsx");
+            out = response.getOutputStream();
+            /*TExcel.exportExcelMutilEntity(name,,{},out);*/
+            TExcel.exportExcel(name,TemporarySing.class,list,out);
+            System.out.println("下载ok");
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+
+        }
     }
 
 }

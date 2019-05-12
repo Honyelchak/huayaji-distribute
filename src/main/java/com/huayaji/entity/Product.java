@@ -1,5 +1,7 @@
 package com.huayaji.entity;
 
+import com.huayaji.util.BeanNote;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -9,6 +11,7 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @BeanNote(name="产品名称")
     private String name;
     private String type;
     private double price;

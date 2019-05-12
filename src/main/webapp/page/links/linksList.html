@@ -15,23 +15,26 @@
 </head>
 <body class="childrenBody">
 	<blockquote class="layui-elem-quote news_search">
-		<div class="layui-inline">
+		<!--<div class="layui-inline">
 		    <div class="layui-input-inline">
 		    	<input type="text" value="" placeholder="请输入关键字" class="layui-input search_input">
 		    </div>
 		    <a class="layui-btn search_btn">查询</a>
-		</div>
-		<div class="layui-inline">
+		</div>-->
+		<!--<div class="layui-inline">
 			<a class="layui-btn linksAdd_btn" style="background-color:#5FB878">添加链接</a>
 		</div>
 		<div class="layui-inline">
 			<a class="layui-btn layui-btn-danger batchDel">批量删除</a>
-		</div>
+		</div>-->
 		<div class="layui-inline">
-			<div class="layui-form-mid layui-word-aux">本页面刷新后除新添加的链接外所有操作无效，关闭页面所有数据重置</div>
+			<div class="layui-form-mid layui-word-aux">导出Excel需要一定的时间，请耐心等候！</div>
 		</div>
 	</blockquote>
-	<div class="layui-form links_list">
+	<div class="layui-inline">
+		<a class="layui-btn layui-btn-primary" id="download">导出Excel</a>
+	</div>
+	<!--<div class="layui-form links_list">
 	  	<table class="layui-table">
 		    <colgroup>
 				<col width="50">
@@ -56,9 +59,80 @@
 		    </thead>
 		    <tbody class="links_content"></tbody>
 		</table>
-	</div>
+	</div>-->
+	<!--<button id="download" ></button>-->
 	<div id="page"></div>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
 	<script type="text/javascript" src="linksList.js"></script>
+	<script type="text/javascript">
+        layui.config({
+            base : "js/"
+        }).use(['layer','jquery'],function(){
+            var $ = layui.jquery;
+
+//导出按钮被点击之后，将按钮制为无效(防止多次生成)
+            function abideBtn(){
+                console.log("禁止按钮......");
+                $("#download").attr({"href":"#"});
+                $("#download").css("cursor","not-allowed");
+            }
+//下载过程中出错误，
+            function downloadError(){
+                console.log("发生错误，下载失败");
+                alert("下载中出现错误！请重试");
+                $("#download").attr({"href":"javascript:exportData();"});
+                $("#download").css("cursor","pointer");
+            }
+            function formatDate(date) {
+                var myyear = date.getFullYear();
+                var mymonth = date.getMonth() + 1;
+                var myweekday = date.getDate();
+
+                if (mymonth < 10) {
+                    mymonth = "0" + mymonth;
+                }
+                if (myweekday < 10) {
+                    myweekday = "0" + myweekday;
+                }
+                return (myyear + "-" + mymonth + "-" + myweekday);
+            }
+
+            $("#download").click(function(){
+                /*var grid = jQuery("#grid");
+                var data = grid['0'].p.postData;*/
+                var url = "/single/export";
+                var xhr = new XMLHttpRequest();
+                xhr.open('post', url, true);
+                xhr.responseType = "blob";
+                xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+                //添加监听事件。
+                xhr.addEventListener("load", abideBtn, false);
+                xhr.addEventListener("error", downloadError, false);
+                xhr.onload = function () {
+                    if (this.status === 200) {
+                        //创建Bolb对象
+                        var blob = this.response;
+                        //html5新出的
+                        var reader = new FileReader();
+                        reader.readAsDataURL(blob);
+                        reader.onload = function (e) {
+                            //创建a标签，构造下载弹窗
+                            var a = document.createElement("a");
+                            a.id = "downloadTag";
+							a.download = '产品待配送表'+ formatDate(new Date()) +'.xlsx';
+                            a.href = e.target.result;
+                            $("body").append(a);
+                            a.click();
+                            console.log("下载完成！");
+                            $("#download").attr({"href":"javascript:exportData();"});
+                            $("#download").css("cursor","pointer");
+                        }
+                    }
+                };
+                xhr.send();
+            });
+        });
+
+	</script>
 </body>
 </html>
