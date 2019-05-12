@@ -38,13 +38,18 @@ public class OrderController {
     private ProductService productService;
     @RequestMapping("/getAll")
     @ResponseBody
-    public ModelAndView getall(){
+    public ModelAndView getall(Integer page,Integer limit, String search){
         Map map = new HashMap();
-        List<Order> orderAll = orderService.findAll();
-        System.out.println();
+        List<Order> orderAll = orderService.findByPage(page,limit,search);
+
+        long total =orderService.getCount(search);
+        int pages= (int) (total%limit==0?total/limit:total/limit+1);
+        map.put("count",total);
+        map.put("curnum",page);
+        map.put("limit",limit);
         map.put("data",orderAll);
         map.put("code", 0);
-        map.put("count", orderAll.size());
+
         map.put("msg", null);
 
         return new ModelAndView(new MappingJackson2JsonView(), map);
@@ -55,6 +60,7 @@ public class OrderController {
         Map map = new HashMap();
        orderService.update(id,totalMoney,distributeTime,distributeType,count);
         logger.info("更新成功！");
+        map.put("res", "ok");
         map.put("res", "ok");
         map.put("code", 0);
         map.put("msg", null);

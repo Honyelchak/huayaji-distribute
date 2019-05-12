@@ -38,7 +38,7 @@ public class DistributeDaoImpl extends HibernateDaoSupport implements Distribute
 
     @Override
     public Distribute findById(Long id) {
-        return this.getHibernateTemplate().get(Distribute.class, Integer.parseInt(id.toString()));
+        return this.getHibernateTemplate().get(Distribute.class, id.toString());
     }
 
     @Override
@@ -73,7 +73,7 @@ public class DistributeDaoImpl extends HibernateDaoSupport implements Distribute
     public List<Distribute> findByUserid(String id) {
         Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria cri = session.createCriteria(Distribute.class);
-        cri.add(Restrictions.eq("user.id", id));
+        cri.add(Restrictions.eq("user.id", Long.parseLong(id)));
 
         List<Distribute> list = cri.list();
         session.close();

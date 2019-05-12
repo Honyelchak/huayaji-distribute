@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
@@ -57,7 +58,7 @@ public class OrderDaoImpl extends HibernateDaoSupport implements OrderDao{
         return this.getHibernateTemplate().get(Order.class, id);
     }
     @Override
-   public Order findByUseridAndProductid(long  userid,long productid) {
+    public Order findByUseridAndProductid(long  userid,long productid) {
 //       DetachedCriteria criteria = DetachedCriteria.forClass(Order.class);
 //       criteria.add(Restrictions.eq("user_id", userid));
 //       criteria.add(Restrictions.eq("product_id", productid));
@@ -71,8 +72,26 @@ public class OrderDaoImpl extends HibernateDaoSupport implements OrderDao{
         cri.add(Restrictions.eq("product.id",productid));
         List<Order> list = cri.list();
         session.close();
-        return list.get(0);
-   }
+        if(list!=null&&list.size()>0)
+            return list.get(0);
+        return  null;
+    }
+
+    @Override
+    public List<Order> findByPage(Integer page, Integer limit, String search) {
+        Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria cri = session.createCriteria(Order.class);
+        if(search!=null&&search!=""&&!search.equals("")&&!search.equals(null))
+            cri.add(Restrictions.like("user.id",Long.parseLong(search)));
+        cri.setFirstResult((page-1)*limit);
+        cri.setMaxResults(limit);
+        List<Order> list = cri.list();
+        session.close();
+        if(list!=null&&list.size()>0)
+            return list;
+        return  null;
+    }
+
     @Override
     public void update(Order user) {
         this.getHibernateTemplate().update(user);
@@ -82,5 +101,17 @@ public class OrderDaoImpl extends HibernateDaoSupport implements OrderDao{
     public void delete(Long id) {
         this.getHibernateTemplate().delete(findById(id));
     }
+    @Override
+    public long getCount(String search)
+    {
+        Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria cri = session.createCriteria(Order.class);
+        if(search!=null&&search!=""&&!search.equals("")&&!search.equals(null))
+            cri.add(Restrictions.like("user.id",Long.parseLong(search)));
+         long count =(long)cri.setProjection(Projections.rowCount()).uniqueResult();
 
+
+            return count;
+
+    }
 }

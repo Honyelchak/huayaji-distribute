@@ -30,8 +30,8 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         , url: '/single/getAll'
         , cols: [[
             {checkbox: true, fixed: true}
-            , {field: 'id', title: 'ID', width: 80, sort: true, fixed: true ,edit: false,}
-            , {field: 'user.name', title: '昵称', width: 80, sort: true, templet: '<div>{{d.user.name}}</div>'}
+            , {field: 'id', title: 'ID', width: 30, sort: true, fixed: true ,edit: false,style:'display:none;'}
+            , {field: 'user.name', title: '昵称', width: 120, sort: true, templet: '<div>{{d.user.name}}</div>'}
             , {field: 'product.name', title: '产品', width: 80, sort: true, edit: false, templet: '<div>{{d.product.name}}</div>'}
             , {field: 'distribute_time', title: '客户待配送日期', width: 200,  templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
             , {field: 'distribute_data', title: '待配送数量', width: 150, }
@@ -40,6 +40,9 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             , {field: 'distribute_status', title: '配送状态', width: 150,templet:'<div>{{   isYes(d.distribute_status) }}</div>'}
             , {field: 'right', title: '操作', width: 177, toolbar: "#barDemo"}
         ]]
+        ,done: function () {
+            $("[data-field='id']").css('display','none');
+        }
         , id: 'testReload'
         , page: true
         , height: 600
@@ -108,7 +111,7 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
 
             var that = this;
             that["data"] = data;
-
+            console.log(data);
             $.ajax({
                 type: "get",
                 url: "/single/add",

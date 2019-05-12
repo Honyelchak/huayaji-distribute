@@ -40,6 +40,9 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             , {field: 'comment', title: '备注', width: 150}
             , {field: 'right', title: '操作', width: 177, toolbar: "#barDemo"}
         ]]
+         ,done: function () {
+        $("[data-field='id']").css('display','none');
+         }
         , id: 'testReload'
         , page: true
         , height: 600

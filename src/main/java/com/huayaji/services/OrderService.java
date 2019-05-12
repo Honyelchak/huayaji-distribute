@@ -16,4 +16,7 @@ public interface OrderService {
     void update(String id, String totalMoney, String distributeTime, String distributeType, String count);
 
     public Order findByUseridAndProductid(long  userid,long productid) ;
+
+    List<Order> findByPage(Integer page, Integer limit, String search);
+    public long getCount(String search);
 }

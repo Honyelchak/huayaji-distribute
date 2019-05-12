@@ -59,11 +59,19 @@ public class SingleController {
                     Order o=orderService.findByUseridAndProductid(d.getUser().getId(),d.getProduct().getId());
                     TemporarySing t=new TemporarySing();
                     t.setDistribute_data(d.getDistributeCountPer());
-                    t.setDistribute_operation(o.getDistributeType()==1?"提货点自提":"送货上门");
+                    if(o!=null) {
+                        t.setDistribute_operation(o.getDistributeType() == 1 ? "提货点自提" : "送货上门");
+                        t.setReceive_operation(o.getDistributeType()==1?"提货点自提":"送货上门");
+                    }
+                    else
+                    {
+                        t.setDistribute_operation("送货上门");
+                        t.setReceive_operation("送货上门");
+                    }
                     t.setDistribute_time(new java.sql.Date(d.getDistributeTime().getTime()));
                     t.setUser(d.getUser());
                     t.setProduct(d.getProduct());
-                    t.setReceive_operation(o.getDistributeType()==1?"提货点自提":"送货上门");
+
                     if(singService.findByUseridAndProductidAnddate(t)==null)
                     {
                         singService.saveTemporary(t);

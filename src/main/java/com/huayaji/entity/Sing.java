@@ -7,6 +7,7 @@ import java.sql.Date;
 public class Sing {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @OneToOne(fetch=FetchType.EAGER,cascade = CascadeType.ALL) //JPA注释： 一对一 关系
     @JoinColumn(name="user_id",referencedColumnName="id",nullable=false)
@@ -85,7 +86,7 @@ public class Sing {
     }
 
     public Sing(TemporarySing t) {
-
+        this.id=t.getId();
         this.user = t.getUser();
         this.product = t.getProduct();
         this.distribute_time = t.getDistribute_time();

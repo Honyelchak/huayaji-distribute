@@ -47,6 +47,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> findByPage(Integer page, Integer limit, String search) {
+        return  orderDao.findByPage( page,  limit,  search);
+    }
+
+    @Override
+    public long getCount(String search) {
+       return orderDao.getCount(search);
+    }
+
+    @Override
     public void update(String id, String totalMoney, String distributeTime, String distributeType, String count) {
         orderDao.update(id,totalMoney,distributeTime,distributeType,count);
     }
