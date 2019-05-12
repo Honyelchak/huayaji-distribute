@@ -30,6 +30,11 @@ public class DistributeServiceImpl implements DistributeService{
     }
 
     @Override
+    public List<Distribute> findByUserid(String id) {
+        return distributeDao.findByUserid(id);
+    }
+
+    @Override
     public void update(Distribute distribute) {
     distributeDao.update(distribute);
     }
