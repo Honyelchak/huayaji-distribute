@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -97,7 +98,52 @@ public class SingDaoImpl extends HibernateDaoSupport implements SingDao{
     }
 
     @Override
+    public List<TemporarySing> findTemporaryByPage(Integer page, Integer limit, String search) {
+        Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria cri = session.createCriteria(TemporarySing.class);
+        if(search!=null&&search!=""&&!search.equals("")&&!search.equals(null))
+            cri.add(Restrictions.like("user.id",Long.parseLong(search)));
+        cri.setFirstResult((page-1)*limit);
+        cri.setMaxResults(limit);
+        List<TemporarySing> list = cri.list();
+        session.close();
+        if(list!=null&&list.size()>0)
+            return list;
+        return  null;
+    }
+
+    @Override
+    public List<Sing> findByPage(Integer page, Integer limit, String search) {
+        Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria cri = session.createCriteria(Sing.class);
+        if(search!=null&&search!=""&&!search.equals("")&&!search.equals(null))
+            cri.add(Restrictions.like("user.id",Long.parseLong(search)));
+        cri.setFirstResult((page-1)*limit);
+        cri.setMaxResults(limit);
+        List<Sing> list = cri.list();
+        session.close();
+        if(list!=null&&list.size()>0)
+            return list;
+        return  null;
+    }
+
+    @Override
     public void delete(Long id) {
         this.getHibernateTemplate().delete(findById(id));
+    }
+    @Override
+    public long getCount(String search)
+    {
+        Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria cri = session.createCriteria(Sing.class);
+        if(search!=null&&search!=""&&!search.equals("")&&!search.equals(null))
+            cri.add(Restrictions.like("user.id",Long.parseLong(search)));
+        long count =(long)cri.setProjection(Projections.rowCount()).uniqueResult();
+         cri = session.createCriteria(TemporarySing.class);
+        if(search!=null&&search!=""&&!search.equals("")&&!search.equals(null))
+            cri.add(Restrictions.like("user.id",Long.parseLong(search)));
+         count +=(long)cri.setProjection(Projections.rowCount()).uniqueResult();
+        return count;
+
     }
 }

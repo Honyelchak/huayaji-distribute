@@ -22,7 +22,7 @@ public interface SingService {
     public void deleteTemporary(Long id);
     public void deleteAllTem();
     public List<TemporarySing> findDilivering();
-
+    public long getCount(String search);
     Sing findByUseridAndProductidAnddate(TemporarySing t);
 
     List<TemporarySing> findTemporaryByPage(Integer page, Integer limit, String search);

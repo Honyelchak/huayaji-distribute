@@ -83,14 +83,19 @@ public class SingleController {
         }
         List<Sing> sings=new ArrayList<Sing>();
         List<TemporarySing> temsings=singService.findTemporaryByPage(page,limit,search);
-        for (TemporarySing t: temsings
-             ) {
-            sings.add(new Sing(t));
+        if(temsings!=null&&temsings.size()>0) {
+            for (TemporarySing t : temsings
+                    ) {
+                sings.add(new Sing(t));
+            }
         }
         sings.addAll(singService.findByPage(page,limit,search));
+        long total =singService.getCount(search);
+        int pages= (int) (total%limit==0?total/limit:total/limit+1);
+        map.put("count",total);
+        map.put("curnum",page);
         map.put("data",sings);
         map.put("code", 0);
-        map.put("count", sings.size());
         map.put("msg", null);
 
         return new ModelAndView(new MappingJackson2JsonView(), map);

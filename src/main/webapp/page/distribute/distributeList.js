@@ -7,12 +7,12 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
 //添加会员
     $(".newsAdd_btn").click(function(){
         var index = layui.layer.open({
-            title : "添加会员",
+            title : "添加配送表",
             type : 2,
             content : "distributeAdd.html",
             success : function(layero, index){
                 setTimeout(function(){
-                    layui.layer.tips('点击此处返回会员列表', '.layui-layer-setwin .layui-layer-close', {
+                    layui.layer.tips('点击此处返回配送表列表', '.layui-layer-setwin .layui-layer-close', {
                         tips: 3
                     });
                 },500)

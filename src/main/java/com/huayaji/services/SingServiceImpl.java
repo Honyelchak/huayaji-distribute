@@ -77,6 +77,21 @@ public class SingServiceImpl implements SingService {
     }
 
     @Override
+    public List<TemporarySing> findTemporaryByPage(Integer page, Integer limit, String search) {
+        return singDao.findTemporaryByPage( page, limit,search);
+    }
+
+    @Override
+    public List<Sing> findByPage(Integer page, Integer limit, String search) {
+        return singDao.findByPage( page,  limit,  search) ;
+    }
+
+    @Override
     public List<TemporarySing> findDilivering() {return singDao.findDilivering();}
+
+    @Override
+    public long getCount(String search) {
+        return singDao.getCount(search);
+    }
 
 }

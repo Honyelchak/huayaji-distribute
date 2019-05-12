@@ -213,6 +213,12 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         var type = $(this).data('type');
         active[type] ? active[type].call(this) : '';
     });
+    $('i').on('click', function(){ var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+    $('.layui-btn').on('click', function(){ var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
 });
 function  isYes(yes) {
     if(yes == 1 ){

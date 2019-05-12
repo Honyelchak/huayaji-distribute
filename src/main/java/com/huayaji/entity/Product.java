@@ -18,7 +18,7 @@ public class Product implements Serializable {
     @Column(name="distribute_type")
     private String distributeType;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
