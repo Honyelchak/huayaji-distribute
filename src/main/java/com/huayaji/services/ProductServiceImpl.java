@@ -39,4 +39,17 @@ public class ProductServiceImpl implements ProductService{
     public void delete(Long id) {
         productDao.delete(id);
     }
+
+
+    @Override
+    public long getCount(String search) {
+        return productDao.getCount(search);
+    }
+
+    @Override
+    public List<Product> findByPage(Integer page, Integer limit, String search)
+    {
+        return productDao.findByPage(page, limit, search);
+    }
+
 }

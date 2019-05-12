@@ -16,6 +16,11 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
+    public long getCount(String search) {
+        return userDao.getCount(search);
+    }
+
+    @Override
     public void save(User user) {
         userDao.save(user);
     }
@@ -38,5 +43,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(Long id) {
         userDao.delete(id);
+    }
+
+    @Override
+    public List<User> findByPage(Integer page, Integer limit, String search)
+    {
+        return userDao.findByPage(page, limit, search);
     }
 }

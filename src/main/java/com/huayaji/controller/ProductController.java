@@ -27,16 +27,18 @@ public class ProductController {
 
     @RequestMapping("/getAll")
     @ResponseBody
-    public ModelAndView hello(){
+    public ModelAndView hello(Integer page,Integer limit, String search){
         Map map = new HashMap();
-        List<Product> productList = productService.findAll();
-
+        List<Product> productList = productService.findByPage(page, limit, search);
+        long total =productService.getCount(search);
+        map.put("count",total);
+        int pages= (int) (total%limit==0?total/limit:total/limit+1);
+        map.put("curnum",page);
+        map.put("limit",limit);
         map.put("data",productList);
         map.put("code", 0);
-        map.put("count", productList.size());
         map.put("msg", null);
-        //User user= userService.findById(1L);
-        //System.out.println(user.toString());
+
         return new ModelAndView(new MappingJackson2JsonView(), map);
     }
 

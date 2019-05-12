@@ -41,7 +41,6 @@ public class OrderController {
     public ModelAndView getall(Integer page,Integer limit, String search){
         Map map = new HashMap();
         List<Order> orderAll = orderService.findByPage(page,limit,search);
-
         long total =orderService.getCount(search);
         int pages= (int) (total%limit==0?total/limit:total/limit+1);
         map.put("count",total);
@@ -49,7 +48,6 @@ public class OrderController {
         map.put("limit",limit);
         map.put("data",orderAll);
         map.put("code", 0);
-
         map.put("msg", null);
 
         return new ModelAndView(new MappingJackson2JsonView(), map);

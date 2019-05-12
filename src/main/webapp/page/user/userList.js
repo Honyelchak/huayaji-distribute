@@ -38,9 +38,22 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         , id: 'testReload'
         , page: true
         , height: 500
-        /*, done: function(){
-            $("[data-field='address.id']").hide();
-        }*/
+        , done: function(){
+            laypage.render({
+                elem:'page'
+                ,layout: ['prev', 'page', 'next', 'skip','count','limit']
+                ,jump:function (obj,first) {
+                    if(!first){
+                        curnum = obj.curr;
+                        limitcount = obj.limit;
+                        //console.log("curnum"+curnum);
+                        //console.log("limitcount"+limitcount);
+                        //layer.msg(curnum+"-"+limitcount);
+                        productsearch(productGroupId,curnum,limitcount);
+                    }
+                }
+            })
+        }
     });
 
     table.on('checkbox(demo)', function (obj) {

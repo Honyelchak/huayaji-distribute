@@ -25,16 +25,18 @@ public class UserController {
 
     @RequestMapping("/getAll")
     @ResponseBody
-    public ModelAndView hello(){
+    public ModelAndView hello(Integer page,Integer limit, String search){
         Map map = new HashMap();
-        List<User> userAll = userService.findAll();
-        System.out.println();
+        List<User> userAll = userService.findByPage(page, limit, search);
+        long total =userService.getCount(search);
+        System.out.println(total);
+        map.put("count",total);
+        int pages= (int) (total%limit==0?total/limit:total/limit+1);
+        map.put("curnum",page);
+        map.put("limit",limit);
         map.put("data",userAll);
         map.put("code", 0);
-        map.put("count", userAll.size());
         map.put("msg", null);
-        //User user= userService.findById(1L);
-        //System.out.println(user.toString());
         return new ModelAndView(new MappingJackson2JsonView(), map);
     }
 

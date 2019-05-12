@@ -16,7 +16,6 @@ public interface OrderDao {
     public void update(Order user);
     public void delete(Long id);
     public Order findByUseridAndProductid(long userid,long productid);
-
-    List<Order> findByPage(Integer page, Integer limit, String search);
+    public List<Order> findByPage(Integer page, Integer limit, String search);
     public long getCount(String search);
 }
