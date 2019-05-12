@@ -6,6 +6,7 @@ import com.huayaji.entity.Order;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -78,5 +79,32 @@ public class DistributeDaoImpl extends HibernateDaoSupport implements Distribute
         List<Distribute> list = cri.list();
         session.close();
         return list;
+    }
+
+    @Override
+    public List<Distribute> findByPage(Integer page, Integer limit, String search) {
+        Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria cri = session.createCriteria(Distribute.class);
+        if(search!=null&&search!=""&&!search.equals("")&&!search.equals(null))
+            cri.add(Restrictions.like("user.id",Long.parseLong(search)));
+        cri.setFirstResult((page-1)*limit);
+        cri.setMaxResults(limit);
+        List<Distribute> list = cri.list();
+        session.close();
+        if(list!=null&&list.size()>0)
+            return list;
+        return  null;
+    }
+
+    @Override
+    public long getCount(String search) {
+        Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria cri = session.createCriteria(Distribute.class);
+        if(search!=null&&search!=""&&!search.equals("")&&!search.equals(null))
+            cri.add(Restrictions.like("user.id",Long.parseLong(search)));
+        long count =(long)cri.setProjection(Projections.rowCount()).uniqueResult();
+
+
+        return count;
     }
 }

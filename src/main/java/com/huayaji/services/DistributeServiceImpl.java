@@ -49,4 +49,14 @@ public class DistributeServiceImpl implements DistributeService{
     public void update(String id, String distributeBalance, String distributeCountPer, String distributeTimeType, String distributeTime, String comment) {
         distributeDao.update(id,distributeBalance,distributeCountPer,distributeTimeType,distributeTime,comment);
     }
+
+    @Override
+    public List<Distribute> findByPage(Integer page, Integer limit, String search) {
+        return distributeDao.findByPage(page,limit,search);
+    }
+
+    @Override
+    public long getCount(String search) {
+        return distributeDao.getCount(search);
+    }
 }

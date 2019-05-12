@@ -36,7 +36,7 @@ public class SingleController {
     private DistributeService distributeService;
     @RequestMapping("/getAll")
     @ResponseBody
-    public ModelAndView getall() throws ParseException {
+    public ModelAndView getall(Integer page,Integer limit, String search) throws ParseException {
         Map map = new HashMap();
         List<Distribute> distributes = distributeService.findAll();
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -82,12 +82,12 @@ public class SingleController {
 
         }
         List<Sing> sings=new ArrayList<Sing>();
-        List<TemporarySing> temsings=singService.findTemporaryAll();
+        List<TemporarySing> temsings=singService.findTemporaryByPage(page,limit,search);
         for (TemporarySing t: temsings
              ) {
             sings.add(new Sing(t));
         }
-        sings.addAll(singService.findAll());
+        sings.addAll(singService.findByPage(page,limit,search));
         map.put("data",sings);
         map.put("code", 0);
         map.put("count", sings.size());

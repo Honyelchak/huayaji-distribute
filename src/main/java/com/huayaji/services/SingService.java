@@ -3,7 +3,9 @@ package com.huayaji.services;
 import com.huayaji.entity.Product;
 import com.huayaji.entity.Sing;
 import com.huayaji.entity.TemporarySing;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface SingService {
@@ -22,4 +24,8 @@ public interface SingService {
     public List<TemporarySing> findDilivering();
 
     Sing findByUseridAndProductidAnddate(TemporarySing t);
+
+    List<TemporarySing> findTemporaryByPage(Integer page, Integer limit, String search);
+
+    List<Sing> findByPage(Integer page, Integer limit, String search);
 }

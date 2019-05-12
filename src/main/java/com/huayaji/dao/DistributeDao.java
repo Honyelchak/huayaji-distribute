@@ -21,4 +21,8 @@ public interface DistributeDao {
     void update(String id, String distributeBalance, String distributeCountPer, String distributeTimeType, String distributeTime, String comment);
 
     List<Distribute> findByUserid(String id);
+
+    List<Distribute> findByPage(Integer page, Integer limit, String search);
+
+    long getCount(String search);
 }

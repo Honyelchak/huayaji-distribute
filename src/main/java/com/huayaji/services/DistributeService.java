@@ -13,4 +13,8 @@ public interface DistributeService {
     public void update(Distribute distribute);
     public void delete(Long id);
     void update(String id, String distributeBalance, String distributeCountPer, String distributeTimeType, String distributeTime, String comment);
+
+    List<Distribute> findByPage(Integer page, Integer limit, String search);
+
+    long getCount(String search);
 }

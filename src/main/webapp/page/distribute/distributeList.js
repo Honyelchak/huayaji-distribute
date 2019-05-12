@@ -42,6 +42,22 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         ]]
          ,done: function () {
         $("[data-field='id']").css('display','none');
+            laypage.render({
+                elem:'page'
+
+                ,layout: ['prev', 'page', 'next', 'skip','count','limit']
+                ,jump:function (obj,first) {
+                    if(!first){
+                        curnum = obj.curr;
+                        limitcount = obj.limit;
+                        //console.log("curnum"+curnum);
+                        //console.log("limitcount"+limitcount);
+                        //layer.msg(curnum+"-"+limitcount);
+                        productsearch(productGroupId,curnum,limitcount);
+                    }
+
+                }
+            })
          }
         , id: 'testReload'
         , page: true
@@ -105,7 +121,11 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         }
         ,reload: function () {
             console.log("success reload");
-            table.reload('testReload');
+            var search =$("#keywords").val();
+            table.reload('testReload',{
+                method:'post',
+                where:{search:search}
+            });
         }
         ,update: function(data){
             var that = this;
@@ -168,6 +188,12 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
 
     $('.demoTable .layui-btn').on('click', function(){
         var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+    $('i').on('click', function(){ var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+    $('.layui-btn').on('click', function(){ var type = $(this).data('type');
         active[type] ? active[type].call(this) : '';
     });
 });
