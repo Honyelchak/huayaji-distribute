@@ -12,9 +12,11 @@ public interface DistributeService {
     public List<Distribute> findByUserid(String id);
     public void update(Distribute distribute);
     public void delete(Long id);
-    void update(String id, String distributeBalance, String distributeCountPer, String distributeTimeType, String distributeTime, String comment);
+    void update(String days,String id, String distributeBalance, String distributeCountPer, String distributeTimeType,String distributeLastTime, String distributeTime, String comment);
 
     List<Distribute> findByPage(Integer page, Integer limit, String search);
 
     long getCount(String search);
+
+    Distribute findByUseridAndProduct(String userid, String productid);
 }

@@ -47,7 +47,12 @@ public class SingleController {
             {
                 Date d1=new Date();
                 d1=sdf.parse(sdf.format(d1));
-                Date d2=d.getDistributeTime();
+                Date d2=null;
+                if(d.getDistributeLastTime()!=null) {
+                    d2= d.getDistributeLastTime();
+                }
+                else
+                    d2=d.getDistributeTime();
                 long days= 0;
                 try {
                      days=getDaysBetweenTwoDates(d1,d2);
@@ -144,8 +149,16 @@ public class SingleController {
 
     @RequestMapping(value = "/add", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ModelAndView save(String  id){
+    public ModelAndView save(String  id,String distributeTime,String userid,String productid){
         Map map = new HashMap();
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Distribute distribute=distributeService.findByUseridAndProduct(userid,productid);
+        try {
+            distribute.setDistributeTime(new Timestamp(sdf.parse(distributeTime).getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        distributeService.update(distribute);
         Sing sing =new Sing(singService.findTemporaryById(Long.parseLong(id)));
         sing.setDistribute_status(1);
        singService.save(sing);

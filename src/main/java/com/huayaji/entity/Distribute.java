@@ -30,7 +30,19 @@ public class Distribute implements Serializable {
     private int distributeCountPer;
     @Column(name="distribute_balance")
     private double distributeBalance;
+    @Column(name="distribute_last_time")
+    private Timestamp distributeLastTime;
     private String comment1;
+
+    public Timestamp getDistributeLastTime() {
+        return distributeLastTime;
+    }
+
+    public void setDistributeLastTime(Timestamp distributeLastTime) {
+        this.distributeLastTime = distributeLastTime;
+    }
+
+
 
     public Long getId() {
         return id;

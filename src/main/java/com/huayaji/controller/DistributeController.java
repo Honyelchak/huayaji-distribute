@@ -50,15 +50,38 @@ public class DistributeController {
     }
     @RequestMapping(value = "/update", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ModelAndView update(String id,String distributeTime,String distributeTimeType,String distributeCountPer,String distributeBalance,String comment){
+    public ModelAndView update(String days, String id,String distributeLastTime,String distributeTime,String distributeTimeType,String distributeCountPer,String distributeBalance,String comment){
         Map map = new HashMap();
-        distributeService.update(id,distributeBalance,distributeCountPer,distributeTimeType,distributeTime,comment);
+        distributeService.update("0",id,distributeBalance,distributeCountPer,distributeTimeType,distributeLastTime,distributeTime,comment);
         logger.info("更新成功！");
         map.put("res", "ok");
         map.put("code", 0);
         map.put("msg", null);
         return new ModelAndView(new MappingJackson2JsonView(), map);
     }
+
+    /**
+     * 推迟天数
+     * @param id
+     * @param distributeTime
+     * @param distributeTimeType
+     * @param distributeCountPer
+     * @param distributeBalance
+     * @param comment
+     * @return
+     */
+    @RequestMapping(value = "/delay", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public ModelAndView delay(String days, String id,String distributeLastTime,String distributeTime,String distributeTimeType,String distributeCountPer,String distributeBalance,String comment){
+        Map map = new HashMap();
+        distributeService.update( days,id,distributeBalance,distributeCountPer,distributeTimeType, distributeLastTime,distributeTime,comment);
+        logger.info("更新成功！");
+        map.put("res", "ok");
+        map.put("code", 0);
+        map.put("msg", null);
+        return new ModelAndView(new MappingJackson2JsonView(), map);
+    }
+
 
     @RequestMapping(value = "/delete", produces = "application/json;charset=utf-8")
     @ResponseBody

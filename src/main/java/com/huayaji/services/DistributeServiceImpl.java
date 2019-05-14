@@ -46,8 +46,8 @@ public class DistributeServiceImpl implements DistributeService{
 
 
     @Override
-    public void update(String id, String distributeBalance, String distributeCountPer, String distributeTimeType, String distributeTime, String comment) {
-        distributeDao.update(id,distributeBalance,distributeCountPer,distributeTimeType,distributeTime,comment);
+    public void update(String days,String id, String distributeBalance, String distributeCountPer, String distributeTimeType,String distributeLastTime, String distributeTime, String comment) {
+        distributeDao.update(days,id,distributeBalance,distributeCountPer,distributeTimeType,distributeLastTime,distributeTime,comment);
     }
 
     @Override
@@ -58,5 +58,10 @@ public class DistributeServiceImpl implements DistributeService{
     @Override
     public long getCount(String search) {
         return distributeDao.getCount(search);
+    }
+
+    @Override
+    public Distribute findByUseridAndProduct(String userid, String productid) {
+        return distributeDao.findByUseridAndProduct(userid,productid);
     }
 }

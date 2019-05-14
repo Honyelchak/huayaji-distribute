@@ -135,7 +135,7 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             $.ajax({
                 type: "get",
                 url: "/single/add",
-                data: {"id":data.id},
+                data: {"id":data.id,"distributeTime":data.distribute_time,"productid":data.product.id,"userid":data.user.id},
                 dataType: "json",
                 async: false,
                 success: function (data) {

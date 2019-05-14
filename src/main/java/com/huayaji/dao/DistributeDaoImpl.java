@@ -55,11 +55,12 @@ public class DistributeDaoImpl extends HibernateDaoSupport implements Distribute
 
 
     @Override
-    public void update(String id, String distributeBalance, String distributeCountPer, String distributeTimeType, String distributeTime, String comment) {
+    public void update(String days,String id, String distributeBalance, String distributeCountPer, String distributeTimeType, String distributeLastTime,String distributeTime, String comment) {
         Distribute distribute=this.getHibernateTemplate().get(Distribute.class,Long.parseLong(id));
         DateFormat format= new SimpleDateFormat("yyyy-MM-dd");
         try {
             distribute.setDistributeTime(new Timestamp( format.parse(distributeTime).getTime()));
+            distribute.setDistributeLastTime(new Timestamp( format.parse(distributeLastTime).getTime() +24*60*60*1000*Integer.parseInt(days)));
             distribute.setDistributeBalance(Double.parseDouble(distributeBalance));
             distribute.setDistributeCountPer(Integer.parseInt(distributeCountPer));
             distribute.setDistributeTimeType(distributeTimeType);
@@ -106,5 +107,19 @@ public class DistributeDaoImpl extends HibernateDaoSupport implements Distribute
 
 
         return count;
+    }
+
+    @Override
+    public Distribute findByUseridAndProduct(String userid, String productid) {
+        Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria cri = session.createCriteria(Distribute.class);
+        cri.add(Restrictions.eq("user.id",Long.parseLong(userid)));
+        cri.add(Restrictions.eq("product.id",Integer.parseInt(productid)));
+
+        List<Distribute> list = cri.list();
+        session.close();
+        if(list!=null&&list.size()>0)
+            return list.get(0);
+        return null;
     }
 }

@@ -33,7 +33,8 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             , {field: 'id', title: 'ID', width: 80, sort: true, fixed: true ,edit: false,}
             , {field: 'user.name', title: '昵称', width: 80, sort: true, templet: '<div>{{d.user.name}}</div>'}
             , {field: 'product.name', title: '产品', width: 80, sort: true, edit: false, templet: '<div>{{d.product.name}}</div>'}
-            , {field: 'distributeTime', title: '首次配送时间', width: 200,  templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
+            , {field: 'distributeTime', title: '首次配送时间', width: 200,  templet: "<div>{{layui.util.toDateString(d.distributeTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
+            , {field: 'distributeLastTime', title: '首次配送时间', width: 200,  templet: "<div>{{layui.util.toDateString(d.distributeLastTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
             , {field: 'distributeTimeType', title: '配送时间间隔(天)', width: 150}
             , {field: 'distributeCountPer', title: '每次配送数量(个)', width: 100}
             , {field: 'distributeBalance', title: '配送余额', width: 100}
@@ -42,6 +43,7 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
         ]]
          ,done: function () {
         $("[data-field='id']").css('display','none');
+            $("[data-field='distributeLastTime']").css('display','none');
             laypage.render({
                 elem:'page'
 
