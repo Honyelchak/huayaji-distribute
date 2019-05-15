@@ -94,7 +94,9 @@ public class SingleController {
                 sings.add(new Sing(t));
             }
         }
-        sings.addAll(singService.findByPage(page,limit,search));
+        List<Sing> list=singService.findByPage(page,limit,search);
+        if(list!=null&&list.size()>0)
+        sings.addAll(list);
         long total =singService.getCount(search);
         int pages= (int) (total%limit==0?total/limit:total/limit+1);
         map.put("count",total);
@@ -176,7 +178,56 @@ public class SingleController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String name = "产品待配送表" + sdf.format(new Date());
         Map map = new HashMap();
-        List<TemporarySing> list = singService.findDilivering();
+        List<TemporarySing> list = new ArrayList<TemporarySing>();
+        List<Distribute> distributes = distributeService.findAll();
+        SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd");
+        singService.deleteAllTem();
+        for(Distribute d:distributes)
+        {
+            if(d.getDistributeBalance()>0)
+            {
+                Date d1=new Date();
+                try {
+                    d1=sf.parse(sf.format(d1));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Date d2=null;
+                if(d.getDistributeLastTime()!=null) {
+                    d2= d.getDistributeLastTime();
+                }
+                else
+                    d2=d.getDistributeTime();
+                long days= 0;
+                try {
+                    days=getDaysBetweenTwoDates(d1,d2);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if(days%Double.parseDouble(d.getDistributeTimeType())==0)
+                {
+                    Order o=orderService.findByUseridAndProductid(d.getUser().getId(),d.getProduct().getId());
+                    TemporarySing t=new TemporarySing();
+                    t.setDistribute_data(d.getDistributeCountPer());
+                    if(o!=null) {
+                        t.setDistribute_operation(o.getDistributeType() == 1 ? "提货点自提" : "送货上门");
+                        t.setReceive_operation(o.getDistributeType()==1?"提货点自提":"送货上门");
+                    }
+                    else
+                    {
+                        t.setDistribute_operation("送货上门");
+                        t.setReceive_operation("送货上门");
+                    }
+                    t.setDistribute_time(new java.sql.Date(d.getDistributeTime().getTime()));
+                    t.setUser(d.getUser());
+                    t.setProduct(d.getProduct());
+
+                   list.add(t);
+
+                }
+            }
+
+        }
 
         if(list.size() > 0){
             try {

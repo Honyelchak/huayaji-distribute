@@ -114,7 +114,7 @@ public class DistributeDaoImpl extends HibernateDaoSupport implements Distribute
         Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria cri = session.createCriteria(Distribute.class);
         cri.add(Restrictions.eq("user.id",Long.parseLong(userid)));
-        cri.add(Restrictions.eq("product.id",Integer.parseInt(productid)));
+        cri.add(Restrictions.eq("product.id",Long.parseLong(productid)));
 
         List<Distribute> list = cri.list();
         session.close();
