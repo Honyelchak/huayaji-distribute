@@ -27,7 +27,7 @@ public class User implements Serializable {
     @BeanNote(name="备注")
     private String note;
     @Column(name="distribute_balance")
-    @BeanNote(name="真实姓名")
+    @BeanNote(name="配送余额")
     private int distribute_balance;
     @BeanNote(name="省")
     private String province;

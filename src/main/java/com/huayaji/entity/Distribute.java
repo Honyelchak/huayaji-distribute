@@ -1,7 +1,5 @@
 package com.huayaji.entity;
 
-import jdk.Exported;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;

@@ -161,7 +161,7 @@ public class SingleController {
         distributeService.update(distribute);
         Sing sing =new Sing(singService.findTemporaryById(Long.parseLong(id)));
         sing.setDistribute_status(1);
-       singService.save(sing);
+        singService.save(sing);
         logger.info("添加成功！");
         map.put("res", "ok");
         map.put("code", 0);
@@ -177,27 +177,26 @@ public class SingleController {
         String name = "产品待配送表" + sdf.format(new Date());
         Map map = new HashMap();
         List<TemporarySing> list = singService.findDilivering();
-        logger.info(list);
-        logger.info("添加成功！");
+
+        if(list.size() > 0){
+            try {
+                response.setHeader("content-type", "application/octet-stream");
+                response.setContentType("application/octet-stream");
+                response.setHeader("Content-Disposition", "attachment;filename=" +URLEncoder.encode(name, "UTF-8")+".xlsx");
+                out = response.getOutputStream();
+                TExcel.exportExcel(name,TemporarySing.class,list,out);
+                out.flush();
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            map.put("msg", "今日待配送为" + list.size() + "个");
+        } else {
+            map.put("msg", "今日待配送为0");
+        }
         map.put("res", "ok");
         map.put("code", 0);
         map.put("data", list);
-        map.put("msg", "添加成功");
-        try {
-            response.setHeader("content-type", "application/octet-stream");
-            response.setContentType("application/octet-stream");
-            response.setHeader("Content-Disposition", "attachment;filename=" +URLEncoder.encode(name, "UTF-8")+".xlsx");
-            out = response.getOutputStream();
-            /*TExcel.exportExcelMutilEntity(name,,{},out);*/
-            TExcel.exportExcel(name,TemporarySing.class,list,out);
-            System.out.println("下载ok");
-            out.flush();
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally{
-
-        }
     }
 
 }
