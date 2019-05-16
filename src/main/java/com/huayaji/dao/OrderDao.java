@@ -18,4 +18,6 @@ public interface OrderDao {
     public Order findByUseridAndProductid(long userid,long productid);
     public List<Order> findByPage(Integer page, Integer limit, String search);
     public long getCount(String search);
+
+    int getCount();
 }

@@ -111,4 +111,13 @@ public class OrderDaoImpl extends HibernateDaoSupport implements OrderDao{
          long count =(long)cri.setProjection(Projections.rowCount()).uniqueResult();
             return count;
     }
+
+    @Override
+    public int getCount() {
+        Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria cri = session.createCriteria(Order.class);
+
+        int count =(int)cri.setProjection(Projections.rowCount()).uniqueResult();
+        return count;
+    }
 }

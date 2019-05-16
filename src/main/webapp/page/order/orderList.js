@@ -39,7 +39,7 @@ layui.use(['form','layer','jquery','laypage','table'],function() {
             , {field: 'user.county', title: '县（区）', width: 180, templet: '<div>{{d.user.county}}</div>' }
             , {field: 'user.detailAddress', title: '详细地址', width: 180, templet: '<div>{{d.user.detailAddress}}</div>' }
             , {field: 'totalMoney', title: '总金额', width: 100}
-            , {field: 'orderTime', title: '下单时间', width: 200, templet: "<div>{{layui.util.toDateString(d.ordertime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
+            , {field: 'orderTime', title: '下单时间', width: 200, templet: "<div>{{layui.util.toDateString(d.orderTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
             , {field: 'distributeTime', title: '首次配送时间', width: 200,templet: "<div>{{layui.util.toDateString(d.distributeTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
             , {field: 'distributeType', title: '配送类型', width: 100,templet:'<div>{{   isYes(d.distributeType) }}</div>'}
             , {field: 'count', title: '数量', width: 100}

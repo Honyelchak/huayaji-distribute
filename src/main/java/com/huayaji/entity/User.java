@@ -23,7 +23,7 @@ public class User implements Serializable {
     @BeanNote(name="年龄")
     private int age;
     @BeanNote(name="客服微信号")
-    private long service_no;
+    private String service_no;
     @BeanNote(name="备注")
     private String note;
     @Column(name="distribute_balance")
@@ -145,11 +145,11 @@ public class User implements Serializable {
         this.age = age;
     }
 
-    public long getService_no() {
+    public String getService_no() {
         return service_no;
     }
 
-    public void setService_no(long service_no) {
+    public void setService_no(String service_no) {
         this.service_no = service_no;
     }
 
@@ -169,7 +169,7 @@ public class User implements Serializable {
         this.distribute_balance = distribute_balance;
     }
 
-    public User(Long id, String name, String real_name, String sex, int age, long service_no, String note, int distribute_balance, String province, String city, String county, String detailAddress, String apartment, int buildingNo, int houseNo) {
+    public User(Long id, String name, String real_name, String sex, int age, String service_no, String note, int distribute_balance, String province, String city, String county, String detailAddress, String apartment, int buildingNo, int houseNo) {
         this.id = id;
         this.name = name;
         this.real_name = real_name;

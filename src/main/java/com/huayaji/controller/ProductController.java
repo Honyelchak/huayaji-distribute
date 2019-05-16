@@ -29,6 +29,11 @@ public class ProductController {
     @ResponseBody
     public ModelAndView hello(Integer page,Integer limit, String search){
         Map map = new HashMap();
+        if(page==null)
+            page=1;
+        if(limit==null)
+            limit=100;
+
         List<Product> productList = productService.findByPage(page, limit, search);
         long total =productService.getCount(search);
         map.put("count",total);

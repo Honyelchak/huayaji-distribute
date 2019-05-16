@@ -146,4 +146,13 @@ public class SingDaoImpl extends HibernateDaoSupport implements SingDao{
         return count;
 
     }
+    public int getCount()
+    {
+        Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria cri = session.createCriteria(Sing.class);
+
+        int count =(int)cri.setProjection(Projections.rowCount()).uniqueResult();
+        return count;
+
+    }
 }

@@ -77,10 +77,10 @@ public class UserController {
     }
     @RequestMapping(value = "/getUserById", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ModelAndView getUserById(Long id) {
+    public ModelAndView getUserById(Long phone) {
 
         Map map = new HashMap();
-        User user = userService.findById(id);
+        User user = userService.findById(phone);
         if (user != null) {
             logger.info("查找成功！");
             map.put("res", "ok");

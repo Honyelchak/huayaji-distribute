@@ -19,4 +19,6 @@ public interface OrderService {
 
     List<Order> findByPage(Integer page, Integer limit, String search);
     public long getCount(String search);
+
+    int getCount();
 }

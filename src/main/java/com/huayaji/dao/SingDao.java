@@ -20,6 +20,7 @@ public interface SingDao {
     public void deleteAllTem();
     public List<TemporarySing> findDilivering();
     public long getCount(String search);
+    public int getCount();
     Sing findByUseridAndProductidAnddate(TemporarySing t);
 
     List<TemporarySing> findTemporaryByPage(Integer page, Integer limit, String search);

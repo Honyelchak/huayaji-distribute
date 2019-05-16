@@ -57,6 +57,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public int getCount() {
+        return orderDao.getCount();
+    }
+
+    @Override
     public void update(String id, String totalMoney, String distributeTime, String distributeType, String count) {
         orderDao.update(id,totalMoney,distributeTime,distributeType,count);
     }

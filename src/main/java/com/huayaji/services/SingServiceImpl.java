@@ -93,5 +93,8 @@ public class SingServiceImpl implements SingService {
     public long getCount(String search) {
         return singDao.getCount(search);
     }
-
+    @Override
+    public int getCount() {
+        return singDao.getCount();
+    }
 }

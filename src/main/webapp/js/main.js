@@ -35,9 +35,9 @@ layui.config({
 	)
 
 	//图片总数
-	$.get("../json/images.json",
+	$.get("/admin/getcount",
 		function(data){
-			$(".imgAll span").text(data.length);
+			$(".temSingle span").text(data.TemsingleNum);
 		}
 	)
 
