@@ -38,6 +38,11 @@ layui.config({
 	$.get("/admin/getcount",
 		function(data){
 			$(".temSingle span").text(data.TemsingleNum);
+            $(".userAll span").text(data.userNum);
+            $(".distributeNum span").text(data.distributeNum);
+            $(".singleNum span").text(data.singleNum);
+            $(".productNum span").text(data.productNum);
+
 		}
 	)
 
