@@ -55,17 +55,13 @@ public class DistributeDaoImpl extends HibernateDaoSupport implements Distribute
 
 
     @Override
-    public void update(String days,String id, String distributeBalance, String distributeCountPer, String distributeTimeType, String distributeLastTime,String distributeTime, String comment) {
-        Distribute distribute=this.getHibernateTemplate().get(Distribute.class,Long.parseLong(id));
+    public void update(String days,String userid ,String distributeCountPer) {
+        Distribute distribute=findByUseridAndProduct(userid,"1");
         DateFormat format= new SimpleDateFormat("yyyy-MM-dd");
         try {
-            distribute.setDistributeTime(new Timestamp( format.parse(distributeTime).getTime()));
-            distribute.setDistributeLastTime(new Timestamp( format.parse(distributeLastTime).getTime() +24*60*60*1000*Integer.parseInt(days)));
-            distribute.setDistributeBalance(Double.parseDouble(distributeBalance));
+            distribute.setDistributeLastTime(new Timestamp( distribute.getDistributeTime().getTime() +24*60*60*1000*Integer.parseInt(days)));
             distribute.setDistributeCountPer(Integer.parseInt(distributeCountPer));
-            distribute.setDistributeTimeType(distributeTimeType);
-            distribute.setComment(comment);
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         this.getHibernateTemplate().update(distribute);

@@ -18,7 +18,7 @@ public interface DistributeDao {
 
 
 
-    void update(String days,String id, String distributeBalance, String distributeCountPer, String distributeTimeType, String distributeLastTime,String distributeTime, String comment);
+    void update(String days,String userid, String distributeCountPer);
 
     List<Distribute> findByUserid(String id);
 

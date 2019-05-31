@@ -50,9 +50,22 @@ public class DistributeController {
     }
     @RequestMapping(value = "/update", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ModelAndView update(String days, String id,String distributeLastTime,String distributeTime,String distributeTimeType,String distributeCountPer,String distributeBalance,String comment){
+    public ModelAndView update( String id,String distributeLastTime,String distributeTime,String distributeTimeType,String distributeCountPer,String distributeBalance,String comment){
         Map map = new HashMap();
-        distributeService.update("0",id,distributeBalance,distributeCountPer,distributeTimeType,distributeLastTime,distributeTime,comment);
+        Distribute distribute=distributeService.findById(Long.parseLong(id));
+        DateFormat format= new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            distribute.setDistributeTime(new Timestamp(format.parse(distributeTime).getTime()));
+            distribute.setDistributeLastTime(new Timestamp(format.parse(distributeLastTime).getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        distribute.setComment(comment);
+        distribute.setDistributeBalance(Double.parseDouble(distributeBalance));
+        distribute.setDistributeCountPer(Integer.parseInt(distributeCountPer));
+        distribute.setDistributeTimeType(distributeTimeType);
+
+        distributeService.update(distribute);
         logger.info("更新成功！");
         map.put("res", "ok");
         map.put("code", 0);
@@ -61,20 +74,17 @@ public class DistributeController {
     }
 
     /**
-     * 推迟天数
-     * @param id
-     * @param distributeTime
-     * @param distributeTimeType
-     * @param distributeCountPer
-     * @param distributeBalance
-     * @param comment
+     * 推迟天数和修改配送数量
+     *      * @param days   推遲天數
+     * @param userid    (phone)
+     * @param distributeCountPer   每次配送数量
      * @return
      */
     @RequestMapping(value = "/delay", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ModelAndView delay(String days, String id,String distributeLastTime,String distributeTime,String distributeTimeType,String distributeCountPer,String distributeBalance,String comment){
+    public ModelAndView delay(String days,String userid,String distributeCountPer){
         Map map = new HashMap();
-        distributeService.update( days,id,distributeBalance,distributeCountPer,distributeTimeType, distributeLastTime,distributeTime,comment);
+        distributeService.update( days,userid,distributeCountPer);
         logger.info("更新成功！");
         map.put("res", "ok");
         map.put("code", 0);

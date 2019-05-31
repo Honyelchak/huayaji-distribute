@@ -12,6 +12,7 @@ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Statement;
 import java.util.List;
 
@@ -125,6 +126,27 @@ public class SingDaoImpl extends HibernateDaoSupport implements SingDao{
         if(list!=null&&list.size()>0)
             return list;
         return  null;
+    }
+
+    @Override
+    public void modifyStatus(String id) {
+        Sing s=findById(Long.parseLong(id));
+        s.setDistribute_status(2);
+        update(s);
+    }
+
+    @Override
+    public List<Sing> findByUseridAndProductid(String phone, String s) {
+        Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Criteria cri = session.createCriteria(Sing.class);
+        cri.add(Restrictions.eq("user.id", Long.parseLong(phone)));
+        cri.add(Restrictions.eq("product.id",Integer.parseInt(s)));
+
+        List<Sing> list = cri.list();
+        session.close();
+        if(list!=null&&list.size()>0)
+            return list;
+        return null;
     }
 
     @Override

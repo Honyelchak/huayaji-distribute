@@ -87,6 +87,16 @@ public class SingServiceImpl implements SingService {
     }
 
     @Override
+    public void modifyStatus(String id) {
+        singDao.modifyStatus(id);
+    }
+
+    @Override
+    public List<Sing> findByUseridAndProductid(String phone, String s) {
+        return singDao.findByUseridAndProductid(phone,s);
+    }
+
+    @Override
     public List<TemporarySing> findDilivering() {return singDao.findDilivering();}
 
     @Override

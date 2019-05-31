@@ -107,6 +107,46 @@ public class SingleController {
 
         return new ModelAndView(new MappingJackson2JsonView(), map);
     }
+
+    /**
+     * 获取正在配送和以配送的配送单
+     * @param phone
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping("/getSingleAll")
+    @ResponseBody
+    public ModelAndView getSingleAll(String phone) throws ParseException {
+        Map map = new HashMap();
+        List<Sing> sings=new ArrayList<Sing>();
+        List<Sing> list=singService.findByUseridAndProductid(phone,"1");
+        if(list!=null&&list.size()>0)
+            sings.addAll(list);
+
+
+        map.put("data",sings);
+        map.put("code", 0);
+        map.put("msg", null);
+        return new ModelAndView(new MappingJackson2JsonView(), map);
+    }
+
+    /**
+     * 根据配送单id修改配送状态（从正在配送到已配送）
+     * @param id
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping("/modifystatus")
+    @ResponseBody
+    public ModelAndView modifyStatus(String id) throws ParseException {
+        Map map = new HashMap();
+        singService.modifyStatus(id);
+        map.put("code", 0);
+        map.put("msg", "配送成功");
+        return new ModelAndView(new MappingJackson2JsonView(), map);
+    }
+
+
     public static long getDaysBetweenTwoDates(Date a, Date b) throws Exception {
         //判断这两个时间的大小
         if(a.equals(b)) return 0;

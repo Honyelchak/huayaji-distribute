@@ -12,7 +12,7 @@ public interface DistributeService {
     public List<Distribute> findByUserid(String id);
     public void update(Distribute distribute);
     public void delete(Long id);
-    void update(String days,String id, String distributeBalance, String distributeCountPer, String distributeTimeType,String distributeLastTime, String distributeTime, String comment);
+    void update(String days,String userid,String distributeCountPer);
 
     List<Distribute> findByPage(Integer page, Integer limit, String search);
 

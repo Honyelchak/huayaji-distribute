@@ -46,8 +46,8 @@ public class DistributeServiceImpl implements DistributeService{
 
 
     @Override
-    public void update(String days,String id, String distributeBalance, String distributeCountPer, String distributeTimeType,String distributeLastTime, String distributeTime, String comment) {
-        distributeDao.update(days,id,distributeBalance,distributeCountPer,distributeTimeType,distributeLastTime,distributeTime,comment);
+    public void update(String days,String userid, String distributeCountPer) {
+        distributeDao.update(days,userid,distributeCountPer);
     }
 
     @Override

@@ -26,4 +26,8 @@ public interface SingDao {
     List<TemporarySing> findTemporaryByPage(Integer page, Integer limit, String search);
 
     List<Sing> findByPage(Integer page, Integer limit, String search);
+
+    void modifyStatus(String id);
+
+    List<Sing> findByUseridAndProductid(String phone, String s);
 }
