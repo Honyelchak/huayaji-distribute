@@ -7,6 +7,7 @@ import com.huayaji.services.OrderService;
 import com.huayaji.services.SingService;
 import com.huayaji.util.TExcel;
 import org.apache.log4j.Logger;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/single")
-public class SingleController {
+public class SingleController extends TimerTask{
     private static final Logger logger = Logger.getLogger(SingleController.class);
 
     @Resource
@@ -118,11 +119,14 @@ public class SingleController {
     @ResponseBody
     public ModelAndView getSingleAll(String phone) throws ParseException {
         Map map = new HashMap();
+        System.out.println("获取电话-----"+phone);
         List<Sing> sings=new ArrayList<Sing>();
         List<Sing> list=singService.findByUseridAndProductid(phone,"1");
-        if(list!=null&&list.size()>0)
+//        System.out.println("已配送的信息----"+list);
+        if(list!=null&&list.size()>0){
             sings.addAll(list);
-
+            System.out.println("已配送的信息----"+sings.get(0));
+        }
 
         map.put("data",sings);
         map.put("code", 0);
@@ -141,6 +145,30 @@ public class SingleController {
     public ModelAndView modifyStatus(String id) throws ParseException {
         Map map = new HashMap();
         singService.modifyStatus(id);
+        map.put("code", 0);
+        map.put("msg", "配送成功");
+        return new ModelAndView(new MappingJackson2JsonView(), map);
+    }
+
+    @RequestMapping("/updatestatus")
+
+    @ResponseBody
+    public ModelAndView updateStatus() throws ParseException {
+        Map map = new HashMap();
+        List<Sing> list=singService.findAll();
+        for (Sing s:list
+             ) {
+            try {
+                if(getDaysBetweenTwoDates(new Date(),s.getDistribute_time())>=1)
+                {
+                    modifyStatus(String.valueOf(s.getId()));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
         map.put("code", 0);
         map.put("msg", "配送成功");
         return new ModelAndView(new MappingJackson2JsonView(), map);
@@ -196,8 +224,9 @@ public class SingleController {
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         Distribute distribute=distributeService.findByUseridAndProduct(userid,productid);
         try {
-            distribute.setDistributeTime(new Timestamp(sdf.parse(distributeTime).getTime()));
-        } catch (ParseException e) {
+            Timestamp t=new Timestamp(Long.parseLong(distributeTime));
+            distribute.setDistributeTime(t);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         distributeService.update(distribute);
@@ -290,4 +319,21 @@ public class SingleController {
         map.put("data", list);
     }
 
+    @Override
+    public void run() {
+
+        List<Sing> list=singService.findAll();
+        for (Sing s:list
+                ) {
+            try {
+                if(getDaysBetweenTwoDates(new Date(),s.getDistribute_time())>=1)
+                {
+                    modifyStatus(String.valueOf(s.getId()));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
 }

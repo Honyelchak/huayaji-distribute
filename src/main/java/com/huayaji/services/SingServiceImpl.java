@@ -1,13 +1,18 @@
 package com.huayaji.services;
 
+import com.huayaji.controller.SingleController;
 import com.huayaji.dao.SingDao;
 import com.huayaji.entity.Sing;
 import com.huayaji.entity.TemporarySing;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
-import java.util.List;
+import java.text.ParseException;
+import java.util.*;
 
 @Service
 @Transactional
@@ -21,6 +26,49 @@ public class SingServiceImpl implements SingService {
         singDao.save(sing);
     }
 
+    @PostConstruct
+    public void updateStatus() throws ParseException {
+        System.out.println("定时器启动...");
+        final long PERIOD_DAY = 24 * 60 * 60 * 1000;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 1); //凌晨1点
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date date=calendar.getTime(); //第一次执行定时任务的时间
+        //如果第一次执行定时任务的时间 小于当前的时间
+        //此时要在 第一次执行定时任务的时间加一天，以便此任务在下个时间点执行。如果不加一天，任务会立即执行。
+        if (date.before(new Date())) {
+            date = this.addDay(date, 1);
+        }
+        Timer timer = new Timer();
+        SingleController task = new SingleController();
+        //安排指定的任务在指定的时间开始进行重复的固定延迟执行。
+        timer.schedule(task,date,PERIOD_DAY);
+    }
+    public Date addDay(Date date, int num) {
+        Calendar startDT = Calendar.getInstance();
+        startDT.setTime(date);
+        startDT.add(Calendar.DAY_OF_MONTH, num);
+        return startDT.getTime();
+    }
+    public static long getDaysBetweenTwoDates(Date a, Date b) throws Exception {
+        //判断这两个时间的大小
+        if(a.equals(b)) return 0;
+        if(!a.before(b)){//保证返回的值为正数
+            Date temp;
+            temp=a;
+            a=b;
+            b=temp;
+        }
+        Calendar c = Calendar.getInstance();//获取calendar对像
+        c.setTime(a);//设置时间 date  转 calendar 类型
+        long t1 = c.getTimeInMillis();//获取时间戳
+        c.setTime(b);
+        long t2 = c.getTimeInMillis();
+        //计算天数
+        long days = (t2 - t1) / (24 * 60 * 60 * 1000);
+        return days;
+    }
     @Override
     public List<Sing> findAll() {
         return singDao.findAll();

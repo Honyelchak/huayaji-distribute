@@ -22,7 +22,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class  AdminController {
 
     private static final Logger logger = Logger.getLogger(AdminController.class);
 

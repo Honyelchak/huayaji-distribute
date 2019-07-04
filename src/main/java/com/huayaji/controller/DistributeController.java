@@ -8,6 +8,7 @@ import com.huayaji.services.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
@@ -48,6 +49,7 @@ public class DistributeController {
 
         return new ModelAndView(new MappingJackson2JsonView(), map);
     }
+
     @RequestMapping(value = "/update", produces = "application/json;charset=utf-8")
     @ResponseBody
     public ModelAndView update( String id,String distributeLastTime,String distributeTime,String distributeTimeType,String distributeCountPer,String distributeBalance,String comment){

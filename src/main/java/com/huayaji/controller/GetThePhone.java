@@ -45,7 +45,7 @@ public class GetThePhone {
     public Object getPhoneNumber(String encryptedData, String code, String iv) {
         String url = "https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code";
         url = url.replaceAll("APPID", "wx973b51aef4427518");
-        url = url.replaceAll("SECRET", "33190c91e4d17a5379996f3d9a4253da");
+        url = url.replaceAll("SECRET", "a6d006b805a92505b13e881376bfc328");
         url = url.replaceAll("JSCODE", code);
         String doPost = HttpClientUtil.doGet(url);
         // 解析相应内容（转换成json对象）
@@ -80,6 +80,7 @@ public class GetThePhone {
                 String result = new String(resultByte, "UTF-8");
                 JSONObject j = JSON.parseObject(result);
                 String phoneNumber = j.getString("phoneNumber");
+
                 User user = userService.findById(Long.parseLong(phoneNumber));
 
                 return user;

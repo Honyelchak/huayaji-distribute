@@ -140,12 +140,15 @@ public class SingDaoImpl extends HibernateDaoSupport implements SingDao{
         Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria cri = session.createCriteria(Sing.class);
         cri.add(Restrictions.eq("user.id", Long.parseLong(phone)));
-        cri.add(Restrictions.eq("product.id",Integer.parseInt(s)));
+        cri.add(Restrictions.eq("product.id",Long.parseLong(s)));
 
         List<Sing> list = cri.list();
         session.close();
-        if(list!=null&&list.size()>0)
+//        System.out.println("数据----"+list);
+        if(list!=null&&list.size()>0){
+//            System.out.println("数据----"+list);
             return list;
+        }
         return null;
     }
 
