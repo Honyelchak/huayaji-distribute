@@ -10,6 +10,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -84,6 +85,7 @@ public class SingDaoImpl extends HibernateDaoSupport implements SingDao{
 
 
     @Override
+    @Transactional
     public Sing findByUseridAndProductidAnddate(TemporarySing t) {
 
         Session session = getHibernateTemplate().getSessionFactory().openSession();
@@ -99,6 +101,7 @@ public class SingDaoImpl extends HibernateDaoSupport implements SingDao{
     }
 
     @Override
+    @Transactional
     public List<TemporarySing> findTemporaryByPage(Integer page, Integer limit, String search) {
         Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria cri = session.createCriteria(TemporarySing.class);
@@ -114,6 +117,7 @@ public class SingDaoImpl extends HibernateDaoSupport implements SingDao{
     }
 
     @Override
+    @Transactional
     public List<Sing> findByPage(Integer page, Integer limit, String search) {
         Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria cri = session.createCriteria(Sing.class);
@@ -129,6 +133,7 @@ public class SingDaoImpl extends HibernateDaoSupport implements SingDao{
     }
 
     @Override
+    @Transactional
     public void modifyStatus(String id) {
         Sing s=findById(Long.parseLong(id));
         s.setDistribute_status(2);
@@ -136,6 +141,7 @@ public class SingDaoImpl extends HibernateDaoSupport implements SingDao{
     }
 
     @Override
+    @Transactional
     public List<Sing> findByUseridAndProductid(String phone, String s) {
         Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria cri = session.createCriteria(Sing.class);
@@ -157,6 +163,7 @@ public class SingDaoImpl extends HibernateDaoSupport implements SingDao{
         this.getHibernateTemplate().delete(findById(id));
     }
     @Override
+    @Transactional
     public long getCount(String search)
     {
         Session session = getHibernateTemplate().getSessionFactory().openSession();
@@ -171,6 +178,7 @@ public class SingDaoImpl extends HibernateDaoSupport implements SingDao{
         return count;
 
     }
+    @Transactional
     public int getCount()
     {
         Session session = getHibernateTemplate().getSessionFactory().openSession();

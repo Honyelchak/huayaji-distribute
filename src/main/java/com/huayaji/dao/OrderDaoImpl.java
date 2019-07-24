@@ -12,6 +12,7 @@ import org.hibernate.query.Query;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
@@ -29,6 +30,7 @@ public class OrderDaoImpl extends HibernateDaoSupport implements OrderDao{
     }
 
     @Override
+    @Transactional
     public void update(String id, String totalMoney, String distributeTime, String distributeType, String count) {
         Order order = this.getHibernateTemplate().get(Order.class, Long.parseLong(id));//根据id查询信息
         DateFormat format= new SimpleDateFormat("yyyy-MM-dd");
@@ -58,6 +60,7 @@ public class OrderDaoImpl extends HibernateDaoSupport implements OrderDao{
         return this.getHibernateTemplate().get(Order.class, id);
     }
     @Override
+    @Transactional
     public Order findByUseridAndProductid(long  userid,long productid) {
 //       DetachedCriteria criteria = DetachedCriteria.forClass(Order.class);
 //       criteria.add(Restrictions.eq("user_id", userid));
@@ -78,6 +81,7 @@ public class OrderDaoImpl extends HibernateDaoSupport implements OrderDao{
     }
 
     @Override
+    @Transactional
     public List<Order> findByPage(Integer page, Integer limit, String search) {
         Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria cri = session.createCriteria(Order.class);
@@ -102,6 +106,7 @@ public class OrderDaoImpl extends HibernateDaoSupport implements OrderDao{
         this.getHibernateTemplate().delete(findById(id));
     }
     @Override
+    @Transactional
     public long getCount(String search)
     {
         Session session = getHibernateTemplate().getSessionFactory().openSession();
@@ -113,6 +118,7 @@ public class OrderDaoImpl extends HibernateDaoSupport implements OrderDao{
     }
 
     @Override
+    @Transactional
     public int getCount() {
         Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria cri = session.createCriteria(Order.class);

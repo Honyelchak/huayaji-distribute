@@ -10,6 +10,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import javax.annotation.Resource;
@@ -55,6 +56,7 @@ public class DistributeDaoImpl extends HibernateDaoSupport implements Distribute
 
 
     @Override
+    @Transactional
     public void update(String days,String userid ,String distributeCountPer) {
         Distribute distribute=findByUseridAndProduct(userid,"1");
         DateFormat format= new SimpleDateFormat("yyyy-MM-dd");
@@ -68,6 +70,7 @@ public class DistributeDaoImpl extends HibernateDaoSupport implements Distribute
     }
 
     @Override
+    @Transactional
     public List<Distribute> findByUserid(String id) {
         Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria cri = session.createCriteria(Distribute.class);
@@ -79,6 +82,7 @@ public class DistributeDaoImpl extends HibernateDaoSupport implements Distribute
     }
 
     @Override
+    @Transactional
     public List<Distribute> findByPage(Integer page, Integer limit, String search) {
         Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria cri = session.createCriteria(Distribute.class);
@@ -94,6 +98,7 @@ public class DistributeDaoImpl extends HibernateDaoSupport implements Distribute
     }
 
     @Override
+    @Transactional
     public long getCount(String search) {
         Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria cri = session.createCriteria(Distribute.class);
@@ -106,6 +111,7 @@ public class DistributeDaoImpl extends HibernateDaoSupport implements Distribute
     }
 
     @Override
+    @Transactional
     public Distribute findByUseridAndProduct(String userid, String productid) {
         Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria cri = session.createCriteria(Distribute.class);

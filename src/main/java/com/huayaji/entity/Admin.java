@@ -13,9 +13,9 @@ public class Admin  implements Serializable {
 
     @Id
     private Long id;
-    @Column(name="user_name")
+    @Column(name="userName")
     private String userName;
-    @Column(name="password")
+    @Column(name="passWord")
     private String passWord;
     private String phone;
     @Column(name="add_time")

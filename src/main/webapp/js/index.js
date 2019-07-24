@@ -126,9 +126,24 @@ layui.config({
 
 	//退出
 	$(".signOut").click(function(){
-		window.sessionStorage.removeItem("menu");
+        $.ajax({
+            url:'/admin/logout',
+            type: "get",
+            dataType: "json",//预期服务器返回的数据类型
+            success: function(res) {
+                if(res["code"]=='0'){
+                    window.location.href = "page/login/login.html";
+                }else{
+                    layer.msg("注销失败！",{time:3000});
+                }
+            },
+            error : function(e) {
+                console.log(e);
+            }
+        });
+		/*window.sessionStorage.removeItem("menu");
 		menu = [];
-		window.sessionStorage.removeItem("curmenu");
+		window.sessionStorage.removeItem("curmenu");*/
 	})
 
 	//隐藏左侧导航

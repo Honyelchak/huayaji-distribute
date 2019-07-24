@@ -43,10 +43,10 @@ public class AdminDaoImpl extends HibernateDaoSupport implements AdminDao {
 
     @Override
     public List<Admin> login(String userName, String passWord) {
-        return (List<Admin>) this.getHibernateTemplate().find("from Admin where user_name = ? and password = ?", new String[]{userName, passWord});
+        return (List<Admin>) this.getHibernateTemplate().find("from Admin where userName = ? and passWord = ?", new String[]{userName, passWord});
     }
     @Override
     public List<Admin> findByUserName(String userName){
-        return (List<Admin>) this.getHibernateTemplate().find("from Admin where user_name = ?", userName);
+        return (List<Admin>) this.getHibernateTemplate().find("from Admin where userName = ?", userName);
     }
 }

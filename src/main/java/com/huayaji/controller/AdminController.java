@@ -8,10 +8,13 @@ import com.huayaji.services.*;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,16 +42,37 @@ public class  AdminController {
     @Resource
     private UserService userService;
 
-    @RequestMapping("/login")
-    public ModelAndView login(Admin admin){
+    @RequestMapping(value = "/login", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public ModelAndView login(String userName, String passWord, HttpSession session){
         Map map = new HashMap();
-        if (adminService.login(admin.getUserName(), admin.getPassWord()) != null) {
+
+        System.out.println("用户名：" + userName);
+        System.out.println("密码：" + passWord);
+        if (adminService.login(userName, passWord) != null) {
+            session.setAttribute("u_name", userName);
             map.put("code", 0);
             map.put("msg", "登录成功");
-            return new ModelAndView("index.html");
+            return new ModelAndView(new MappingJackson2JsonView(), map);
         } else {
             map.put("code", -1);
             map.put("msg", "登录失败");
+            return new ModelAndView(new MappingJackson2JsonView(), map);
+        }
+    }
+
+    @RequestMapping(value = "/logout", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public ModelAndView logout(HttpSession session){
+        Map map = new HashMap();
+        if (session.getAttribute("u_name") != null || !"".equals(session.getAttribute("u_name"))) {
+            session.removeAttribute("u_name");
+            map.put("code", 0);
+            map.put("msg", "注销成功！");
+            return new ModelAndView(new MappingJackson2JsonView(), map);
+        } else {
+            map.put("code", -1);
+            map.put("msg", "注销失败！");
             return new ModelAndView(new MappingJackson2JsonView(), map);
         }
     }

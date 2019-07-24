@@ -5,10 +5,12 @@ import com.huayaji.entity.User;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -47,6 +49,7 @@ public class ProductDaoImpl extends HibernateDaoSupport implements ProductDao{
     }
 
     @Override
+    @Transactional
     public List<Product> findByPage(Integer page, Integer limit, String search) {
         Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria cri = session.createCriteria(Product.class);
@@ -62,13 +65,16 @@ public class ProductDaoImpl extends HibernateDaoSupport implements ProductDao{
     }
 
     @Override
+    @Transactional
     public long getCount(String search)
     {
         Session session = getHibernateTemplate().getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
         Criteria cri = session.createCriteria(Product.class);
         if(search!=null&&search!=""&&!search.equals("")&&!search.equals(null))
             cri.add(Restrictions.like("user.id",Long.parseLong(search)));
         long count = (long)cri.setProjection(Projections.rowCount()).uniqueResult();
+        transaction.commit();
         return count;
     }
 }

@@ -9,6 +9,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -46,6 +47,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao{
     }
 
     @Override
+    @Transactional
     public List<User> findByPage(Integer page, Integer limit, String search) {
         Session session = getHibernateTemplate().getSessionFactory().openSession();
         Criteria cri = session.createCriteria(User.class);
@@ -61,6 +63,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao{
     }
 
     @Override
+    @Transactional
     public long getCount(String search)
     {
         Session session = getHibernateTemplate().getSessionFactory().openSession();

@@ -1,7 +1,7 @@
 layui.config({
 	base : "js/"
 }).use(['form','layer'],function(){
-	var form = layui.form(),
+		var form = layui.form,
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		$ = layui.jquery;
 	//video背景
@@ -14,8 +14,28 @@ layui.config({
 	}).resize();
 	
 	//登录按钮事件
-	form.on("submit(login)",function(data){
-		window.location.href = "../../index.html";
+    $("body").on('click','#submit-btn',function(){
+        $.ajax({
+            url:'/admin/login',
+            type: "post",
+            dataType: "json",//预期服务器返回的数据类型
+            contentType : "application/x-www-form-urlencoded",
+            /*contentType: 'application/json',*/
+            /*data: JSON.stringify(data1),*/
+            data: $('#form-login').serialize(),
+            success: function(res) {
+                if(res["code"]=='0'){
+                    layer.msg("登录成功！",{time:3000});
+                    //window.location.href = "https://www.baidu.com";
+                    window.location.href = "../../index.html";
+                }else{
+                    layer.msg("登录失败！",{time:3000});
+                }
+            },
+            error : function(e) {
+                console.log(e);
+            }
+        });
 		return false;
-	})
-})
+	});
+});

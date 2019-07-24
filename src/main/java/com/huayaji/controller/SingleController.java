@@ -301,10 +301,13 @@ public class SingleController extends TimerTask{
         if(list.size() > 0){
             try {
                 response.setHeader("content-type", "application/octet-stream");
+
                 response.setContentType("application/octet-stream");
                 response.setHeader("Content-Disposition", "attachment;filename=" +URLEncoder.encode(name, "UTF-8")+".xlsx");
                 out = response.getOutputStream();
                 TExcel.exportExcel(name,TemporarySing.class,list,out);
+
+                response.setHeader("Content-Length", String.valueOf(out.toString().getBytes().length));
                 out.flush();
                 out.close();
             } catch (Exception e) {
